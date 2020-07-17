@@ -1,0 +1,24 @@
+Package: galvanizer
+Title: Interface to Galvanize internal audit software
+Version: 0.1.0
+Authors@R: 
+    person(given = "Jonathan",
+           family = "Lin",
+           role = c("aut", "cre"),
+           email = "jonlinca@users.noreply.github.com",
+           comment = c(ORCID = "0000-0001-8664-6846"))
+Description: API wrapper to Galvanize platform, including Highbond.
+License: GPL-3 + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.0
+Imports: 
+    magrittr,
+    dplyr,
+    httr,
+    jsonlite,
+    lubridate,
+    rlang
+Suggests: 
+    testthat
