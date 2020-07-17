@@ -79,10 +79,9 @@ download <- get_highbond_results(highbond_openapi, highbond_org, highbond_datace
 #> Date in ISO8601 format; converting timezone from UTC to "America/Denver".
 #> Date in ISO8601 format; converting timezone from UTC to "America/Denver".
 #> Date in ISO8601 format; converting timezone from UTC to "America/Denver".
-#> Date in ISO8601 format; converting timezone from UTC to "America/Denver".
 
 head(upload)
 #>      name age active date_started          date_ended
-#> 1 Cowbell  21   TRUE   2019-01-01 2020-07-17 11:40:11
-#> 2   Rufus  32  FALSE   2020-01-01 2020-07-17 11:40:11
+#> 1 Cowbell  21   TRUE   2019-01-01 2020-07-17 11:55:06
+#> 2   Rufus  32  FALSE   2020-01-01 2020-07-17 11:55:06
 ```
