@@ -40,4 +40,3 @@ vignettes/*.pdf
 
 .DS_Store
 .Rbuildignore
-docs
