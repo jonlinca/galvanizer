@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
   highbond_openapi <- Sys.getenv('highbond_openapi')
   highbond_org <- Sys.getenv('highbond_org')
   highbond_datacenter <- Sys.getenv('highbond_datacenter')
-  highbond_table <- Sys.getenv('highbond_table')
+  highbond_table <- Sys.getenv('highbond_readme_results_table')
 ```
 
 # galvanizer

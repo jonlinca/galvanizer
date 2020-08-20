@@ -30,7 +30,7 @@ test_that("Highbond Results - POST with PURGE", {
   
   # Col type check for re-download
   
-  Sys.sleep(10)
+  Sys.sleep(10) # Allow Highbond to process...
   
   download <- get_highbond_results(highbond_openapi, highbond_org, highbond_datacenter, highbond_table, timezone = 'Canada/Pacific')
   
@@ -69,7 +69,7 @@ test_that("Highbond Results - POST without Purge", {
   
   # Wait delay
   
-  Sys.sleep(10)
+  Sys.sleep(20)
   
   download <- get_highbond_results(highbond_openapi, highbond_org, highbond_datacenter, highbond_table)
   

@@ -75,13 +75,13 @@ the results online and also download the new data too:
 
 ``` r
 download <- get_highbond_results(highbond_openapi, highbond_org, highbond_datacenter, highbond_table)
-#> Retrieving Testthat R Post
+#> Retrieving Readme Table
 #> Date in ISO8601 format; converting timezone from UTC to "America/Denver".
 #> Date in ISO8601 format; converting timezone from UTC to "America/Denver".
 #> Date in ISO8601 format; converting timezone from UTC to "America/Denver".
 
 head(upload)
 #>      name age active date_started          date_ended
-#> 1 Cowbell  21   TRUE   2019-01-01 2020-07-17 11:55:06
-#> 2   Rufus  32  FALSE   2020-01-01 2020-07-17 11:55:06
+#> 1 Cowbell  21   TRUE   2019-01-01 2020-08-20 15:10:30
+#> 2   Rufus  32  FALSE   2020-01-01 2020-08-20 15:10:30
 ```

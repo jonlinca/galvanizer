@@ -1,9 +1,18 @@
 # Documentation for API at: https://docs-apis.highbond.com/
 
-hb_api_get <- function(apikey, url, waittime = 0.6){
+hb_api_get <- function(apikey, url, waittime = 0.6, params = NULL){
   # The function that actually pulls Highbond data
   
-  hb_api_get <- httr::GET(url, hb_headers(apikey))
+  if (is.null(params)){
+    hb_api_get <- httr::GET(url, 
+                            hb_headers(apikey))
+  } else {
+    # We have to do this because having a params of blank but passing a fully encoded url will clear all the parameters
+    hb_api_get <- httr::GET(url, 
+                          hb_headers(apikey),
+                          query = params)
+  }
+  
   Sys.sleep(waittime) # Wait time is required as Highbond limits rates to about three queries per second
   hb_validateDownload(hb_api_get)
   return(hb_api_get)
@@ -29,6 +38,16 @@ hb_validateDownload <- function(content){
 hb_url <- function(org, datacenter){
   # See https://docs-apis.highbond.com/#section/Making-requests
   
+  regionurl <- hb_url_base(datacenter) # Moved to enable hb_url_base functionality to accomodate projects. Same syntax kept to allow for Results to continue without re-engineering
+  
+  url <- paste0(regionurl, '/v1/orgs/', org, '/')
+  
+  return(url)
+}
+
+hb_url_base <- function(datacenter){
+  # This needs to be separate due to needing a base URL for Projects and next page handler
+  
   if (datacenter == 'us'){
     regionurl <- 'https://apis.highbond.com'
   } else if (datacenter == 'ca'){
@@ -44,9 +63,7 @@ hb_url <- function(org, datacenter){
     regionurl <- 'https://apis.highbond.com'
   }
   
-  url <- paste0(regionurl, '/v1/orgs/', org, '/')
-  
-  return(url)
+  return(regionurl)
 }
 
 api_jsonParseDf <- function(apicontent){

@@ -2,6 +2,7 @@
 
 export("%>%")
 export(get_highbond_results)
+export(list_projects)
 export(post_highbond_results)
 importFrom(dplyr,anti_join)
 importFrom(dplyr,inner_join)
