@@ -12,8 +12,8 @@
 #' @export
 #'
 #' @examples
-#' /dontrun{
-#' projectme
+#' \dontrun{
+#' projects <- get_project(highbond_openapi, highbond_org, highbond_datacenter)
 #' }
 get_project <- function(apikey, org, datacenter, project_id = NULL, fields = NULL, pagesize = 50){
   
@@ -30,6 +30,7 @@ get_project <- function(apikey, org, datacenter, project_id = NULL, fields = NUL
 
 hb_url_project <- function(component, project_id = NULL, objective_id = NULL, issue_id = NULL, id = NULL){
 # Used to build the correct urls for Project information, depending on the type of data captured
+# Future - perhaps put plural switch here?
 
   url <- NULL
   
@@ -134,14 +135,19 @@ hb_prj_set_params <- function(component, pagesize, fields = NULL){
   return(param_list)
 }
 
+#' @importFrom rlang .data
+#' @importFrom dplyr select
+#' @importFrom tidyr nest
+#' @importFrom tibble as_tibble tibble
+#' @importFrom tidyjson spread_values enter_object gather_object spread_all jstring
 hb_prj_parse_standard <- function(content_raw){
   # This will parse the standard data fields that exist in all get points
   
   content_header <- content_raw %>%
-    spread_values(id = jstring(id),
-                  type = jstring(type)) %>%
+    tidyjson::spread_values(id = tidyjson::jstring(id),
+                  type = tidyjson::jstring(type)) %>%
     #  spread_all %>%
-    select(document.id, id, type) %>%
+    select(.data$document.id, .data$id, .data$type) %>%
     as_tibble()
   
   content_attributes <- content_raw %>% 
@@ -153,9 +159,9 @@ hb_prj_parse_standard <- function(content_raw){
     tidyjson::enter_object(relationships) %>%
     gather_object %>%
     spread_all %>% 
-    select(document.id, name, relationship_id = data.id, relationship_type = data.type) %>%
+    select(.data$document.id, .data$name, relationship_id = .data$data.id, relationship_type = .data$data.type) %>%
     as_tibble() %>%
-    nest(relationships = c(name, relationship_id, relationship_type))
+    nest(relationships = c(.data$name, .data$relationship_id, .data$relationship_type))
   
   content_parts <- tibble(
     header = content_header,
@@ -166,6 +172,11 @@ hb_prj_parse_standard <- function(content_raw){
   return(content_parts)
 }
 
+#' @importFrom rlang .data
+#' @importFrom dplyr select
+#' @importFrom tidyr nest
+#' @importFrom tibble as_tibble tibble
+#' @importFrom tidyjson spread_values enter_object gather_object gather_array spread_all append_values_string
 hb_prj_parse_custom <- function(component, content_raw){
   # This parses custom only
   
@@ -174,18 +185,23 @@ hb_prj_parse_custom <- function(component, content_raw){
   }
   
   content_attributes_custom <- content_raw %>% 
-    tidyjson::enter_object(attributes) %>% 
-    tidyjson::enter_object(custom_attributes) %>%
+    enter_object(attributes) %>% 
+    enter_object(custom_attributes) %>%
     gather_array() %>%
     gather_object() %>% 
     append_values_string("value") %>%
-    select(document.id, array.index, name, value) %>% #propose to remove array.index
+    select(.data$document.id, .data$array.index, .data$name, .data$value) %>% #propose to remove array.index
     as_tibble() %>%
-    nest(custom_attributes = c(array.index, name, value)) # CONSIDER RESHAPING TO HAVE ID, NAME, VALUE
+    nest(custom_attributes = c(.data$array.index, .data$name, .data$value)) # CONSIDER RESHAPING TO HAVE ID, NAME, VALUE
   
   return(content_attributes_custom)
 }
 
+#' @importFrom rlang .data
+#' @importFrom dplyr select
+#' @importFrom tidyr nest
+#' @importFrom tibble as_tibble tibble
+#' @importFrom tidyjson spread_values enter_object gather_object gather_array spread_all append_values_string
 hb_prj_parse_tags <- function(component, content_raw){
   # This only processes tags
   
@@ -198,14 +214,18 @@ hb_prj_parse_tags <- function(component, content_raw){
     tidyjson::enter_object(tag_list) %>% 
     gather_array() %>% 
     append_values_string() %>%
-    select(document.id, array.index, tag_list = string) %>% #propose to remove array.index
+    select(.data$document.id, .data$array.index, tag_list = .data$string) %>% #propose to remove array.index
     as_tibble() %>%
-    nest(tag_list = c(array.index, tag_list))
+    nest(tag_list = c(.data$array.index, .data$tag_list))
   
   return(content_tags)
 }
 
+#' @importFrom rlang .data
+#' @importFrom dplyr select left_join
 hb_prj_coljoin_data <- function(component, core, custom, tags){
+  . <- NULL
+  
   # Combine all the data together
   
   joined <- core$header %>%
@@ -218,11 +238,15 @@ hb_prj_coljoin_data <- function(component, core, custom, tags){
           left_join(., tags, by = 'document.id')
         }} %>%
     left_join(core$relationships, by = 'document.id') %>%
-    select(-document.id)
+    select(-.data$document.id)
   
   return(joined)
 }
 
+#' @importFrom rlang .data
+#' @importFrom dplyr select bind_rows
+#' @importFrom httr content
+#' @importFrom jsonlite fromJSON
 hb_prj_get_controller <- function(apikey, url, params, datacenter, component, plural, waittime = 0.6){
  # Performs the GET and loop
   

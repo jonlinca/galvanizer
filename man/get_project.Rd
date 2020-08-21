@@ -33,7 +33,7 @@ A dataframe of projects
 Downloads the primary details of one or all projects
 }
 \examples{
-/dontrun{
+\dontrun{
 projectme
 }
 }

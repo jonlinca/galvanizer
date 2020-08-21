@@ -6,6 +6,8 @@ test_that("Highbond Projects - GET ALL projects", {
   highbond_fields <- 'name,state,status,created_at,updated_at,description,tag_list,project_type,entities'
   
   projects <- get_project(highbond_openapi, highbond_org, highbond_datacenter)
+  
+  expect_true(nrow(projects) > 1)
 })
 
 test_that("Highbond Projects - GET ONE projects", {
@@ -18,4 +20,6 @@ test_that("Highbond Projects - GET ONE projects", {
   project_id <- 121339
   
   projects <- get_project(highbond_openapi, highbond_org, highbond_datacenter, project_id = project_id)
+  
+  expect_true(nrow(projects) == 1)
 })

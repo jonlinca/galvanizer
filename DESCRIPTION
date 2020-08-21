@@ -20,6 +20,8 @@ Imports:
     jsonlite,
     lubridate,
     rlang,
-    tidyjson
+    tidyjson,
+    tibble,
+    tidyr
 Suggests: 
     testthat
