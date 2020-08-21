@@ -3,6 +3,8 @@
 export("%>%")
 export(get_highbond_results)
 export(get_project)
+export(get_project_planning_file)
+export(get_project_type)
 export(post_highbond_results)
 importFrom(dplyr,anti_join)
 importFrom(dplyr,bind_rows)

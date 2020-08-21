@@ -2,7 +2,7 @@
 % Please edit documentation in R/highbond_api_projects.R
 \name{get_project}
 \alias{get_project}
-\title{Retrieve Highbond Projects}
+\title{Retrieve Highbond Projects - Projects}
 \usage{
 get_project(
   apikey,
@@ -22,7 +22,8 @@ get_project(
 
 \item{project_id}{Defaults to all projects}
 
-\item{fields}{OPTIONAL. A character string of all fields requested within the project}
+\item{fields}{OPTIONAL. A character string of all fields requested within the
+project}
 
 \item{pagesize}{Defaults to 50. Maximum is 100.}
 }
@@ -32,8 +33,17 @@ A dataframe of projects
 \description{
 Downloads the primary details of one or all projects
 }
+\details{
+Fields allowed: name, state, status, created_at, updated_at,
+description, background, budget, position, certification,
+control_performance, risk_assurance, management_response, max_sample_size,
+number_of_testing_rounds, opinion, opinion_description, purpose, scope,
+start_date, target_date, tag_list, project_type, entities
+}
 \examples{
 \dontrun{
-projectme
+projects <- get_projects(highbond_openapi, highbond_org, highbond_datacenter)
+projects <- get_projects(highbond_openapi, highbond_org, highbond_datacenter, 
+  fields = c('name', 'state', 'status'))
 }
 }

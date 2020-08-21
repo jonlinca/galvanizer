@@ -1,11 +1,18 @@
-#' Retrieve Highbond Projects
-#' 
+#' Retrieve Highbond Projects - Projects
+#'
 #' @description Downloads the primary details of one or all projects
+#'
+#' @details Fields allowed: name, state, status, created_at, updated_at,
+#'   description, background, budget, position, certification,
+#'   control_performance, risk_assurance, management_response, max_sample_size,
+#'   number_of_testing_rounds, opinion, opinion_description, purpose, scope,
+#'   start_date, target_date, tag_list, project_type, entities
 #'
 #' @inheritParams get_highbond_results
 #'
 #' @param project_id Defaults to all projects
-#' @param fields OPTIONAL. A character string of all fields requested within the project
+#' @param fields OPTIONAL. A character vector each field requested within the
+#'   project. NULL will default to all fields.
 #' @param pagesize Defaults to 50. Maximum is 100.
 #'
 #' @return A dataframe of projects
@@ -13,7 +20,9 @@
 #'
 #' @examples
 #' \dontrun{
-#' projects <- get_project(highbond_openapi, highbond_org, highbond_datacenter)
+#' projects <- get_projects(highbond_openapi, highbond_org, highbond_datacenter)
+#' projects <- get_projects(highbond_openapi, highbond_org, highbond_datacenter, 
+#'   fields = c('name', 'state', 'status'))
 #' }
 get_project <- function(apikey, org, datacenter, project_id = NULL, fields = NULL, pagesize = 50){
   
@@ -27,6 +36,57 @@ get_project <- function(apikey, org, datacenter, project_id = NULL, fields = NUL
   
   return(data) 
 }
+
+#' Retrieve Highbond Project Types
+#' 
+#' @description Downloads the primary details of one or all projects
+#' 
+#' @details Possible fields include: 
+#'
+#' @inheritParams get_project
+#'
+#' @param project_type_id Defaults to all project types
+#' 
+#' @export
+#' @return A dataframe of project types
+get_project_type <- function(apikey, org, datacenter, project_type_id = NULL, fields = NULL, pagesize = 50){
+  
+  component <- 'project_types' # Set up the project
+  url <- paste0(hb_url(org, datacenter), hb_url_project(component, id = project_type_id)) # Set up the query parameters
+  #print(url)
+  
+  plural <- is.null(project_type_id) # Flag if its one or many. I.e. plural download
+  
+  params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
+  data <- hb_prj_get_controller(apikey, url, params, datacenter, component, plural) # Download the data
+  
+  return(data) 
+}
+
+#' Retrieve Highbond Project Planning Files
+#' 
+#' @description Downloads the primary details of one or multiple planning files for a project.
+#' 
+#' @details possible fields: 
+#'
+#' @inheritParams get_project
+#'
+#' @param planning_file_id Defaults to all planning files within a project
+#' @export
+#' @return A dataframe of project types
+get_project_planning_file <- function(apikey, org, datacenter, project_id, planning_file_id = NULL, fields = NULL, pagesize = 50){
+
+  component <- 'planning_files' # Set up the project
+  url <- paste0(hb_url(org, datacenter), hb_url_project(component, project_id = project_id, id = planning_file_id)) # Set up the query parameters
+
+  plural <- is.null(planning_file_id) # Flag if its one or many. I.e. plural download
+  
+  params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
+  data <- hb_prj_get_controller(apikey, url, params, datacenter, component, plural) # Download the data
+  
+  return(data) 
+}
+
 
 hb_url_project <- function(component, project_id = NULL, objective_id = NULL, issue_id = NULL, id = NULL){
 # Used to build the correct urls for Project information, depending on the type of data captured
@@ -50,11 +110,11 @@ hb_url_project <- function(component, project_id = NULL, objective_id = NULL, is
   }
   
   # Project Types override, different because the ID is different
-  if (component == 'projects_types'){
+  if (component == 'project_types'){
     if (is.null(id)) {
-      url <- 'projects_types/' # Get all projects
+      url <- 'project_types/' # Get all projects
     } else {
-      url <- paste0('projects_types/', id) # Get one specific project type
+      url <- paste0('project_types/', id) # Get one specific project type
     }
     
     return(url) # Early return
@@ -126,6 +186,11 @@ hb_prj_set_params <- function(component, pagesize, fields = NULL){
   # 
   # print(eval(parse(text=txt1)))
   
+  # Make fields friendly for download
+  if (length(fields) > 0) {
+    fields <- paste0(fields, collapse = ',')
+  }
+  
   param_list <- list()
   param_name_pagesize <- paste0('page[size]')
   param_name_fields <- paste0('fields[',component,']')
@@ -154,19 +219,10 @@ hb_prj_parse_standard <- function(content_raw){
     tidyjson::enter_object(attributes) %>% 
     spread_all %>%
     as_tibble()
-  
-  content_rel <- content_raw %>%
-    tidyjson::enter_object(relationships) %>%
-    gather_object %>%
-    spread_all %>% 
-    select(.data$document.id, .data$name, relationship_id = .data$data.id, relationship_type = .data$data.type) %>%
-    as_tibble() %>%
-    nest(relationships = c(.data$name, .data$relationship_id, .data$relationship_type))
-  
+
   content_parts <- tibble(
     header = content_header,
-    attributes = content_attributes,
-    relationships = content_rel
+    attributes = content_attributes
   )
   
   return(content_parts)
@@ -180,19 +236,25 @@ hb_prj_parse_standard <- function(content_raw){
 hb_prj_parse_custom <- function(component, content_raw){
   # This parses custom only
   
-  if(!(component %in% c('projects'))){
-    return(NULL)
-  }
+  # if(!(component %in% c('projects', 'planning_files'))){
+  #   return(NULL)
+  # }
   
   content_attributes_custom <- content_raw %>% 
     enter_object(attributes) %>% 
-    enter_object(custom_attributes) %>%
+    enter_object(custom_attributes)
+  
+  if (nrow(content_attributes_custom) == 0){return (NULL)} # Check for blanks before going
+  
+  content_attributes_custom <- content_attributes_custom %>%
     gather_array() %>%
     gather_object() %>% 
-    append_values_string("value") %>%
+    append_values_string("value") %>% # This is the reason why an early return is not needed
     select(.data$document.id, .data$array.index, .data$name, .data$value) %>% #propose to remove array.index
     as_tibble() %>%
     nest(custom_attributes = c(.data$array.index, .data$name, .data$value)) # CONSIDER RESHAPING TO HAVE ID, NAME, VALUE
+  
+  if (nrow(content_attributes_custom) == 0){return (NULL)}
   
   return(content_attributes_custom)
 }
@@ -205,39 +267,73 @@ hb_prj_parse_custom <- function(component, content_raw){
 hb_prj_parse_tags <- function(component, content_raw){
   # This only processes tags
   
-  if(!(component %in% c('projects'))){
-    return(NULL)
-  }
+  # if(!(component %in% c('projects'))){
+  #   return(NULL)
+  # }
   
   content_tags <- content_raw %>% 
     tidyjson::enter_object(attributes) %>% 
-    tidyjson::enter_object(tag_list) %>% 
+    tidyjson::enter_object(tag_list)
+  
+  if (nrow(content_tags) == 0){return (NULL)} # Check for blanks before going
+  
+  content_tags <- content_tags %>%
     gather_array() %>% 
     append_values_string() %>%
     select(.data$document.id, .data$array.index, tag_list = .data$string) %>% #propose to remove array.index
     as_tibble() %>%
     nest(tag_list = c(.data$array.index, .data$tag_list))
   
+  if (nrow(content_tags) == 0){return (NULL)}
+  
   return(content_tags)
 }
 
 #' @importFrom rlang .data
+#' @importFrom dplyr select
+#' @importFrom tidyr nest
+#' @importFrom tibble as_tibble tibble
+#' @importFrom tidyjson spread_values enter_object gather_object gather_array spread_all append_values_string
+hb_prj_parse_rel <- function(component, content_raw){
+  # This only processes tags
+
+  # if(!(component %in% c('projects', 'planning_files'))){
+  #   return(NULL)
+  # }
+  
+  content_rel <- content_raw %>%
+    tidyjson::enter_object(relationships) 
+  
+  if (nrow(content_rel) == 0){return (NULL)} # This occurs here because select statement will fail if these columsn doen't exist
+  
+  content_rel <- content_rel %>%
+    gather_object %>%
+    spread_all %>%
+    select(.data$document.id, .data$name, relationship_id = .data$data.id, relationship_type = .data$data.type) %>% # ARE THESE SHOWING UP DIFFERENTLY AFTER SPREADING FOR DIFERENT TYPES?
+    as_tibble() %>%
+    nest(relationships = c(.data$name, relationship_id, relationship_type))
+  
+  return(content_rel)
+}
+
+#' @importFrom rlang .data
 #' @importFrom dplyr select left_join
-hb_prj_coljoin_data <- function(component, core, custom, tags){
+hb_prj_coljoin_data <- function(component, core, custom, tags, relationships){
   . <- NULL
   
   # Combine all the data together
   
   joined <- core$header %>%
-    left_join(core$attributes, by = 'document.id') %>% 
-    {
-      if(component %in% c('projects')){
+    left_join(core$attributes, by = 'document.id') %>% {
+        if(!is.null(custom)){
         left_join(., custom, by = 'document.id')
-      }} %>% {
-        if(component %in% c('projects')){
-          left_join(., tags, by = 'document.id')
-        }} %>%
-    left_join(core$relationships, by = 'document.id') %>%
+      } else . } %>% {
+        if(!is.null(tags)){
+        left_join(., tags, by = 'document.id')
+      } else .} %>% {
+        if(!is.null(relationships)){
+          left_join(., relationships, by = 'document.id')
+      } else .} %>%
     select(-.data$document.id)
   
   return(joined)
@@ -259,15 +355,21 @@ hb_prj_get_controller <- function(apikey, url, params, datacenter, component, pl
 
   next_page <- content$links$`next` # Save next page reference
   content_data <- if(plural){content$data} else {content} # This is important for many
+  
+  if (length(content_data) == 0){
+    warning(paste('Downloaded json is blank. Is', component, 'empty?'))
+    return(NULL)
+  }
 
   core <- hb_prj_parse_standard(content_data) # Returns the three primary tables in all - header, attributes, relationships
 
   # Custom fields get - relevant to most except...
   custom <- hb_prj_parse_custom(component, content_data)
   tags <- hb_prj_parse_tags(component, content_data)
-
+  relationships <- hb_prj_parse_rel(component, content_data)
+  
   # First page, finished
-  combined_data <- hb_prj_coljoin_data(component, core, custom, tags)
+  combined_data <- hb_prj_coljoin_data(component, core, custom, tags, relationships)
   
   # Pagination
   while (!is.null(next_page)){
@@ -289,9 +391,10 @@ hb_prj_get_controller <- function(apikey, url, params, datacenter, component, pl
     # Custom fields get - relevant to most except...
     custom <- hb_prj_parse_custom(component, content_data)
     tags <- hb_prj_parse_tags(component, content_data)
+    relationships <- hb_prj_parse_rel(component, content_data)
     
     # Next page, finished
-    combined_data_next <- hb_prj_coljoin_data(component, core, custom, tags)
+    combined_data_next <- hb_prj_coljoin_data(component, core, custom, tags, relationships)
     
     combined_data <- bind_rows(combined_data, combined_data_next)
   }
