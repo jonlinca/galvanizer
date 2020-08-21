@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-galvanizer is a package designed to interact to Highbond's API (https://docs-apis.highbond.com). By using R with galvanizer, you can download data from Highbond, process them locally, and upload any new results into Highbond Results.
+galvanizer is a package designed to interact to Highbond's API (https://docs-apis.highbond.com). By using R with galvanizer, you can download data from Highbond's Results and Project modules. For Highbond Results, you can also process data locally and upload data into Highbond Result tables.
 
 ## Installation
 

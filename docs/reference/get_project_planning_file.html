@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • galvanizer</title>
+<title>Retrieve Highbond Project - Planning Files — get_project_planning_file • galvanizer</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,9 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Retrieve Highbond Project - Planning Files — get_project_planning_file" />
+<meta property="og:description" content="Downloads the primary details of one or multiple planning files
+for a project." />
 
 
 
@@ -58,7 +60,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -100,66 +102,72 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Retrieve Highbond Project - Planning Files</h1>
+    
+    <div class="hidden name"><code>get_project_planning_file.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Downloads the primary details of one or multiple planning files
+for a project.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>get_project_planning_file</span>(
+  <span class='no'>apikey</span>,
+  <span class='no'>org</span>,
+  <span class='no'>datacenter</span>,
+  <span class='no'>project_id</span>,
+  <span class='kw'>planning_file_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>fields</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>pagesize</span> <span class='kw'>=</span> <span class='fl'>50</span>
+)</pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="get_highbond_results.html">get_highbond_results()</a></code> </p>
-        </td>
-        <td><p>Retrieve Highbond Results table</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_project.html">get_project()</a></code> </p>
-        </td>
-        <td><p>Retrieve Highbond Projects - Projects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_project_planning_file.html">get_project_planning_file()</a></code> </p>
-        </td>
-        <td><p>Retrieve Highbond Project - Planning Files</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_project_type.html">get_project_type()</a></code> </p>
-        </td>
-        <td><p>Retrieve Highbond Projects - Project Types</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="post_highbond_results.html">post_highbond_results()</a></code> </p>
-        </td>
-        <td><p>Upload Highbond Results table</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>apikey</th>
+      <td><p>Highbond API token</p></td>
+    </tr>
+    <tr>
+      <th>org</th>
+      <td><p>Organization number</p></td>
+    </tr>
+    <tr>
+      <th>datacenter</th>
+      <td><p>Can be us, ca, eu, ap, au</p></td>
+    </tr>
+    <tr>
+      <th>project_id</th>
+      <td><p>Project ID number. Required.</p></td>
+    </tr>
+    <tr>
+      <th>planning_file_id</th>
+      <td><p>Defaults to all planning files within a project. NULL
+defaults to all planning files</p></td>
+    </tr>
+    <tr>
+      <th>fields</th>
+      <td><p>OPTIONAL. A character vector each field requested within the
+project. NULL will default to all fields.</p></td>
+    </tr>
+    <tr>
+      <th>pagesize</th>
+      <td><p>Defaults to 50. Maximum is 100.</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A tibble of planning files.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>possible fields: name, reference_id, description, position,
+created_at, updated_at, custom_attributes, project</p>
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>

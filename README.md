@@ -9,8 +9,9 @@
 
 galvanizer is a package designed to interact to Highbond’s API
 (<https://docs-apis.highbond.com>). By using R with galvanizer, you can
-download data from Highbond, process them locally, and upload any new
-results into Highbond Results.
+download data from Highbond’s Results and Project modules. For Highbond
+Results, you can also process data locally and upload data into Highbond
+Result tables.
 
 ## Installation
 
@@ -82,8 +83,8 @@ download <- get_highbond_results(highbond_openapi, highbond_org, highbond_datace
 
 head(upload)
 #>      name age active date_started          date_ended
-#> 1 Cowbell  21   TRUE   2019-01-01 2020-08-21 11:49:25
-#> 2   Rufus  32  FALSE   2020-01-01 2020-08-21 11:49:25
+#> 1 Cowbell  21   TRUE   2019-01-01 2020-08-21 11:53:27
+#> 2   Rufus  32  FALSE   2020-01-01 2020-08-21 11:53:27
 ```
 
 ## Highbond Projects data
