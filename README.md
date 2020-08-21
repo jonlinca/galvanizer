@@ -82,6 +82,33 @@ download <- get_highbond_results(highbond_openapi, highbond_org, highbond_datace
 
 head(upload)
 #>      name age active date_started          date_ended
-#> 1 Cowbell  21   TRUE   2019-01-01 2020-08-20 15:10:30
-#> 2   Rufus  32  FALSE   2020-01-01 2020-08-20 15:10:30
+#> 1 Cowbell  21   TRUE   2019-01-01 2020-08-21 11:49:25
+#> 2   Rufus  32  FALSE   2020-01-01 2020-08-21 11:49:25
+```
+
+## Highbond Projects data
+
+Highbond Projects data (also known as ‘Audits’) is also retrievable,
+depending on which screen of information you would like to retrieve
+from. There are options to download all or just one set of information,
+depending on the pane chosen.
+
+``` r
+projects <- get_project(highbond_openapi, highbond_org, highbond_datacenter)
+head(projects)
+#> # A tibble: 6 x 26
+#>   id    type  name  state status created_at updated_at description background
+#>   <chr> <chr> <chr> <chr> <chr>  <chr>      <chr>      <chr>       <chr>     
+#> 1 1213… proj… Payr… acti… active 2020-08-1… 2020-08-1… "Project t… <NA>      
+#> 2 1213… proj… IT G… acti… active 2020-08-1… 2020-08-1… ""          <NA>      
+#> 3 1213… proj… Sarb… acti… active 2020-08-1… 2020-08-1… ""          <NA>      
+#> 4 1213… proj… Sale… acti… active 2020-08-1… 2020-08-1… "Project t… <NA>      
+#> 5 1213… proj… SOC … acti… active 2020-08-1… 2020-08-1… "Project t… <NA>      
+#> 6 1213… proj… Purc… acti… active 2020-08-1… 2020-08-1… "The purch… <NA>      
+#> # … with 17 more variables: budget <dbl>, position <dbl>, certification <lgl>,
+#> #   control_performance <lgl>, risk_assurance <lgl>, management_response <lgl>,
+#> #   max_sample_size <dbl>, number_of_testing_rounds <dbl>, opinion <lgl>,
+#> #   opinion_description <lgl>, purpose <chr>, scope <chr>, start_date <chr>,
+#> #   target_date <chr>, custom_attributes <list>, tag_list <list>,
+#> #   relationships <list>
 ```

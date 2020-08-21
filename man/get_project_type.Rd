@@ -2,7 +2,7 @@
 % Please edit documentation in R/highbond_api_projects.R
 \name{get_project_type}
 \alias{get_project_type}
-\title{Retrieve Highbond Project Types}
+\title{Retrieve Highbond Projects - Project Types}
 \usage{
 get_project_type(
   apikey,
@@ -22,13 +22,13 @@ get_project_type(
 
 \item{project_type_id}{Defaults to all project types}
 
-\item{fields}{OPTIONAL. A character string of all fields requested within the
-project}
+\item{fields}{OPTIONAL. A character vector each field requested within the
+project. NULL will default to all fields.}
 
 \item{pagesize}{Defaults to 50. Maximum is 100.}
 }
 \value{
-A dataframe of project types
+A tibble of project types
 }
 \description{
 Downloads the primary details of one or all projects

@@ -20,15 +20,15 @@ get_project(
 
 \item{datacenter}{Can be us, ca, eu, ap, au}
 
-\item{project_id}{Defaults to all projects}
+\item{project_id}{Project ID number. NULL defaults to all projects.}
 
-\item{fields}{OPTIONAL. A character string of all fields requested within the
-project}
+\item{fields}{OPTIONAL. A character vector each field requested within the
+project. NULL will default to all fields.}
 
 \item{pagesize}{Defaults to 50. Maximum is 100.}
 }
 \value{
-A dataframe of projects
+A tibble of projects
 }
 \description{
 Downloads the primary details of one or all projects

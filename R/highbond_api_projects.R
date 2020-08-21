@@ -10,12 +10,12 @@
 #'
 #' @inheritParams get_highbond_results
 #'
-#' @param project_id Defaults to all projects
+#' @param project_id Project ID number. NULL defaults to all projects.
 #' @param fields OPTIONAL. A character vector each field requested within the
 #'   project. NULL will default to all fields.
 #' @param pagesize Defaults to 50. Maximum is 100.
 #'
-#' @return A dataframe of projects
+#' @return A tibble of projects
 #' @export
 #'
 #' @examples
@@ -37,7 +37,7 @@ get_project <- function(apikey, org, datacenter, project_id = NULL, fields = NUL
   return(data) 
 }
 
-#' Retrieve Highbond Project Types
+#' Retrieve Highbond Projects - Project Types
 #' 
 #' @description Downloads the primary details of one or all projects
 #' 
@@ -48,7 +48,7 @@ get_project <- function(apikey, org, datacenter, project_id = NULL, fields = NUL
 #' @param project_type_id Defaults to all project types
 #' 
 #' @export
-#' @return A dataframe of project types
+#' @return A tibble of project types
 get_project_type <- function(apikey, org, datacenter, project_type_id = NULL, fields = NULL, pagesize = 50){
   
   component <- 'project_types' # Set up the project
@@ -63,17 +63,21 @@ get_project_type <- function(apikey, org, datacenter, project_type_id = NULL, fi
   return(data) 
 }
 
-#' Retrieve Highbond Project Planning Files
-#' 
-#' @description Downloads the primary details of one or multiple planning files for a project.
-#' 
-#' @details possible fields: 
+#' Retrieve Highbond Project - Planning Files
+#'
+#' @description Downloads the primary details of one or multiple planning files
+#'   for a project.
+#'
+#' @details possible fields: name, reference_id, description, position,
+#'   created_at, updated_at, custom_attributes, project
 #'
 #' @inheritParams get_project
 #'
-#' @param planning_file_id Defaults to all planning files within a project
+#' @param project_id Project ID number. Required.
+#' @param planning_file_id Defaults to all planning files within a project. NULL
+#'   defaults to all planning files
 #' @export
-#' @return A dataframe of project types
+#' @return A tibble of planning files.
 get_project_planning_file <- function(apikey, org, datacenter, project_id, planning_file_id = NULL, fields = NULL, pagesize = 50){
 
   component <- 'planning_files' # Set up the project

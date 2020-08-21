@@ -2,7 +2,7 @@
 % Please edit documentation in R/highbond_api_projects.R
 \name{get_project_planning_file}
 \alias{get_project_planning_file}
-\title{Retrieve Highbond Project Planning Files}
+\title{Retrieve Highbond Project - Planning Files}
 \usage{
 get_project_planning_file(
   apikey,
@@ -21,21 +21,24 @@ get_project_planning_file(
 
 \item{datacenter}{Can be us, ca, eu, ap, au}
 
-\item{project_id}{Defaults to all projects}
+\item{project_id}{Project ID number. Required.}
 
-\item{planning_file_id}{Defaults to all planning files within a project}
+\item{planning_file_id}{Defaults to all planning files within a project. NULL
+defaults to all planning files}
 
-\item{fields}{OPTIONAL. A character string of all fields requested within the
-project}
+\item{fields}{OPTIONAL. A character vector each field requested within the
+project. NULL will default to all fields.}
 
 \item{pagesize}{Defaults to 50. Maximum is 100.}
 }
 \value{
-A dataframe of project types
+A tibble of planning files.
 }
 \description{
-Downloads the primary details of one or multiple planning files for a project.
+Downloads the primary details of one or multiple planning files
+for a project.
 }
 \details{
-possible fields:
+possible fields: name, reference_id, description, position,
+created_at, updated_at, custom_attributes, project
 }
