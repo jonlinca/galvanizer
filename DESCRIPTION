@@ -19,6 +19,7 @@ Imports:
     httr,
     jsonlite,
     lubridate,
-    rlang
+    rlang,
+    tidyjson
 Suggests: 
     testthat
