@@ -20,7 +20,7 @@ get_project_type(
 
 \item{datacenter}{Can be us, ca, eu, ap, au}
 
-\item{project_type_id}{Defaults to all project types}
+\item{project_type_id}{\code{NULL} Defaults to all project types}
 
 \item{fields}{OPTIONAL. A character vector each field requested within the
 project. NULL will default to all fields.}
@@ -31,8 +31,11 @@ project. NULL will default to all fields.}
 A tibble of project types
 }
 \description{
-Downloads the primary details of one or all projects
+Downloads the primary details of one or all project types.
 }
 \details{
-Possible fields include:
+Possible fields include: name, description, workflow, project_terms,
+certification_terms, control_terms, finding_terms, control_test_terms,
+finding_action_terms, narrative_terms, objective_terms, planning_terms,
+results_terms, risk_terms, test_plan_terms, walkthrough_terms
 }

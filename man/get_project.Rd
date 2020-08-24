@@ -20,7 +20,7 @@ get_project(
 
 \item{datacenter}{Can be us, ca, eu, ap, au}
 
-\item{project_id}{Project ID number. NULL defaults to all projects.}
+\item{project_id}{Project ID number. \code{NULL} will default to all items.}
 
 \item{fields}{OPTIONAL. A character vector each field requested within the
 project. NULL will default to all fields.}
@@ -42,8 +42,8 @@ start_date, target_date, tag_list, project_type, entities
 }
 \examples{
 \dontrun{
-projects <- get_projects(highbond_openapi, highbond_org, highbond_datacenter)
-projects <- get_projects(highbond_openapi, highbond_org, highbond_datacenter, 
+projects <- get_project(highbond_openapi, highbond_org, highbond_datacenter)
+projects <- get_project(highbond_openapi, highbond_org, highbond_datacenter, 
   fields = c('name', 'state', 'status'))
 }
 }
