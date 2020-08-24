@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Retrieve Highbond Project - Planning Files — get_project_planning_file • galvanizer</title>
+<title>Retrieve Highbond Project - Controls — get_project_control • galvanizer</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,12 @@
 
 
 
-<meta property="og:title" content="Retrieve Highbond Project - Planning Files — get_project_planning_file" />
-<meta property="og:description" content="Downloads the primary details of one or multiple planning files
-for a project." />
+<meta property="og:title" content="Retrieve Highbond Project - Controls — get_project_control" />
+<meta property="og:description" content="&quot;A control is a program, policy, routine, or activity that is
+intended to mitigate a risk. Controls are organized by objectives, and can
+be associated with one or more risks. The combination of identified risks
+and corresponding controls defines the Risk Control Matrix. Controls are
+also known as procedures.&quot;" />
 
 
 
@@ -104,22 +107,25 @@ for a project." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Retrieve Highbond Project - Planning Files</h1>
+    <h1>Retrieve Highbond Project - Controls</h1>
     
-    <div class="hidden name"><code>get_project_planning_file.Rd</code></div>
+    <div class="hidden name"><code>get_project_control.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Downloads the primary details of one or multiple planning files
-for a project.</p>
+    <p>"A control is a program, policy, routine, or activity that is
+intended to mitigate a risk. Controls are organized by objectives, and can
+be associated with one or more risks. The combination of identified risks
+and corresponding controls defines the Risk Control Matrix. Controls are
+also known as procedures."</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_project_planning_file</span>(
+    <pre class="usage"><span class='fu'>get_project_control</span>(
   <span class='no'>apikey</span>,
   <span class='no'>org</span>,
   <span class='no'>datacenter</span>,
-  <span class='kw'>project_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>planning_file_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>objective_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>control_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fields</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>pagesize</span> <span class='kw'>=</span> <span class='fl'>50</span>
 )</pre>
@@ -140,12 +146,12 @@ for a project.</p>
       <td><p>Can be us, ca, eu, ap, au</p></td>
     </tr>
     <tr>
-      <th>project_id</th>
+      <th>objective_id</th>
       <td><p>Required if other parameter is blank. May obtain multiple rows.</p></td>
     </tr>
     <tr>
-      <th>planning_file_id</th>
-      <td><p>Required if other parameter is blank. Will get only one row.</p></td>
+      <th>control_id</th>
+      <td><p>Required if other parameter is blank. Will get only one.</p></td>
     </tr>
     <tr>
       <th>fields</th>
@@ -160,11 +166,13 @@ project. NULL will default to all fields.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble of planning files.</p>
+    <p>A tibble of controls</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>possible fields: name, reference_id, description, position,
-created_at, updated_at, custom_attributes, project</p>
+    <p>possible fields: title, description, control_id, owner, frequency,
+control_type, prevent_detect, method, status, position, created_at,
+updated_at, custom_attributes, objective, walkthrough, control_test_plan,
+control_tests, mitigations, owner_user, entities</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

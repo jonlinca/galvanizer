@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Retrieve Highbond Projects - Project Types — get_project_type" />
-<meta property="og:description" content="Downloads the primary details of one or all projects" />
+<meta property="og:description" content="Downloads the primary details of one or all project types." />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">galvanizer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Downloads the primary details of one or all projects</p>
+    <p>Downloads the primary details of one or all project types.</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_project_type</span>(
@@ -138,7 +138,7 @@
     </tr>
     <tr>
       <th>project_type_id</th>
-      <td><p>Defaults to all project types</p></td>
+      <td><p><code>NULL</code> Defaults to all project types</p></td>
     </tr>
     <tr>
       <th>fields</th>
@@ -156,7 +156,10 @@ project. NULL will default to all fields.</p></td>
     <p>A tibble of project types</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Possible fields include:</p>
+    <p>Possible fields include: name, description, workflow, project_terms,
+certification_terms, control_terms, finding_terms, control_test_terms,
+finding_action_terms, narrative_terms, objective_terms, planning_terms,
+results_terms, risk_terms, test_plan_terms, walkthrough_terms</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

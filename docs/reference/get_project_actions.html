@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Retrieve Highbond Project - Planning Files — get_project_planning_file • galvanizer</title>
+<title>Retrieve Highbond Project - Actions — get_project_actions • galvanizer</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,11 @@
 
 
 
-<meta property="og:title" content="Retrieve Highbond Project - Planning Files — get_project_planning_file" />
-<meta property="og:description" content="Downloads the primary details of one or multiple planning files
-for a project." />
+<meta property="og:title" content="Retrieve Highbond Project - Actions — get_project_actions" />
+<meta property="og:description" content="&quot;An action is a specific follow-up measure that is associated
+with an identified issue. You can add actions and assign action owners. You
+can also set up reminders for yourself to retest issues or track hours
+spent on retesting by self-assigning actions.&quot;" />
 
 
 
@@ -104,22 +106,24 @@ for a project." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Retrieve Highbond Project - Planning Files</h1>
+    <h1>Retrieve Highbond Project - Actions</h1>
     
-    <div class="hidden name"><code>get_project_planning_file.Rd</code></div>
+    <div class="hidden name"><code>get_project_actions.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Downloads the primary details of one or multiple planning files
-for a project.</p>
+    <p>"An action is a specific follow-up measure that is associated
+with an identified issue. You can add actions and assign action owners. You
+can also set up reminders for yourself to retest issues or track hours
+spent on retesting by self-assigning actions."</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_project_planning_file</span>(
+    <pre class="usage"><span class='fu'>get_project_actions</span>(
   <span class='no'>apikey</span>,
   <span class='no'>org</span>,
   <span class='no'>datacenter</span>,
-  <span class='kw'>project_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>planning_file_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>issue_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>action_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fields</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>pagesize</span> <span class='kw'>=</span> <span class='fl'>50</span>
 )</pre>
@@ -140,12 +144,12 @@ for a project.</p>
       <td><p>Can be us, ca, eu, ap, au</p></td>
     </tr>
     <tr>
-      <th>project_id</th>
+      <th>issue_id</th>
       <td><p>Required if other parameter is blank. May obtain multiple rows.</p></td>
     </tr>
     <tr>
-      <th>planning_file_id</th>
-      <td><p>Required if other parameter is blank. Will get only one row.</p></td>
+      <th>action_id</th>
+      <td><p>Required if other parameter is blank. Will get only one.</p></td>
     </tr>
     <tr>
       <th>fields</th>
@@ -160,11 +164,14 @@ project. NULL will default to all fields.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble of planning files.</p>
+    <p>A tibble of actions</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>possible fields: name, reference_id, description, position,
-created_at, updated_at, custom_attributes, project</p>
+    <p>possible fields: title, created_at, updated_at, owner_name,
+owner_email, send_recurring_reminder, include_issue_details,
+include_remediation_details, description, due_date, priority, closed,
+completed_date, status, submitted_on, custom_attributes, issue,
+assigned_by, cc_users</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
