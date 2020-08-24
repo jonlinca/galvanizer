@@ -18,7 +18,7 @@ get_project_type(
 
 \item{org}{Organization number}
 
-\item{datacenter}{Can be us, ca, eu, ap, au}
+\item{datacenter}{One of \code{'us', 'ca', 'eu', 'ap', 'au'}}
 
 \item{project_type_id}{\code{NULL} Defaults to all project types}
 

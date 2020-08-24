@@ -20,7 +20,7 @@ post_highbond_results(
 
 \item{org}{Organization number}
 
-\item{datacenter}{Can be us, ca, eu, ap, au}
+\item{datacenter}{One of \code{'us', 'ca', 'eu', 'ap', 'au'}}
 
 \item{table_id}{The table to be downloaded}
 

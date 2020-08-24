@@ -18,7 +18,7 @@ get_project_control_test_plan(
 
 \item{org}{Organization number}
 
-\item{datacenter}{Can be us, ca, eu, ap, au}
+\item{datacenter}{One of \code{'us', 'ca', 'eu', 'ap', 'au'}}
 
 \item{control_test_plan_id}{Will get only one.}
 

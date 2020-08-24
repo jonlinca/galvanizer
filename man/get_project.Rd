@@ -18,7 +18,7 @@ get_project(
 
 \item{org}{Organization number}
 
-\item{datacenter}{Can be us, ca, eu, ap, au}
+\item{datacenter}{One of \code{'us', 'ca', 'eu', 'ap', 'au'}}
 
 \item{project_id}{Project ID number. \code{NULL} will default to all items.}
 

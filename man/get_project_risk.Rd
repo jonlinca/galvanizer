@@ -19,7 +19,7 @@ get_project_risk(
 
 \item{org}{Organization number}
 
-\item{datacenter}{Can be us, ca, eu, ap, au}
+\item{datacenter}{One of \code{'us', 'ca', 'eu', 'ap', 'au'}}
 
 \item{objective_id}{Required if other parameter is blank. May obtain multiple rows.}
 

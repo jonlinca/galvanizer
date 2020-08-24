@@ -77,14 +77,14 @@ the results online and also download the new data too:
 ``` r
 download <- get_highbond_results(highbond_openapi, highbond_org, highbond_datacenter, highbond_table)
 #> Retrieving Readme Table
-#> Date in ISO8601 format; converting timezone from UTC to "America/Denver".
-#> Date in ISO8601 format; converting timezone from UTC to "America/Denver".
-#> Date in ISO8601 format; converting timezone from UTC to "America/Denver".
+#> Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".
+#> Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".
+#> Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".
 
 head(upload)
 #>      name age active date_started          date_ended
-#> 1 Cowbell  21   TRUE   2019-01-01 2020-08-21 11:53:27
-#> 2   Rufus  32  FALSE   2020-01-01 2020-08-21 11:53:27
+#> 1 Cowbell  21   TRUE   2019-01-01 2020-08-23 22:08:37
+#> 2   Rufus  32  FALSE   2020-01-01 2020-08-23 22:08:37
 ```
 
 ## Highbond Projects data
@@ -100,16 +100,16 @@ head(projects)
 #> # A tibble: 6 x 26
 #>   id    type  name  state status created_at updated_at description background
 #>   <chr> <chr> <chr> <chr> <chr>  <chr>      <chr>      <chr>       <chr>     
-#> 1 1213… proj… Payr… acti… active 2020-08-1… 2020-08-1… "Project t… <NA>      
+#> 1 1213… proj… Payr… acti… active 2020-08-1… 2020-08-2… "Project t… <NA>      
 #> 2 1213… proj… IT G… acti… active 2020-08-1… 2020-08-1… ""          <NA>      
-#> 3 1213… proj… Sarb… acti… active 2020-08-1… 2020-08-1… ""          <NA>      
+#> 3 1213… proj… Sarb… acti… active 2020-08-1… 2020-08-2… ""          <NA>      
 #> 4 1213… proj… Sale… acti… active 2020-08-1… 2020-08-1… "Project t… <NA>      
 #> 5 1213… proj… SOC … acti… active 2020-08-1… 2020-08-1… "Project t… <NA>      
 #> 6 1213… proj… Purc… acti… active 2020-08-1… 2020-08-1… "The purch… <NA>      
 #> # … with 17 more variables: budget <dbl>, position <dbl>, certification <lgl>,
-#> #   control_performance <lgl>, risk_assurance <lgl>, management_response <lgl>,
-#> #   max_sample_size <dbl>, number_of_testing_rounds <dbl>, opinion <lgl>,
-#> #   opinion_description <lgl>, purpose <chr>, scope <chr>, start_date <chr>,
+#> #   control_performance <lgl>, risk_assurance <lgl>, management_response <chr>,
+#> #   max_sample_size <dbl>, number_of_testing_rounds <dbl>, opinion <chr>,
+#> #   opinion_description <chr>, purpose <chr>, scope <chr>, start_date <chr>,
 #> #   target_date <chr>, custom_attributes <list>, tag_list <list>,
 #> #   relationships <list>
 ```

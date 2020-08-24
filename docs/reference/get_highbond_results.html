@@ -73,7 +73,7 @@ Results, including metadata and questionnaire responses (if applicable)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">galvanizer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -119,7 +119,7 @@ Results, including metadata and questionnaire responses (if applicable).</p>
   <span class='no'>org</span>,
   <span class='no'>datacenter</span>,
   <span class='no'>table_id</span>,
-  <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"America/Denver"</span>
+  <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/timezones.html'>Sys.timezone</a></span>()
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -135,7 +135,7 @@ Results, including metadata and questionnaire responses (if applicable).</p>
     </tr>
     <tr>
       <th>datacenter</th>
-      <td><p>Can be us, ca, eu, ap, au</p></td>
+      <td><p>One of <code>'us', 'ca', 'eu', 'ap', 'au'</code></p></td>
     </tr>
     <tr>
       <th>table_id</th>
@@ -143,7 +143,7 @@ Results, including metadata and questionnaire responses (if applicable).</p>
     </tr>
     <tr>
       <th>timezone</th>
-      <td><p>Defaults to 'America/Denver'. See <code><a href='https://rdrr.io/r/base/timezones.html'>OlsonNames()</a></code> for a list of allowable timezones.</p></td>
+      <td><p>Defaults to <code><a href='https://rdrr.io/r/base/timezones.html'>Sys.timezone()</a></code>. See <code><a href='https://rdrr.io/r/base/timezones.html'>OlsonNames()</a></code> for a list of allowable timezones.</p></td>
     </tr>
     </table>
 

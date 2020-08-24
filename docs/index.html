@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">galvanizer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -105,14 +105,14 @@
 <p><img src="reference/figures/highbond_results_upload.png" alt="successful results upload"></p>
 <div class="sourceCode" id="cb3"><pre class="r"><span class="no">download</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/get_highbond_results.html">get_highbond_results</a></span>(<span class="no">highbond_openapi</span>, <span class="no">highbond_org</span>, <span class="no">highbond_datacenter</span>, <span class="no">highbond_table</span>)
 <span class="co">#&gt; Retrieving Readme Table</span>
-<span class="co">#&gt; Date in ISO8601 format; converting timezone from UTC to "America/Denver".</span>
-<span class="co">#&gt; Date in ISO8601 format; converting timezone from UTC to "America/Denver".</span>
-<span class="co">#&gt; Date in ISO8601 format; converting timezone from UTC to "America/Denver".</span>
+<span class="co">#&gt; Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".</span>
+<span class="co">#&gt; Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".</span>
+<span class="co">#&gt; Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">upload</span>)
 <span class="co">#&gt;      name age active date_started          date_ended</span>
-<span class="co">#&gt; 1 Cowbell  21   TRUE   2019-01-01 2020-08-21 11:53:27</span>
-<span class="co">#&gt; 2   Rufus  32  FALSE   2020-01-01 2020-08-21 11:53:27</span></pre></div>
+<span class="co">#&gt; 1 Cowbell  21   TRUE   2019-01-01 2020-08-23 21:59:47</span>
+<span class="co">#&gt; 2   Rufus  32  FALSE   2020-01-01 2020-08-23 21:59:47</span></pre></div>
 </div>
 <div id="highbond-projects-data" class="section level2">
 <h2 class="hasAnchor">
@@ -123,16 +123,16 @@
 <span class="co">#&gt; # A tibble: 6 x 26</span>
 <span class="co">#&gt;   id    type  name  state status created_at updated_at description background</span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;     </span>
-<span class="co">#&gt; 1 1213… proj… Payr… acti… active 2020-08-1… 2020-08-1… "Project t… &lt;NA&gt;      </span>
+<span class="co">#&gt; 1 1213… proj… Payr… acti… active 2020-08-1… 2020-08-2… "Project t… &lt;NA&gt;      </span>
 <span class="co">#&gt; 2 1213… proj… IT G… acti… active 2020-08-1… 2020-08-1… ""          &lt;NA&gt;      </span>
-<span class="co">#&gt; 3 1213… proj… Sarb… acti… active 2020-08-1… 2020-08-1… ""          &lt;NA&gt;      </span>
+<span class="co">#&gt; 3 1213… proj… Sarb… acti… active 2020-08-1… 2020-08-2… ""          &lt;NA&gt;      </span>
 <span class="co">#&gt; 4 1213… proj… Sale… acti… active 2020-08-1… 2020-08-1… "Project t… &lt;NA&gt;      </span>
 <span class="co">#&gt; 5 1213… proj… SOC … acti… active 2020-08-1… 2020-08-1… "Project t… &lt;NA&gt;      </span>
 <span class="co">#&gt; 6 1213… proj… Purc… acti… active 2020-08-1… 2020-08-1… "The purch… &lt;NA&gt;      </span>
 <span class="co">#&gt; # … with 17 more variables: budget &lt;dbl&gt;, position &lt;dbl&gt;, certification &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   control_performance &lt;lgl&gt;, risk_assurance &lt;lgl&gt;, management_response &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   max_sample_size &lt;dbl&gt;, number_of_testing_rounds &lt;dbl&gt;, opinion &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   opinion_description &lt;lgl&gt;, purpose &lt;chr&gt;, scope &lt;chr&gt;, start_date &lt;chr&gt;,</span>
+<span class="co">#&gt; #   control_performance &lt;lgl&gt;, risk_assurance &lt;lgl&gt;, management_response &lt;chr&gt;,</span>
+<span class="co">#&gt; #   max_sample_size &lt;dbl&gt;, number_of_testing_rounds &lt;dbl&gt;, opinion &lt;chr&gt;,</span>
+<span class="co">#&gt; #   opinion_description &lt;chr&gt;, purpose &lt;chr&gt;, scope &lt;chr&gt;, start_date &lt;chr&gt;,</span>
 <span class="co">#&gt; #   target_date &lt;chr&gt;, custom_attributes &lt;list&gt;, tag_list &lt;list&gt;,</span>
 <span class="co">#&gt; #   relationships &lt;list&gt;</span></pre></div>
 </div>

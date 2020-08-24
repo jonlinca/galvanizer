@@ -9,7 +9,7 @@ get_highbond_results(
   org,
   datacenter,
   table_id,
-  timezone = "America/Denver"
+  timezone = Sys.timezone()
 )
 }
 \arguments{
@@ -17,11 +17,11 @@ get_highbond_results(
 
 \item{org}{Organization number}
 
-\item{datacenter}{Can be us, ca, eu, ap, au}
+\item{datacenter}{One of \code{'us', 'ca', 'eu', 'ap', 'au'}}
 
 \item{table_id}{The table to be downloaded}
 
-\item{timezone}{Defaults to 'America/Denver'. See \code{OlsonNames()} for a list of allowable timezones.}
+\item{timezone}{Defaults to \code{Sys.timezone()}. See \code{OlsonNames()} for a list of allowable timezones.}
 }
 \value{
 A list containing the contents, table requested and the original response

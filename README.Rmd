@@ -77,6 +77,7 @@ Once that has successfully uploaded into Highbond Results, you can view the resu
 download <- get_highbond_results(highbond_openapi, highbond_org, highbond_datacenter, highbond_table)
 
 head(upload)
+
 ```
 
 ## Highbond Projects data

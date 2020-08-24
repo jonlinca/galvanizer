@@ -18,7 +18,7 @@ get_project_mitigation(
 
 \item{org}{Organization number}
 
-\item{datacenter}{Can be us, ca, eu, ap, au}
+\item{datacenter}{One of \code{'us', 'ca', 'eu', 'ap', 'au'}}
 
 \item{mitigation_id}{Will get only one.}
 

@@ -56,9 +56,9 @@ hb_api_get_result_columns <- function(apikey, org, datacenter, table_id){
 #'
 #' @param apikey Highbond API token
 #' @param org Organization number
-#' @param datacenter Can be us, ca, eu, ap, au
+#' @param datacenter One of \code{'us', 'ca', 'eu', 'ap', 'au'}
 #' @param table_id The table to be downloaded
-#' @param timezone Defaults to 'America/Denver'. See \code{OlsonNames()} for a list of allowable timezones.
+#' @param timezone Defaults to \code{Sys.timezone()}. See \code{OlsonNames()} for a list of allowable timezones.
 #'
 #' @importFrom dplyr mutate_at vars
 #' @importFrom rlang .data
@@ -71,7 +71,7 @@ hb_api_get_result_columns <- function(apikey, org, datacenter, table_id){
 #' \dontrun{
 #' response <- get_highbond_results(highbond_openapi, 12345, 'us', 567890)
 #' }
-get_highbond_results <- function(apikey, org, datacenter, table_id, timezone = 'America/Denver'){
+get_highbond_results <- function(apikey, org, datacenter, table_id, timezone = Sys.timezone()){
   
   # Print table name
   tablename <- hb_api_get_result_name(apikey, org, datacenter, table_id)
