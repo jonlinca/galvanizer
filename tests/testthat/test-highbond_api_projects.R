@@ -52,8 +52,8 @@ test_that("Highbond Projects - GET project result files", {
   highbond_org <- Sys.getenv('highbond_org')
   highbond_datacenter <- Sys.getenv('highbond_datacenter')
   
-  a <- get_project_results_file(highbond_openapi, highbond_org, highbond_datacenter, project_id = 121339)
-  b <- get_project_results_file(highbond_openapi, highbond_org, highbond_datacenter, results_file_id = 211799) 
+  a <- get_project_result_file(highbond_openapi, highbond_org, highbond_datacenter, project_id = 121339)
+  b <- get_project_result_file(highbond_openapi, highbond_org, highbond_datacenter, results_file_id = 211799) 
   
   expect_true(nrow(a) >= 1)
   expect_true(nrow(b) >= 1)
@@ -91,7 +91,7 @@ test_that("Highbond Projects - GET risks", {
   a <- get_project_risk(highbond_openapi, highbond_org, highbond_datacenter, objective_id = 593214) 
   b <- get_project_risk(highbond_openapi, highbond_org, highbond_datacenter, risk_id = 3684685) 
     
-    expect_true(nrow(a) >= 1)
+  expect_true(nrow(a) >= 1)
   expect_true(nrow(b) >= 1)
 })
 
@@ -112,7 +112,7 @@ test_that("Highbond Projects - GET control test plans", {
   highbond_org <- Sys.getenv('highbond_org')
   highbond_datacenter <- Sys.getenv('highbond_datacenter')
   
-  a <- get_project_control_test_plans(highbond_openapi, highbond_org, highbond_datacenter, control_test_plan_id = 4650972)
+  a <- get_project_control_test_plan(highbond_openapi, highbond_org, highbond_datacenter, control_test_plan_id = 4650972)
     
   expect_true(nrow(a) >= 1)
 })
@@ -122,7 +122,7 @@ test_that("Highbond Projects - GET control tests", {
   highbond_org <- Sys.getenv('highbond_org')
   highbond_datacenter <- Sys.getenv('highbond_datacenter')
   
-  a <- get_project_control_tests(highbond_openapi, highbond_org, highbond_datacenter, control_test_id = 3359066)
+  a <- get_project_control_test(highbond_openapi, highbond_org, highbond_datacenter, control_test_id = 3359066)
   
   expect_true(nrow(a) >= 1)
 })

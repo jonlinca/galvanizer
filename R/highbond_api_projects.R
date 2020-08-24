@@ -112,7 +112,7 @@ get_project_planning_file <- function(apikey, org, datacenter, project_id = NULL
 #' @param results_file_id Required if other parameter is blank. Will get only one row.
 #' @export
 #' @return A tibble of result files
-get_project_results_file <- function(apikey, org, datacenter, project_id = NULL, results_file_id = NULL, fields = NULL, pagesize = 50){
+get_project_result_file <- function(apikey, org, datacenter, project_id = NULL, results_file_id = NULL, fields = NULL, pagesize = 50){
   
   primary <- project_id
   secondary <- results_file_id
@@ -303,7 +303,7 @@ get_project_mitigation <- function(apikey, org, datacenter, mitigation_id, field
 #'
 #' @export
 #' @return A tibble of control test plans
-get_project_control_test_plans <- function(apikey, org, datacenter, control_test_plan_id, fields = NULL, pagesize = 50){
+get_project_control_test_plan <- function(apikey, org, datacenter, control_test_plan_id, fields = NULL, pagesize = 50){
   
   primary <- control_test_plan_id
   component <- 'control_test_plans' # Set up the project
@@ -329,7 +329,7 @@ get_project_control_test_plans <- function(apikey, org, datacenter, control_test
 #'
 #' @export
 #' @return A tibble of control tests
-get_project_control_tests <- function(apikey, org, datacenter, control_test_id, fields = NULL, pagesize = 50){
+get_project_control_test <- function(apikey, org, datacenter, control_test_id, fields = NULL, pagesize = 50){
   
   primary <- control_test_id
   component <- 'control_tests' # Set up the project
