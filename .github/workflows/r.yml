@@ -70,6 +70,11 @@ jobs:
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
+          highbond_datacenter: ${{secrets.HIGHBOND_DATACENTER}}
+          highbond_openapi: ${{secrets.HIGHBOND_OPENAPI}}
+          highbond_org: ${{secrets.HIGHBOND_ORG}}
+          highbond_readme_results_table: ${{secrets.HIGHBOND_README_RESULTS_TABLE}}
+          highbond_table: ${{secrets.HIGHBOND_TABLE}} 
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
