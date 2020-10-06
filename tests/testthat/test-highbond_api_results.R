@@ -11,19 +11,6 @@ test_that("Highbond Results - POST with PURGE", {
   highbond_datacenter <- Sys.getenv('highbond_datacenter')
   highbond_table <- Sys.getenv('highbond_table')
   
-  # apikey <- Sys.getenv('highbond_openapi')
-  # org <- Sys.getenv('highbond_org')
-  # datacenter <- Sys.getenv('highbond_datacenter')
-  # table_id <- Sys.getenv('highbond_table')
-  # purge <- TRUE
-  
-  # upload <- data.frame(field_one = c('A','B','C'),
-  #                      field_two = c(1, 2, 3),
-  #                      field_three = c(TRUE, FALSE, TRUE),
-  #                      field_four = c(as.Date('2019-01-01'), as.Date('2020-01-01'), as.Date('2021-12-31')),
-  #                      field_five = c(as.POSIXct(Sys.time()), as.POSIXct(Sys.time()), as.POSIXct(Sys.time())),
-  #                      field_six =  c(as.POSIXlt(Sys.time()), as.POSIXlt(Sys.time()), as.POSIXlt(Sys.time())))
-
   # Check if upload worked
   
   expect_null(post_highbond_results(highbond_openapi, highbond_org, highbond_datacenter, highbond_table, upload = upload, purge = TRUE))
@@ -58,12 +45,6 @@ test_that("Highbond Results - POST without Purge", {
   download <- get_highbond_results(highbond_openapi, highbond_org, highbond_datacenter, highbond_table)
   
   current_count <- nrow(download$content$data)
-
-  # upload <- data.frame(field_one = c('A','B','C'),
-  #                      field_two = c(1, 2, 3),
-  #                      field_three = c(TRUE, FALSE, TRUE),
-  #                      field_four = c(as.Date('2019-01-01'), as.Date('2020-01-01'), as.Date('2021-12-31')),
-  #                      field_five = c(as.POSIXct(Sys.time()), as.POSIXct(Sys.time()), as.POSIXct(Sys.time())))
   
   expect_equal(post_highbond_results(highbond_openapi, highbond_org, highbond_datacenter, highbond_table, upload = upload, purge = FALSE), NULL)
   
@@ -98,4 +79,6 @@ test_that("Highbond Results - POST - Stress test", {
   massupload <- do.call("rbind", replicate(1000, upload, simplify = FALSE))
   
   expect_null(post_highbond_results(highbond_openapi, highbond_org, highbond_datacenter, highbond_table, upload = massupload, purge = TRUE))
+  
+  Sys.sleep(10)
 })

@@ -81,10 +81,19 @@ download <- get_highbond_results(highbond_openapi, highbond_org, highbond_datace
 #> Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".
 #> Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".
 
-head(upload)
-#>      name age active date_started          date_ended
-#> 1 Cowbell  21   TRUE   2019-01-01 2020-08-23 22:08:37
-#> 2   Rufus  32  FALSE   2020-01-01 2020-08-23 22:08:37
+head(download$content$data)
+#>   metadata.priority metadata.status metadata.publish_date metadata.publisher
+#> 1               Low             New   2020-08-24 15:34:56           Jon Test
+#> 2               Low             New   2020-08-24 15:34:56           Jon Test
+#>   metadata.assignee metadata.group metadata.updated_at metadata.closed_at
+#> 1              <NA>           <NA> 2020-08-24 15:34:56               <NA>
+#> 2              <NA>           <NA> 2020-08-24 15:34:56               <NA>
+#>      name age active date_started          date_ended extras.record_id
+#> 1 Cowbell  21   TRUE   2019-01-01 2020-08-24 15:34:50      9.10805e+14
+#> 2   Rufus  32  FALSE   2020-01-01 2020-08-24 15:34:50      9.10805e+14
+#>   extras.collection extras.results_table
+#> 1 galvanizer checks         Readme Table
+#> 2 galvanizer checks         Readme Table
 ```
 
 ## Highbond Projects data
