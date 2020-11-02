@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Retrieve Highbond Results table — get_highbond_results • galvanizer</title>
+<title>Highbond Authentication credentials — setup_highbond • galvanizer</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Retrieve Highbond Results table — get_highbond_results" />
-<meta property="og:description" content="Downloads the content in the structure as saved by Highbond
-Results, including metadata and questionnaire responses (if applicable)." />
+<meta property="og:title" content="Highbond Authentication credentials — setup_highbond" />
+<meta property="og:description" content="Assembles all the core authentication needed to connect to a Highbond instance." />
 
 
 
@@ -104,47 +103,44 @@ Results, including metadata and questionnaire responses (if applicable)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Retrieve Highbond Results table</h1>
+    <h1>Highbond Authentication credentials</h1>
     
-    <div class="hidden name"><code>get_highbond_results.Rd</code></div>
+    <div class="hidden name"><code>setup_highbond.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Downloads the content in the structure as saved by Highbond
-Results, including metadata and questionnaire responses (if applicable).</p>
+    <p>Assembles all the core authentication needed to connect to a Highbond instance.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_highbond_results</span>(<span class='no'>auth</span>, <span class='no'>table_id</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/timezones.html'>Sys.timezone</a></span>())</pre>
+    <pre class="usage"><span class='fu'>setup_highbond</span>(<span class='no'>apikey</span>, <span class='no'>instance</span>, <span class='no'>datacenter</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>auth</th>
-      <td><p>Highbond authentication credentials, created from <code><a href='setup_highbond.html'>setup_highbond</a></code></p></td>
+      <th>apikey</th>
+      <td><p>Highbond API token</p></td>
     </tr>
     <tr>
-      <th>table_id</th>
-      <td><p>The table to be downloaded</p></td>
+      <th>instance</th>
+      <td><p>The HighBond instance ID, also known as the organization number</p></td>
     </tr>
     <tr>
-      <th>timezone</th>
-      <td><p>Defaults to <code><a href='https://rdrr.io/r/base/timezones.html'>Sys.timezone()</a></code>. See <code><a href='https://rdrr.io/r/base/timezones.html'>OlsonNames()</a></code> for a list of allowable timezones.</p></td>
+      <th>datacenter</th>
+      <td><p>The region code. Can be <code>'us', 'ca', 'eu', 'ap', 'au'</code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list containing the contents, table requested and the original response</p>
+    <p>A Highbond Authentication credentials object to pass to your requests</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Table ID can be found in the path of your Result table.
-https://&lt;company_name&gt;.results.highbond.com/projects/&lt;COLLECTION_ID&gt;/controls/&lt;ANALYSIS_ID&gt;/control_tests/&lt;TABLE_ID&gt;</p>
+    <p>Requires a Highbond API token. Activate a token from
+<a href='https://help.highbond.com/helpdocs/highbond/en-us/Content/launchpad/getting_started/managing_access_tokens.html'>https://help.highbond.com/helpdocs/highbond/en-us/Content/launchpad/getting_started/managing_access_tokens.html</a>.</p>
+<p>The Instance (Organization) number and datacenter can both be found from the Highbond launchpad, then accessing Options and Organization.
+<a href='https://accounts.highbond.com/orgs/&lt;ORG_ID&gt;/details'>https://accounts.highbond.com/orgs/&lt;ORG_ID&gt;/details</a></p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>response</span> <span class='kw'>&lt;-</span> <span class='fu'>get_highbond_results</span>(<span class='no'>highbond_openapi</span>, <span class='fl'>12345</span>, <span class='st'>'us'</span>, <span class='fl'>567890</span>)
-}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -76,7 +76,7 @@ walkthrough is called an execute procedure.&quot;" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">galvanizer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -120,29 +120,14 @@ control is designed appropriately. In a Workplan workflow project, a
 walkthrough is called an execute procedure."</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_project_walkthrough</span>(
-  <span class='no'>apikey</span>,
-  <span class='no'>org</span>,
-  <span class='no'>datacenter</span>,
-  <span class='no'>walkthrough_id</span>,
-  <span class='kw'>fields</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>pagesize</span> <span class='kw'>=</span> <span class='fl'>50</span>
-)</pre>
+    <pre class="usage"><span class='fu'>get_project_walkthrough</span>(<span class='no'>auth</span>, <span class='no'>walkthrough_id</span>, <span class='kw'>fields</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pagesize</span> <span class='kw'>=</span> <span class='fl'>50</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>apikey</th>
-      <td><p>Highbond API token</p></td>
-    </tr>
-    <tr>
-      <th>org</th>
-      <td><p>Organization number</p></td>
-    </tr>
-    <tr>
-      <th>datacenter</th>
-      <td><p>One of <code>'us', 'ca', 'eu', 'ap', 'au'</code></p></td>
+      <th>auth</th>
+      <td><p>Highbond authentication credentials, created from <code><a href='setup_highbond.html'>setup_highbond</a></code></p></td>
     </tr>
     <tr>
       <th>walkthrough_id</th>

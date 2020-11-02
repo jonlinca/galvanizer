@@ -44,6 +44,16 @@ your Launchpad, under Options / Organization. The organization number
 will be under the format of
 `https://accounts.highbond.com/orgs/<ORGANIZATION_ID>/details`
 
+To use any functions, you will need to create and pass a Highbond
+Authentication object. You can make it by passing the API token,
+organization / instance number and data center location to
+`setup_highbond()`:
+
+``` r
+library(galvanizer)
+highbond_auth <- setup_highbond(highbond_openapi, highbond_org, highbond_datacenter)
+```
+
 ## Highbond Results data
 
 Once you have those, then you need to identify the table you want to
@@ -57,8 +67,6 @@ You can choose to upload a set of test data into a new Data Analytic to
 try this out:
 
 ``` r
-library(galvanizer)
-
 upload <- data.frame(name = c('Cowbell', 'Rufus'),
                      age = c(21, 32),
                      active = c(TRUE, FALSE),
@@ -66,7 +74,7 @@ upload <- data.frame(name = c('Cowbell', 'Rufus'),
                      date_ended = c(as.POSIXct(Sys.time()), as.POSIXct(Sys.time())))
 
 # Substitute your API key, org number, data, center, table, and the dataframe to be uploaded
-post_highbond_results(highbond_openapi, highbond_org, highbond_datacenter, highbond_table, upload = upload, purge = TRUE)
+post_highbond_results(highbond_auth, highbond_table, upload = upload, purge = TRUE)
 ```
 
 Once that has successfully uploaded into Highbond Results, you can view
@@ -75,7 +83,7 @@ the results online and also download the new data too:
 ![successful results upload](man/figures/highbond_results_upload.png)
 
 ``` r
-download <- get_highbond_results(highbond_openapi, highbond_org, highbond_datacenter, highbond_table)
+download <- get_highbond_results(highbond_auth, highbond_table)
 #> Retrieving Readme Table
 #> Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".
 #> Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".
@@ -83,14 +91,14 @@ download <- get_highbond_results(highbond_openapi, highbond_org, highbond_datace
 
 head(download$content$data)
 #>   metadata.priority metadata.status metadata.publish_date metadata.publisher
-#> 1               Low             New   2020-08-24 15:34:56           Jon Test
-#> 2               Low             New   2020-08-24 15:34:56           Jon Test
+#> 1               Low             New   2020-11-02 11:45:05           Jon Test
+#> 2               Low             New   2020-11-02 11:45:05           Jon Test
 #>   metadata.assignee metadata.group metadata.updated_at metadata.closed_at
-#> 1              <NA>           <NA> 2020-08-24 15:34:56               <NA>
-#> 2              <NA>           <NA> 2020-08-24 15:34:56               <NA>
+#> 1              <NA>           <NA> 2020-11-02 11:45:05               <NA>
+#> 2              <NA>           <NA> 2020-11-02 11:45:05               <NA>
 #>      name age active date_started          date_ended extras.record_id
-#> 1 Cowbell  21   TRUE   2019-01-01 2020-08-24 15:34:50      9.10805e+14
-#> 2   Rufus  32  FALSE   2020-01-01 2020-08-24 15:34:50      9.10805e+14
+#> 1 Cowbell  21   TRUE   2019-01-01 2020-11-02 11:44:37     1.094678e+15
+#> 2   Rufus  32  FALSE   2020-01-01 2020-11-02 11:44:37     1.094678e+15
 #>   extras.collection extras.results_table
 #> 1 galvanizer checks         Readme Table
 #> 2 galvanizer checks         Readme Table
@@ -104,7 +112,7 @@ from. There are options to download all or just one set of information,
 depending on the pane chosen.
 
 ``` r
-projects <- get_project(highbond_openapi, highbond_org, highbond_datacenter)
+projects <- get_project(highbond_auth)
 head(projects)
 #> # A tibble: 6 x 26
 #>   id    type  name  state status created_at updated_at description background

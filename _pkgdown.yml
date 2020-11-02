@@ -1,4 +1,9 @@
 reference:
+- title: Set up
+  desc: >
+    Configure R to use the Highbond API
+- contents:
+  - setup_highbond
 - title: "Highbond Results"
   desc: >
     Functions for downloading and uploading data from Highbond Result tables

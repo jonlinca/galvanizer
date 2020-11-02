@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">galvanizer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -84,6 +84,9 @@
 <p>To generate a Highbond API token from your Highbond instance by referencing the <a href="https://help.highbond.com/helpdocs/highbond/en-us/Content/launchpad/getting_started/managing_access_tokens.html">help files</a>. This can be found on your profile page.</p>
 <p><img src="reference/figures/generate_token.png" alt="generate API token"></p>
 <p>To identify your organization number and data center, best found from your Launchpad, under Options / Organization. The organization number will be under the format of <code>https://accounts.highbond.com/orgs/&lt;ORGANIZATION_ID&gt;/details</code></p>
+<p>To use any functions, you will need to create and pass a Highbond Authentication object. You can make it by passing the API token, organization / instance number and data center location to <code><a href="reference/setup_highbond.html">setup_highbond()</a></code>:</p>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">galvanizer</span>)
+<span class="no">highbond_auth</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/setup_highbond.html">setup_highbond</a></span>(<span class="no">highbond_openapi</span>, <span class="no">highbond_org</span>, <span class="no">highbond_datacenter</span>)</pre></div>
 </div>
 <div id="highbond-results-data" class="section level2">
 <h2 class="hasAnchor">
@@ -91,34 +94,41 @@
 <p>Once you have those, then you need to identify the table you want to upload and download data from. The easiest way to do this is to navigate to the Results Data Analytic table you want to upload and grab the <code>TABLE_ID</code> from the URL. It will look like:</p>
 <p><code>https://&lt;company_name&gt;.results.highbond.com/projects/&lt;COLLECTION_ID&gt;/controls/&lt;ANALYSIS_ID&gt;/control_tests/&lt;TABLE_ID&gt;</code></p>
 <p>You can choose to upload a set of test data into a new Data Analytic to try this out:</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">galvanizer</span>)
-
-<span class="no">upload</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Cowbell'</span>, <span class="st">'Rufus'</span>),
+<div class="sourceCode" id="cb3"><pre class="r"><span class="no">upload</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Cowbell'</span>, <span class="st">'Rufus'</span>),
                      <span class="kw">age</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">21</span>, <span class="fl">32</span>),
                      <span class="kw">active</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">TRUE</span>, <span class="fl">FALSE</span>),
                      <span class="kw">date_started</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">'2019-01-01'</span>), <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">'2020-01-01'</span>)),
                      <span class="kw">date_ended</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span>()), <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span>())))
 
 <span class="co"># Substitute your API key, org number, data, center, table, and the dataframe to be uploaded</span>
-<span class="fu"><a href="reference/post_highbond_results.html">post_highbond_results</a></span>(<span class="no">highbond_openapi</span>, <span class="no">highbond_org</span>, <span class="no">highbond_datacenter</span>, <span class="no">highbond_table</span>, <span class="kw">upload</span> <span class="kw">=</span> <span class="no">upload</span>, <span class="kw">purge</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
+<span class="fu"><a href="reference/post_highbond_results.html">post_highbond_results</a></span>(<span class="no">highbond_auth</span>, <span class="no">highbond_table</span>, <span class="kw">upload</span> <span class="kw">=</span> <span class="no">upload</span>, <span class="kw">purge</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
 <p>Once that has successfully uploaded into Highbond Results, you can view the results online and also download the new data too:</p>
 <p><img src="reference/figures/highbond_results_upload.png" alt="successful results upload"></p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="no">download</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/get_highbond_results.html">get_highbond_results</a></span>(<span class="no">highbond_openapi</span>, <span class="no">highbond_org</span>, <span class="no">highbond_datacenter</span>, <span class="no">highbond_table</span>)
+<div class="sourceCode" id="cb4"><pre class="r"><span class="no">download</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/get_highbond_results.html">get_highbond_results</a></span>(<span class="no">highbond_auth</span>, <span class="no">highbond_table</span>)
 <span class="co">#&gt; Retrieving Readme Table</span>
 <span class="co">#&gt; Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".</span>
 <span class="co">#&gt; Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".</span>
 <span class="co">#&gt; Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">upload</span>)
-<span class="co">#&gt;      name age active date_started          date_ended</span>
-<span class="co">#&gt; 1 Cowbell  21   TRUE   2019-01-01 2020-08-23 21:59:47</span>
-<span class="co">#&gt; 2   Rufus  32  FALSE   2020-01-01 2020-08-23 21:59:47</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">download</span>$<span class="no">content</span>$<span class="no">data</span>)
+<span class="co">#&gt;   metadata.priority metadata.status metadata.publish_date metadata.publisher</span>
+<span class="co">#&gt; 1               Low             New   2020-11-02 11:45:05           Jon Test</span>
+<span class="co">#&gt; 2               Low             New   2020-11-02 11:45:05           Jon Test</span>
+<span class="co">#&gt;   metadata.assignee metadata.group metadata.updated_at metadata.closed_at</span>
+<span class="co">#&gt; 1              &lt;NA&gt;           &lt;NA&gt; 2020-11-02 11:45:05               &lt;NA&gt;</span>
+<span class="co">#&gt; 2              &lt;NA&gt;           &lt;NA&gt; 2020-11-02 11:45:05               &lt;NA&gt;</span>
+<span class="co">#&gt;      name age active date_started          date_ended extras.record_id</span>
+<span class="co">#&gt; 1 Cowbell  21   TRUE   2019-01-01 2020-11-02 11:44:37     1.094678e+15</span>
+<span class="co">#&gt; 2   Rufus  32  FALSE   2020-01-01 2020-11-02 11:44:37     1.094678e+15</span>
+<span class="co">#&gt;   extras.collection extras.results_table</span>
+<span class="co">#&gt; 1 galvanizer checks         Readme Table</span>
+<span class="co">#&gt; 2 galvanizer checks         Readme Table</span></pre></div>
 </div>
 <div id="highbond-projects-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#highbond-projects-data" class="anchor"></a>Highbond Projects data</h2>
 <p>Highbond Projects data (also known as ‘Audits’) is also retrievable, depending on which screen of information you would like to retrieve from. There are options to download all or just one set of information, depending on the pane chosen.</p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="no">projects</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/get_project.html">get_project</a></span>(<span class="no">highbond_openapi</span>, <span class="no">highbond_org</span>, <span class="no">highbond_datacenter</span>)
+<div class="sourceCode" id="cb5"><pre class="r"><span class="no">projects</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/get_project.html">get_project</a></span>(<span class="no">highbond_auth</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">projects</span>)
 <span class="co">#&gt; # A tibble: 6 x 26</span>
 <span class="co">#&gt;   id    type  name  state status created_at updated_at description background</span>

@@ -51,6 +51,7 @@ To identify your organization number and data center, best found from your Launc
 To use any functions, you will need to create and pass a Highbond Authentication object. You can make it by passing the API token, organization / instance number and data center location to `setup_highbond()`:
 
 ```{r}
+library(galvanizer)
 highbond_auth <- setup_highbond(highbond_openapi, highbond_org, highbond_datacenter)
 ```
 
@@ -63,8 +64,6 @@ Once you have those, then you need to identify the table you want to upload and 
 You can choose to upload a set of test data into a new Data Analytic to try this out:
 
 ```{r, message=FALSE}
-library(galvanizer)
-
 upload <- data.frame(name = c('Cowbell', 'Rufus'),
                      age = c(21, 32),
                      active = c(TRUE, FALSE),
@@ -90,6 +89,6 @@ head(download$content$data)
 Highbond Projects data (also known as 'Audits') is also retrievable, depending on which screen of information you would like to retrieve from. There are options to download all or just one set of information, depending on the pane chosen.
 
 ```{r}
-projects <- get_project(highbond_auth, highbond_datacenter)
+projects <- get_project(highbond_auth)
 head(projects)
 ```
