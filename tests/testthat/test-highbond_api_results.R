@@ -6,20 +6,18 @@ upload <- data.frame(field_one = c('A','B','C'),
                      field_six =  c(as.POSIXlt(Sys.time()), as.POSIXlt(Sys.time()), as.POSIXlt(Sys.time())))
 
 test_that("Highbond Results - POST with PURGE", {
-  highbond_openapi <- Sys.getenv('highbond_openapi')
-  highbond_org <- Sys.getenv('highbond_org')
-  highbond_datacenter <- Sys.getenv('highbond_datacenter')
+  hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
   highbond_table <- Sys.getenv('highbond_table')
   
   # Check if upload worked
   
-  expect_null(post_highbond_results(highbond_openapi, highbond_org, highbond_datacenter, highbond_table, upload = upload, purge = TRUE))
+  expect_null(post_highbond_results(hb_creds, highbond_table, upload = upload, purge = TRUE))
   
   # Col type check for re-download
   
-  Sys.sleep(10) # Allow Highbond to process...
+  Sys.sleep(20) # Allow Highbond to process...
   
-  download <- get_highbond_results(highbond_openapi, highbond_org, highbond_datacenter, highbond_table, timezone = 'Canada/Pacific')
+  download <- get_highbond_results(hb_creds, highbond_table, timezone = 'Canada/Pacific')
   
   coltypes <- download$content$columns %>%
     dplyr::filter(field_name %in% c('field_one', 'field_two', 'field_three', 'field_four', 'field_five', 'field_six')) %>%
@@ -37,22 +35,23 @@ test_that("Highbond Results - POST with PURGE", {
 })
 
 test_that("Highbond Results - POST without Purge", {
-  highbond_openapi <- Sys.getenv('highbond_openapi')
-  highbond_org <- Sys.getenv('highbond_org')
-  highbond_datacenter <- Sys.getenv('highbond_datacenter')
+  hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
+  
   highbond_table <- Sys.getenv('highbond_table')
   
-  download <- get_highbond_results(highbond_openapi, highbond_org, highbond_datacenter, highbond_table)
+  Sys.sleep(20)
+  
+  download <- get_highbond_results(hb_creds, highbond_table)
   
   current_count <- nrow(download$content$data)
   
-  expect_equal(post_highbond_results(highbond_openapi, highbond_org, highbond_datacenter, highbond_table, upload = upload, purge = FALSE), NULL)
+  expect_equal(post_highbond_results(hb_creds, highbond_table, upload = upload, purge = FALSE), NULL)
   
   # Wait delay
   
   Sys.sleep(20)
   
-  download <- get_highbond_results(highbond_openapi, highbond_org, highbond_datacenter, highbond_table)
+  download <- get_highbond_results(hb_creds, highbond_table)
   
   new_count <- nrow(download$content$data)
   
@@ -60,25 +59,23 @@ test_that("Highbond Results - POST without Purge", {
 })
 
 test_that("Highbond Results - GET", {
-  highbond_openapi <- Sys.getenv('highbond_openapi')
-  highbond_org <- Sys.getenv('highbond_org')
-  highbond_datacenter <- Sys.getenv('highbond_datacenter')
+  hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
   highbond_table <- Sys.getenv('highbond_table')
   
-  download <- get_highbond_results(highbond_openapi, highbond_org, highbond_datacenter, highbond_table)
+  Sys.sleep(20)
+  
+  download <- get_highbond_results(hb_creds, highbond_table)
   
   expect_true(nrow(download$content$data) >  0)
 })
 
 test_that("Highbond Results - POST - Stress test", {
-  highbond_openapi <- Sys.getenv('highbond_openapi')
-  highbond_org <- Sys.getenv('highbond_org')
-  highbond_datacenter <- Sys.getenv('highbond_datacenter')
+  hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
   highbond_table <- Sys.getenv('highbond_table')
   
   massupload <- do.call("rbind", replicate(1000, upload, simplify = FALSE))
   
-  expect_null(post_highbond_results(highbond_openapi, highbond_org, highbond_datacenter, highbond_table, upload = massupload, purge = TRUE))
+  expect_null(post_highbond_results(hb_creds, highbond_table, upload = massupload, purge = TRUE))
   
-  Sys.sleep(10)
+  Sys.sleep(20)
 })
