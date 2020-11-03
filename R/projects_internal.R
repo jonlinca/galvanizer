@@ -13,7 +13,7 @@ hb_project_one_only <- function(id1, id2){
   return(TRUE)
 }
 
-hb_prj_set_params <- function(component, pagesize, fields = NULL){
+hb_prj_set_params <- function(component, pagesize = 50, fields = NULL){
   # Creates a list of eligible parameters based on the generalized requirements
   # The check for using this should occur at the component-check level
   
@@ -79,12 +79,8 @@ hb_prj_parse_standard <- function(content_raw){
 #' @importFrom tidyr nest
 #' @importFrom tibble as_tibble tibble
 #' @importFrom tidyjson spread_values enter_object gather_object gather_array spread_all append_values_string
-hb_prj_parse_custom <- function(component, content_raw){
+hb_prj_parse_custom <- function(content_raw){
   # This parses custom only
-  
-  # if(!(component %in% c('projects', 'planning_files'))){
-  #   return(NULL)
-  # }
 
   # Suppress notes, as these are JSON elements within the returned object
   attributes <- NULL
@@ -114,12 +110,8 @@ hb_prj_parse_custom <- function(component, content_raw){
 #' @importFrom tidyr nest
 #' @importFrom tibble as_tibble tibble
 #' @importFrom tidyjson spread_values enter_object gather_object gather_array spread_all append_values_string
-hb_prj_parse_tags <- function(component, content_raw){
+hb_prj_parse_tags <- function(content_raw){
   # This only processes tags
-  
-  # if(!(component %in% c('projects'))){
-  #   return(NULL)
-  # }
   
   # Suppress notes, as these are JSON elements within the returned object
   attributes <- NULL
@@ -148,12 +140,8 @@ hb_prj_parse_tags <- function(component, content_raw){
 #' @importFrom tidyr nest
 #' @importFrom tibble as_tibble tibble
 #' @importFrom tidyjson spread_values enter_object gather_object gather_array spread_all append_values_string
-hb_prj_parse_rel <- function(component, content_raw){
+hb_prj_parse_rel <- function(content_raw){
   # This only processes tags
-  
-  # if(!(component %in% c('projects', 'planning_files'))){
-  #   return(NULL)
-  # }
   
   # Suppress notes, as these are JSON elements within the returned object
   relationships <- NULL
@@ -177,7 +165,7 @@ hb_prj_parse_rel <- function(component, content_raw){
 
 #' @importFrom rlang .data
 #' @importFrom dplyr select left_join
-hb_prj_coljoin_data <- function(component, core, custom, tags, relationships){
+hb_prj_coljoin_data <- function(core, custom, tags, relationships){
   . <- NULL
   
   # Combine all the data together
@@ -202,7 +190,7 @@ hb_prj_coljoin_data <- function(component, core, custom, tags, relationships){
 #' @importFrom dplyr select bind_rows
 #' @importFrom httr content
 #' @importFrom jsonlite fromJSON
-hb_prj_get_controller <- function(auth, url, params, component, plural, waittime = 0.6){
+hb_prj_get_controller <- function(auth, url, params, plural, waittime = 0.6){
   # Performs the GET and loop
   
   i <- 1 # pointer
@@ -216,19 +204,19 @@ hb_prj_get_controller <- function(auth, url, params, component, plural, waittime
   content_data <- if(plural){content$data} else {content} # This is important for many
   
   if (length(content_data) == 0){
-    warning(paste('Downloaded json is blank. Is', component, 'empty?'))
+    warning(paste('Downloaded json is blank. Is it empty?'))
     return(NULL)
   }
   
   core <- hb_prj_parse_standard(content_data) # Returns the three primary tables in all - header, attributes, relationships
   
   # Custom fields get - relevant to most except...
-  custom <- hb_prj_parse_custom(component, content_data)
-  tags <- hb_prj_parse_tags(component, content_data)
-  relationships <- hb_prj_parse_rel(component, content_data)
+  custom <- hb_prj_parse_custom(content_data)
+  tags <- hb_prj_parse_tags(content_data)
+  relationships <- hb_prj_parse_rel(content_data)
   
   # First page, finished
-  combined_data <- hb_prj_coljoin_data(component, core, custom, tags, relationships)
+  combined_data <- hb_prj_coljoin_data(core, custom, tags, relationships)
   
   # Pagination
   while (!is.null(next_page)){
@@ -248,12 +236,12 @@ hb_prj_get_controller <- function(auth, url, params, component, plural, waittime
     core <- hb_prj_parse_standard(content_data) # Returns the three primary tables in all - header, attributes, relationships
     
     # Custom fields get - relevant to most except...
-    custom <- hb_prj_parse_custom(component, content_data)
-    tags <- hb_prj_parse_tags(component, content_data)
-    relationships <- hb_prj_parse_rel(component, content_data)
+    custom <- hb_prj_parse_custom(content_data) # Is component even necessary?
+    tags <- hb_prj_parse_tags(content_data)
+    relationships <- hb_prj_parse_rel(content_data)
     
     # Next page, finished
-    combined_data_next <- hb_prj_coljoin_data(component, core, custom, tags, relationships)
+    combined_data_next <- hb_prj_coljoin_data(core, custom, tags, relationships)
     
     combined_data <- bind_rows(combined_data, combined_data_next)
   }
