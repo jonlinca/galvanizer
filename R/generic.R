@@ -132,3 +132,120 @@ api_jsonParseDf <- function(apicontent){
   return(parsed)
 }
 
+hb_url_component <- function(component, primary = NULL, secondary = NULL, primary_parent = NULL){
+  # Builds the second part of the URL, the resource itself
+  # This needs to break out GET A and GET ALL 
+  
+  # Primary parent for projects/framworks, very limited use case currently
+  # Primary is the primary ID of the resource - for example, a high level project number
+  # Secondary is the secondary ID of the resource - for example, specific files or controls
+  
+  # Future - perhaps put plural switch here?
+  
+  url <- NULL
+  
+  ### PART ONE - Substitution based on components.
+  # These are components that are considered top level - i.e. /orgs/{org_id}/projects
+  
+  if (component %in% c('projects', 'project_types', 'entities', 'collections')){
+    if (is.null(primary)) {
+      url <- paste0(component, '/') # Get all projects
+    } else {
+      url <- paste0(component, '/', primary) # Get one specific project
+    }
+    
+    return(url) # Early return
+  }
+  
+  # These components have no secondary component
+  if(component %in% c('control_test_plans', 'walkthroughs', 'control_tests', 'mitigations', 'request_items')){
+    url <- paste0(component, '/', primary)
+    
+    return(url) # Early return
+  }
+  
+  if (is.null(primary) & is.null(secondary)) # If the project or objective isn't specified, then at least one of the components needs to be
+  {
+    stop("Primary and secondary IDs must be specified for the requested component")
+  }
+  
+  ### PART TWO - Components that belong to a specific parent
+  
+  # Projects - Project based components
+  # FUTURE These may be switched as well with a 'framework' parent component - Planning Files, Objectives, Collaborators
+  if(component %in% c('planning_files', 'results_files', 'objectives', 'issues', 'collaborators')){
+    if (is.null(secondary)){
+      if (is.null(primary_parent)){
+        primary_parent <- 'projects'
+      }
+      url <- paste0(primary_parent, '/', primary, '/', component)
+    } else {
+      url <- paste0(component, '/', secondary)
+    }
+  }
+  
+  # Projects - Objective based components
+  # FUTURE Narrative projects must be Internal Control
+  if(component %in% c('narratives', 'risks', 'controls')){
+    if (is.null(secondary)){
+      url <- paste0('objectives/', primary, '/', component)
+    } else {
+      url <- paste0(component, '/', secondary)
+    }
+  }
+  
+  # Projects - Issue based components
+  if(component %in% c('actions')){
+    if (is.null(secondary)){
+      url <- paste0('issues/', primary, '/', component)
+    } else {
+      url <- paste0(component, '/', secondary)
+    }
+  }
+  
+  # Projects - Project Types based components
+  if(component %in% c('custom_attributes')){
+    if (is.null(secondary)){
+      url <- paste0('project_types/', primary, '/', component)
+    } else {
+      url <- paste0(component, '/', secondary)
+    }
+  }
+  
+  # Results - Collections-based components
+  
+  if(component %in% c('analyses')){
+    if (is.null(secondary)){
+      url <- paste0('collections/', primary, '/', component)
+    } else {
+      url <- paste0(component, '/', secondary)
+    }
+  }
+  
+  # Results - Analyses-based components
+  
+  if(component %in% c('tables')){
+    if (is.null(secondary)){
+      url <- paste0('analyses/', primary, '/', component)
+    } else {
+      url <- paste0(component, '/', secondary)
+    }
+  }
+  
+  # Results - Tables-based components
+  
+  if(component %in% c('columns', 'records')){
+    if (is.null(secondary)){
+      url <- paste0('tables/', primary, '/', component)
+    } else {
+      stop("Results Columns and Records should be specified with a 'primary' table reference.")
+    }
+  }
+  
+  # Final check
+  if (is.null(url)){
+    stop("Something broke, check if component/parent/primary/secondary matches")
+  }
+  
+  return(url)
+}

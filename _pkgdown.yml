@@ -8,8 +8,8 @@ reference:
   desc: >
     Functions for downloading and uploading data from Highbond Result tables
 - contents: 
-  - get_highbond_results
-  - post_highbond_results
+  - get_highbond_results*
+  - post_highbond_results*
 - title: "Highbond Projects"
   desc: >
     Functions for downloading and uploading data from Highbond Projects

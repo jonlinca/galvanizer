@@ -65,7 +65,7 @@ test_that("Highbond Projects - GET narratives", {
   a <- get_project_narrative(hb_creds, objective_id = 593214) 
   b <- get_project_narrative(hb_creds, narrative_id = 131413) 
     
-    expect_true(nrow(a) >= 1)
+  expect_true(nrow(a) >= 1)
   expect_true(nrow(b) >= 1)
 })
 
@@ -147,6 +147,16 @@ test_that("Highbond Projects - GET entities", {
   a <- get_project_entity(hb_creds, NULL)
   b <- get_project_entity(hb_creds, entity_id = 69872)
     
+  expect_true(nrow(a) >= 1)
+  expect_true(nrow(b) >= 1)
+})
+
+test_that("Highbond Projects - GET collaborators", {
+  hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
+  
+  a <- get_project_collaborator(hb_creds, project_id = 121339)
+  b <- get_project_collaborator(hb_creds, encoded_uid = 'MTIxMzM5OmUySnNpX003Mk5WU3BFbnhQTlN6')
+  
   expect_true(nrow(a) >= 1)
   expect_true(nrow(b) >= 1)
 })

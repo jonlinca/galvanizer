@@ -31,8 +31,7 @@ start_date, target_date, tag_list, project_type, entities
 }
 \examples{
 \dontrun{
-projects <- get_project(highbond_openapi, highbond_org, highbond_datacenter)
-projects <- get_project(highbond_openapi, highbond_org, highbond_datacenter, 
-  fields = c('name', 'state', 'status'))
+projects <- get_project(auth)
+projects <- get_project(auth, fields = c('name', 'state', 'status'))
 }
 }

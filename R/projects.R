@@ -8,7 +8,7 @@
 #'   number_of_testing_rounds, opinion, opinion_description, purpose, scope,
 #'   start_date, target_date, tag_list, project_type, entities
 #'
-#' @inheritParams get_highbond_results
+#' @inheritParams get_results_record
 #'
 #' @param project_id Project ID number. \code{NULL} will default to all items.
 #' @param fields OPTIONAL. A character vector each field requested within the
@@ -20,16 +20,15 @@
 #'
 #' @examples
 #' \dontrun{
-#' projects <- get_project(highbond_openapi, highbond_org, highbond_datacenter)
-#' projects <- get_project(highbond_openapi, highbond_org, highbond_datacenter, 
-#'   fields = c('name', 'state', 'status'))
+#' projects <- get_project(auth)
+#' projects <- get_project(auth, fields = c('name', 'state', 'status'))
 #' }
 get_project <- function(auth, project_id = NULL, fields = NULL, pagesize = 50){
   
   primary <- project_id
   component <- 'projects' # Set up the project
   
-  url <- paste0(hb_url(auth), hb_url_project(component, primary)) # Set up the query parameters
+  url <- paste0(hb_url(auth), hb_url_component(component, primary)) # Set up the query parameters
   plural <- is.null(primary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
@@ -58,7 +57,7 @@ get_project_type <- function(auth, project_type_id = NULL, fields = NULL, pagesi
   primary <- project_type_id
   component <- 'project_types' # Set up the project
   
-  url <- paste0(hb_url(auth), hb_url_project(component, primary)) # Set up the query parameters
+  url <- paste0(hb_url(auth), hb_url_component(component, primary)) # Set up the query parameters
   plural <- is.null(primary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
@@ -89,7 +88,7 @@ get_project_planning_file <- function(auth, project_id = NULL, planning_file_id 
   component <- 'planning_files' # Set up the project
   hb_project_one_only(primary, secondary) # Checks
   
-  url <- paste0(hb_url(auth), hb_url_project(component, primary, secondary)) # Set up the query parameters
+  url <- paste0(hb_url(auth), hb_url_component(component, primary, secondary)) # Set up the query parameters
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
 
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
@@ -119,7 +118,7 @@ get_project_result_file <- function(auth, project_id = NULL, results_file_id = N
   component <- 'results_files' # Set up the project
   hb_project_one_only(primary, secondary) # Checks
   
-  url <- paste0(hb_url(auth), hb_url_project(component, primary, secondary)) # Set up the query parameters
+  url <- paste0(hb_url(auth), hb_url_component(component, primary, secondary)) # Set up the query parameters
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
@@ -153,7 +152,7 @@ get_project_objective <- function(auth, project_id = NULL, objective_id = NULL, 
   component <- 'objectives' # Set up the project
   hb_project_one_only(primary, secondary) # Checks
   
-  url <- paste0(hb_url(auth), hb_url_project(component, primary, secondary)) # Set up the query parameters
+  url <- paste0(hb_url(auth), hb_url_component(component, primary, secondary)) # Set up the query parameters
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
@@ -183,7 +182,7 @@ get_project_narrative <- function(auth, objective_id = NULL, narrative_id = NULL
   component <- 'narratives' # Set up the project
   hb_project_one_only(primary, secondary) # Checks
   
-  url <- paste0(hb_url(auth), hb_url_project(component, primary, secondary)) # Set up the query parameters
+  url <- paste0(hb_url(auth), hb_url_component(component, primary, secondary)) # Set up the query parameters
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
 
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
@@ -215,7 +214,7 @@ get_project_risk <- function(auth, objective_id = NULL, risk_id = NULL, fields =
   component <- 'risks' # Set up the project
   hb_project_one_only(primary, secondary) # Checks
   
-  url <- paste0(hb_url(auth), hb_url_project(component, primary, secondary)) # Set up the query parameters
+  url <- paste0(hb_url(auth), hb_url_component(component, primary, secondary)) # Set up the query parameters
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
@@ -251,7 +250,7 @@ get_project_control <- function(auth, objective_id = NULL, control_id = NULL, fi
   component <- 'controls' # Set up the project
   hb_project_one_only(primary, secondary) # Checks
   
-  url <- paste0(hb_url(auth), hb_url_project(component, primary, secondary)) # Set up the query parameters
+  url <- paste0(hb_url(auth), hb_url_component(component, primary, secondary)) # Set up the query parameters
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
@@ -275,7 +274,7 @@ get_project_mitigation <- function(auth, mitigation_id, fields = NULL, pagesize 
   primary <- mitigation_id
   component <- 'mitigations' # Set up the project
   
-  url <- paste0(hb_url(auth), hb_url_project(component, primary)) # Set up the query parameters
+  url <- paste0(hb_url(auth), hb_url_component(component, primary)) # Set up the query parameters
   plural <- FALSE
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
@@ -308,7 +307,7 @@ get_project_control_test_plan <- function(auth, control_test_plan_id, fields = N
   primary <- control_test_plan_id
   component <- 'control_test_plans' # Set up the project
   
-  url <- paste0(hb_url(auth), hb_url_project(component, primary)) # Set up the query parameters
+  url <- paste0(hb_url(auth), hb_url_component(component, primary)) # Set up the query parameters
   plural <- FALSE
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
@@ -334,7 +333,7 @@ get_project_control_test <- function(auth, control_test_id, fields = NULL, pages
   primary <- control_test_id
   component <- 'control_tests' # Set up the project
   
-  url <- paste0(hb_url(auth), hb_url_project(component, primary)) # Set up the query parameters
+  url <- paste0(hb_url(auth), hb_url_component(component, primary)) # Set up the query parameters
   plural <- FALSE
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
@@ -362,7 +361,7 @@ get_project_walkthrough <- function(auth, walkthrough_id, fields = NULL, pagesiz
   primary <- walkthrough_id
   component <- 'walkthroughs' # Set up the project
   
-  url <- paste0(hb_url(auth), hb_url_project(component, primary)) # Set up the query parameters
+  url <- paste0(hb_url(auth), hb_url_component(component, primary)) # Set up the query parameters
   plural <- FALSE
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
@@ -400,7 +399,7 @@ get_project_issue <- function(auth, project_id = NULL, issue_id = NULL, fields =
   component <- 'issues' # Set up the project
   hb_project_one_only(primary, secondary) # Checks
   
-  url <- paste0(hb_url(auth), hb_url_project(component, primary, secondary)) # Set up the query parameters
+  url <- paste0(hb_url(auth), hb_url_component(component, primary, secondary)) # Set up the query parameters
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
@@ -435,7 +434,7 @@ get_project_actions <- function(auth, issue_id = NULL, action_id = NULL, fields 
   component <- 'actions' # Set up the project
   hb_project_one_only(primary, secondary) # Checks
   
-  url <- paste0(hb_url(auth), hb_url_project(component, primary, secondary)) # Set up the query parameters
+  url <- paste0(hb_url(auth), hb_url_component(component, primary, secondary)) # Set up the query parameters
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
@@ -459,7 +458,7 @@ get_project_request_items <- function(auth, request_id, fields = NULL, pagesize 
   primary <- request_id
   component <- 'request_items' # Set up the project
   
-  url <- paste0(hb_url(auth), hb_url_project(component, primary)) # Set up the query parameters
+  url <- paste0(hb_url(auth), hb_url_component(component, primary)) # Set up the query parameters
   plural <- FALSE
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
@@ -485,7 +484,7 @@ get_project_entity <- function(auth, entity_id = NULL, fields = NULL, pagesize =
   primary <- entity_id
   component <- 'entities' # Set up the project
   
-  url <- paste0(hb_url(auth), hb_url_project(component, primary)) # Set up the query parameters
+  url <- paste0(hb_url(auth), hb_url_component(component, primary)) # Set up the query parameters
   plural <- is.null(primary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
@@ -494,3 +493,35 @@ get_project_entity <- function(auth, entity_id = NULL, fields = NULL, pagesize =
   return(data) 
 }
 
+#' Retrieve Highbond Projects - Collaborators
+#'
+#' @description Get the collaborators, aka user roles in Project or Framework.
+#'
+#' @details Fields allowed: project, framework, user, project_role, effective_role, organization_role, created_at, updated_at, group
+#' 
+#' @inheritParams get_project
+#'
+#' @param parent_resource_type Can be \code{'projects'} or \code{'frameworks'}
+#' @param project_id Required if other parameter is blank. 
+#' @param encoded_uid Required if the other parameter is blank. Base64 encoded parent resource id (project or framework) and user uid in format \code{parent_resource_id:user_uid.}.
+#'
+#' @return A tibble of collaborators
+#' @export
+get_project_collaborator <- function(auth, project_id = NULL, encoded_uid = NULL, fields = NULL, pagesize = 50){
+  
+  primary <- project_id
+  secondary <- encoded_uid
+  component <- 'collaborators' # Set up the project
+  hb_project_one_only(primary, secondary) # Checks
+  
+  url <- paste0(hb_url(auth), hb_url_component(component, primary, secondary)) # Set up the query parameters
+  
+  # A project id will return MULTIPLE users for one project
+  # Whereas an encoded UID will return a single
+  plural <- is.null(secondary) 
+  
+  params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
+  data <- hb_prj_get_controller(auth, url, params, component, plural) # Download the data
+  
+  return(data) 
+}

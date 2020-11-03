@@ -11,13 +11,13 @@ test_that("Highbond Results - POST with PURGE", {
   
   # Check if upload worked
   
-  expect_null(post_highbond_results(hb_creds, highbond_table, upload = upload, purge = TRUE))
+  expect_null(post_results_record(hb_creds, highbond_table, upload = upload, purge = TRUE))
   
   # Col type check for re-download
   
   Sys.sleep(20) # Allow Highbond to process...
   
-  download <- get_highbond_results(hb_creds, highbond_table, timezone = 'Canada/Pacific')
+  download <- get_results_record(hb_creds, highbond_table, timezone = 'Canada/Pacific')
   
   coltypes <- download$content$columns %>%
     dplyr::filter(field_name %in% c('field_one', 'field_two', 'field_three', 'field_four', 'field_five', 'field_six')) %>%
@@ -41,17 +41,17 @@ test_that("Highbond Results - POST without Purge", {
   
   Sys.sleep(20)
   
-  download <- get_highbond_results(hb_creds, highbond_table)
+  download <- get_results_record(hb_creds, highbond_table)
   
   current_count <- nrow(download$content$data)
   
-  expect_equal(post_highbond_results(hb_creds, highbond_table, upload = upload, purge = FALSE), NULL)
+  expect_equal(post_results_record(hb_creds, highbond_table, upload = upload, purge = FALSE), NULL)
   
   # Wait delay
   
   Sys.sleep(20)
   
-  download <- get_highbond_results(hb_creds, highbond_table)
+  download <- get_results_record(hb_creds, highbond_table)
   
   new_count <- nrow(download$content$data)
   
@@ -64,7 +64,7 @@ test_that("Highbond Results - GET", {
   
   Sys.sleep(20)
   
-  download <- get_highbond_results(hb_creds, highbond_table)
+  download <- get_results_record(hb_creds, highbond_table)
   
   expect_true(nrow(download$content$data) >  0)
 })
@@ -75,7 +75,7 @@ test_that("Highbond Results - POST - Stress test", {
   
   massupload <- do.call("rbind", replicate(1000, upload, simplify = FALSE))
   
-  expect_null(post_highbond_results(hb_creds, highbond_table, upload = massupload, purge = TRUE))
+  expect_null(post_results_record(hb_creds, highbond_table, upload = massupload, purge = TRUE))
   
   Sys.sleep(20)
 })

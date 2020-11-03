@@ -13,100 +13,6 @@ hb_project_one_only <- function(id1, id2){
   return(TRUE)
 }
 
-#hb_url_project <- function(component, project_id = NULL, objective_id = NULL, issue_id = NULL, id = NULL){
-hb_url_project <- function(component, primary = NULL, secondary = NULL){
-  # Used to build the correct urls for Project information, depending on the type of data captured
-  # Future - perhaps put plural switch here?
-  
-  url <- NULL
-  
-  ### This needs to break out GET A and GET ALL 
-  
-  ### PART ONE - Substitution based on components. with no main area overriding the query
-  
-  # Project override as structure is mildly different  
-  if (component == 'projects'){
-    if (is.null(primary)) {
-      url <- 'projects/' # Get all projects
-    } else {
-      url <- paste0('projects/', primary) # Get one specific project
-    }
-    
-    return(url) # Early return
-  }
-  
-  # Project Types override, different because the ID is different
-  if (component == 'project_types'){
-    if (is.null(primary)) {
-      url <- 'project_types/' # Get all projects
-    } else {
-      url <- paste0('project_types/', primary) # Get one specific project type
-    }
-    
-    return(url) # Early return
-  }
-  
-  # These have no higher level component, but ID is always required
-  if(component %in% c('control_test_plans', 'walkthroughs', 'control_tests', 'mitigations', 'request_items')){
-    url <- paste0(component, '/', primary)
-    
-    return(url) # Early return
-  }
-  
-  if(component %in% c('entities')){
-    if (is.null(primary)) {
-      url <- 'entities/' # Get all projects
-    } else {
-      url <- paste0('entities/', primary) # Get one specific project type
-    }
-    
-    return(url) # Early return
-  }
-  
-  # Error check to make sure enough information is specified to proceed into next stage
-  
-  if (is.null(primary) & is.null(secondary)) # If the project or objective isn't specified, then at least one of the components needs to be
-  {
-    stop("Primary and secondary IDs must be specified for the requested component")
-  }
-  
-  ### PART TWO - Substitution based on components and main area
-  
-  # Project based components
-  if(component %in% c('planning_files', 'results_files', 'objectives', 'issues')){
-    if (is.null(secondary)){
-      url <- paste0('projects/', primary, '/', component)
-    } else {
-      url <- paste0(component, '/', secondary)
-    }
-  }
-  
-  # Objective based components
-  if(component %in% c('narratives', 'risks', 'controls')){
-    if (is.null(secondary)){
-      url <- paste0('objectives/', primary, '/', component)
-    } else {
-      url <- paste0(component, '/', secondary)
-    }
-  }
-  
-  # Issue based components
-  if(component %in% c('actions')){
-    if (is.null(secondary)){
-      url <- paste0('issues/', primary, '/', component)
-    } else {
-      url <- paste0(component, '/', secondary)
-    }
-  }
-  
-  # Final check
-  if (is.null(url)){
-    stop("(Project & Objective & Issue) and (Component) can't be empty, but something broke")
-  }
-  
-  return(url)
-}
-
 hb_prj_set_params <- function(component, pagesize, fields = NULL){
   # Creates a list of eligible parameters based on the generalized requirements
   # The check for using this should occur at the component-check level
@@ -183,7 +89,7 @@ hb_prj_parse_custom <- function(component, content_raw){
   # Suppress notes, as these are JSON elements within the returned object
   attributes <- NULL
   custom_attributes <- NULL
-  
+
   content_attributes_custom <- content_raw %>% 
     enter_object(attributes) %>% # Have not been able to find a way to suppress this note
     enter_object(custom_attributes)
