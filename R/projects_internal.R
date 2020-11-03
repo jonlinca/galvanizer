@@ -201,6 +201,11 @@ hb_prj_get_controller <- function(auth, url, params, plural, waittime = 0.6){
   content <- jsonlite::fromJSON(json, simplifyVector = FALSE)
   
   next_page <- content$links$`next` # Save next page reference
+  
+  # The Plural flag needs to be set if there are multiple id and types per data source.
+  # If data comes back in a $data list, then it is TRUE
+  # otherwise, it comes back straight as is, FALSE
+  
   content_data <- if(plural){content$data} else {content} # This is important for many
   
   if (length(content_data) == 0){
