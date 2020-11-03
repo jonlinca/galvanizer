@@ -32,7 +32,7 @@ get_project <- function(auth, project_id = NULL, fields = NULL, pagesize = 50){
   plural <- is.null(primary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, component, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
   
   return(data) 
 }
@@ -61,7 +61,7 @@ get_project_type <- function(auth, project_type_id = NULL, fields = NULL, pagesi
   plural <- is.null(primary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, component, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
   
   return(data) 
 }
@@ -92,7 +92,7 @@ get_project_planning_file <- function(auth, project_id = NULL, planning_file_id 
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
 
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, component, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
   
   return(data) 
 }
@@ -122,7 +122,7 @@ get_project_result_file <- function(auth, project_id = NULL, results_file_id = N
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, component, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
   
   return(data) 
 }
@@ -156,7 +156,7 @@ get_project_objective <- function(auth, project_id = NULL, objective_id = NULL, 
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, component, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
   
   return(data) 
 }
@@ -186,7 +186,7 @@ get_project_narrative <- function(auth, objective_id = NULL, narrative_id = NULL
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
 
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, component, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
   
   return(data) 
 }
@@ -218,7 +218,7 @@ get_project_risk <- function(auth, objective_id = NULL, risk_id = NULL, fields =
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, component, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
   
   return(data) 
 }
@@ -254,7 +254,7 @@ get_project_control <- function(auth, objective_id = NULL, control_id = NULL, fi
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, component, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
   
   return(data) 
 }
@@ -278,7 +278,7 @@ get_project_mitigation <- function(auth, mitigation_id, fields = NULL, pagesize 
   plural <- FALSE
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, component, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
   
   return(data) 
 }
@@ -311,7 +311,7 @@ get_project_control_test_plan <- function(auth, control_test_plan_id, fields = N
   plural <- FALSE
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, component, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
   
   return(data) 
 }
@@ -337,7 +337,7 @@ get_project_control_test <- function(auth, control_test_id, fields = NULL, pages
   plural <- FALSE
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, component, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
   
   return(data) 
 }
@@ -365,7 +365,7 @@ get_project_walkthrough <- function(auth, walkthrough_id, fields = NULL, pagesiz
   plural <- FALSE
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, component, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
   
   return(data) 
 }
@@ -403,7 +403,7 @@ get_project_issue <- function(auth, project_id = NULL, issue_id = NULL, fields =
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, component, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
   
   return(data) 
 }
@@ -438,7 +438,7 @@ get_project_actions <- function(auth, issue_id = NULL, action_id = NULL, fields 
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, component, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
   
   return(data) 
 }
@@ -462,7 +462,7 @@ get_project_request_items <- function(auth, request_id, fields = NULL, pagesize 
   plural <- FALSE
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, component, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
   
   return(data) 
 }
@@ -488,7 +488,7 @@ get_project_entity <- function(auth, entity_id = NULL, fields = NULL, pagesize =
   plural <- is.null(primary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, component, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
   
   return(data) 
 }
@@ -521,7 +521,7 @@ get_project_collaborator <- function(auth, project_id = NULL, encoded_uid = NULL
   plural <- is.null(secondary) 
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, component, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
   
   return(data) 
 }
