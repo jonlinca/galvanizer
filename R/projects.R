@@ -501,9 +501,8 @@ get_project_entity <- function(auth, entity_id = NULL, fields = NULL, pagesize =
 #' 
 #' @inheritParams get_project
 #'
-#' @param parent_resource_type Can be \code{'projects'} or \code{'frameworks'}
 #' @param project_id Required if other parameter is blank. 
-#' @param encoded_uid Required if the other parameter is blank. Base64 encoded parent resource id (project or framework) and user uid in format \code{parent_resource_id:user_uid.}.
+#' @param encoded_uid Required if the other parameter is blank. Base64 encoded parent resource id (project or framework) and user uid, encoded from format \code{parent_resource_id:user_uid.}.
 #'
 #' @return A tibble of collaborators
 #' @export
