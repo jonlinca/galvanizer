@@ -529,7 +529,7 @@ get_project_collaborator <- function(auth, project_id = NULL, encoded_uid = NULL
 #'
 #' @description Get the custom attributes set within a project type. Note these
 #'   are different than the custom terms used to rename fields. For those, see
-#'   \link[galvanizer]{project_type}
+#'   \link[galvanizer]{get_project_type}
 #'
 #' @inheritParams get_project
 #'
