@@ -101,10 +101,10 @@
                      <span class="kw">date_ended</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span>()), <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span>())))
 
 <span class="co"># Substitute your API key, org number, data, center, table, and the dataframe to be uploaded</span>
-<span class="fu">post_highbond_results</span>(<span class="no">highbond_auth</span>, <span class="no">highbond_table</span>, <span class="kw">upload</span> <span class="kw">=</span> <span class="no">upload</span>, <span class="kw">purge</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
+<span class="fu"><a href="reference/post_results_records.html">post_results_records</a></span>(<span class="no">highbond_auth</span>, <span class="no">highbond_table</span>, <span class="kw">upload</span> <span class="kw">=</span> <span class="no">upload</span>, <span class="kw">purge</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
 <p>Once that has successfully uploaded into Highbond Results, you can view the results online and also download the new data too:</p>
 <p><img src="reference/figures/highbond_results_upload.png" alt="successful results upload"></p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="no">download</span> <span class="kw">&lt;-</span> <span class="fu">get_highbond_results</span>(<span class="no">highbond_auth</span>, <span class="no">highbond_table</span>)
+<div class="sourceCode" id="cb4"><pre class="r"><span class="no">download</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/get_results_records.html">get_results_records</a></span>(<span class="no">highbond_auth</span>, <span class="no">highbond_table</span>)
 <span class="co">#&gt; Retrieving Readme Table</span>
 <span class="co">#&gt; Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".</span>
 <span class="co">#&gt; Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".</span>
@@ -112,14 +112,14 @@
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">download</span>$<span class="no">content</span>$<span class="no">data</span>)
 <span class="co">#&gt;   metadata.priority metadata.status metadata.publish_date metadata.publisher</span>
-<span class="co">#&gt; 1               Low             New   2020-11-02 11:45:05           Jon Test</span>
-<span class="co">#&gt; 2               Low             New   2020-11-02 11:45:05           Jon Test</span>
+<span class="co">#&gt; 1               Low             New   2020-11-02 11:45:37           Jon Test</span>
+<span class="co">#&gt; 2               Low             New   2020-11-02 11:45:37           Jon Test</span>
 <span class="co">#&gt;   metadata.assignee metadata.group metadata.updated_at metadata.closed_at</span>
-<span class="co">#&gt; 1              &lt;NA&gt;           &lt;NA&gt; 2020-11-02 11:45:05               &lt;NA&gt;</span>
-<span class="co">#&gt; 2              &lt;NA&gt;           &lt;NA&gt; 2020-11-02 11:45:05               &lt;NA&gt;</span>
+<span class="co">#&gt; 1              &lt;NA&gt;           &lt;NA&gt; 2020-11-02 11:45:37               &lt;NA&gt;</span>
+<span class="co">#&gt; 2              &lt;NA&gt;           &lt;NA&gt; 2020-11-02 11:45:37               &lt;NA&gt;</span>
 <span class="co">#&gt;      name age active date_started          date_ended extras.record_id</span>
-<span class="co">#&gt; 1 Cowbell  21   TRUE   2019-01-01 2020-11-02 11:44:37     1.094678e+15</span>
-<span class="co">#&gt; 2   Rufus  32  FALSE   2020-01-01 2020-11-02 11:44:37     1.094678e+15</span>
+<span class="co">#&gt; 1 Cowbell  21   TRUE   2019-01-01 2020-11-02 11:45:05     1.094678e+15</span>
+<span class="co">#&gt; 2   Rufus  32  FALSE   2020-01-01 2020-11-02 11:45:05     1.094678e+15</span>
 <span class="co">#&gt;   extras.collection extras.results_table</span>
 <span class="co">#&gt; 1 galvanizer checks         Readme Table</span>
 <span class="co">#&gt; 2 galvanizer checks         Readme Table</span></pre></div>

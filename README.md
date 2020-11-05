@@ -74,7 +74,7 @@ upload <- data.frame(name = c('Cowbell', 'Rufus'),
                      date_ended = c(as.POSIXct(Sys.time()), as.POSIXct(Sys.time())))
 
 # Substitute your API key, org number, data, center, table, and the dataframe to be uploaded
-post_highbond_results(highbond_auth, highbond_table, upload = upload, purge = TRUE)
+post_results_records(highbond_auth, highbond_table, upload = upload, purge = TRUE)
 ```
 
 Once that has successfully uploaded into Highbond Results, you can view
@@ -83,7 +83,7 @@ the results online and also download the new data too:
 ![successful results upload](man/figures/highbond_results_upload.png)
 
 ``` r
-download <- get_highbond_results(highbond_auth, highbond_table)
+download <- get_results_records(highbond_auth, highbond_table)
 #> Retrieving Readme Table
 #> Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".
 #> Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".
@@ -91,14 +91,14 @@ download <- get_highbond_results(highbond_auth, highbond_table)
 
 head(download$content$data)
 #>   metadata.priority metadata.status metadata.publish_date metadata.publisher
-#> 1               Low             New   2020-11-02 11:45:05           Jon Test
-#> 2               Low             New   2020-11-02 11:45:05           Jon Test
+#> 1               Low             New   2020-11-02 11:45:37           Jon Test
+#> 2               Low             New   2020-11-02 11:45:37           Jon Test
 #>   metadata.assignee metadata.group metadata.updated_at metadata.closed_at
-#> 1              <NA>           <NA> 2020-11-02 11:45:05               <NA>
-#> 2              <NA>           <NA> 2020-11-02 11:45:05               <NA>
+#> 1              <NA>           <NA> 2020-11-02 11:45:37               <NA>
+#> 2              <NA>           <NA> 2020-11-02 11:45:37               <NA>
 #>      name age active date_started          date_ended extras.record_id
-#> 1 Cowbell  21   TRUE   2019-01-01 2020-11-02 11:44:37     1.094678e+15
-#> 2   Rufus  32  FALSE   2020-01-01 2020-11-02 11:44:37     1.094678e+15
+#> 1 Cowbell  21   TRUE   2019-01-01 2020-11-02 11:45:05     1.094678e+15
+#> 2   Rufus  32  FALSE   2020-01-01 2020-11-02 11:45:05     1.094678e+15
 #>   extras.collection extras.results_table
 #> 1 galvanizer checks         Readme Table
 #> 2 galvanizer checks         Readme Table
