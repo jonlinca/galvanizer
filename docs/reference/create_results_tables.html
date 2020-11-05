@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Retrieve Highbond Projects - Projects — get_project • galvanizer</title>
+<title>Create, Update or Delete Results - Tables — create_results_tables • galvanizer</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Retrieve Highbond Projects - Projects — get_project" />
-<meta property="og:description" content="Downloads the primary details of one or all projects" />
+<meta property="og:title" content="Create, Update or Delete Results - Tables — create_results_tables" />
+<meta property="og:description" content="Create, Update or Delete Results - Tables" />
 
 
 
@@ -103,16 +103,20 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Retrieve Highbond Projects - Projects</h1>
+    <h1>Create, Update or Delete Results - Tables</h1>
     
-    <div class="hidden name"><code>get_project.Rd</code></div>
+    <div class="hidden name"><code>create_results_tables.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Downloads the primary details of one or all projects</p>
+    <p>Create, Update or Delete Results - Tables</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_project</span>(<span class='no'>auth</span>, <span class='kw'>project_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fields</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pagesize</span> <span class='kw'>=</span> <span class='fl'>50</span>)</pre>
+    <pre class="usage"><span class='fu'>create_results_tables</span>(<span class='no'>auth</span>, <span class='no'>analysis_id</span>, <span class='no'>name</span>, <span class='no'>...</span>)
+
+<span class='fu'>update_results_tables</span>(<span class='no'>auth</span>, <span class='no'>table_id</span>, <span class='no'>...</span>)
+
+<span class='fu'>delete_results_tables</span>(<span class='no'>auth</span>, <span class='no'>table_id</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -122,36 +126,46 @@
       <td><p>Highbond authentication credentials, created from <code><a href='setup_highbond.html'>setup_highbond</a></code></p></td>
     </tr>
     <tr>
-      <th>project_id</th>
-      <td><p>Project ID number. <code>NULL</code> will default to all items.</p></td>
+      <th>analysis_id</th>
+      <td><p>The ID number of the analyses</p></td>
     </tr>
     <tr>
-      <th>fields</th>
-      <td><p>OPTIONAL. A character vector each field requested within the
-project. NULL will default to all fields.</p></td>
+      <th>name</th>
+      <td><p>The name of the newly created Result object</p></td>
     </tr>
     <tr>
-      <th>pagesize</th>
-      <td><p>Defaults to 50. Maximum is 100.</p></td>
+      <th>...</th>
+      <td><p>List(s) to add additional data</p></td>
+    </tr>
+    <tr>
+      <th>table_id</th>
+      <td><p>The ID number of the table</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble of projects</p>
+    <p>A dataframe with the newly created object.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Fields allowed: name, state, status, created_at, updated_at,
-description, background, budget, position, certification,
-control_performance, risk_assurance, management_response, max_sample_size,
-number_of_testing_rounds, opinion, opinion_description, purpose, scope,
-start_date, target_date, tag_list, project_type, entities</p>
+    <p>Each endpoint has a list of required elements, as listed in the
+parameters.</p>
+<p>For optional data, such as attributes, you may pass additional lists. The
+top level name of this optional list should match the name of the json
+level to be added, with key-value pairs within the list. Ultimately, this
+list object will be added as a child json level, under the 'data' top level
+json.</p>
+<p>For example: <code>attributes</code> is a json is nested under data, and therefore
+should be created as the name of the object. Then additional information
+can be added to it as a key-value pair to the list.</p>
+    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>projects</span> <span class='kw'>&lt;-</span> <span class='fu'>get_project</span>(<span class='no'>auth</span>)
-<span class='no'>projects</span> <span class='kw'>&lt;-</span> <span class='fu'>get_project</span>(<span class='no'>auth</span>, <span class='kw'>fields</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'name'</span>, <span class='st'>'state'</span>, <span class='st'>'status'</span>))
-}</div></pre>
+    
+<ul>
+<li><p><code>update_results_tables</code>: Update an analyses</p></li>
+<li><p><code>delete_results_tables</code>: Delete an analyses</p></li>
+</ul>
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

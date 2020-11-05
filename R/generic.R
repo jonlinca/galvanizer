@@ -249,3 +249,24 @@ hb_url_component <- function(component, primary = NULL, secondary = NULL, primar
   
   return(url)
 }
+
+hb_parse_content <- function(content, plural){
+  content_data <- if(plural){content$data} else {content} # This is important for many
+  
+  if (length(content_data) == 0){
+    warning(paste('Downloaded json is blank. Is it empty?'))
+    return(NULL)
+  }
+  
+  core <- hb_prj_parse_standard(content_data) # Returns the three primary tables in all - header, attributes, relationships
+  
+  # Custom fields get - relevant to most except...
+  custom <- hb_prj_parse_custom(content_data)
+  tags <- hb_prj_parse_tags(content_data)
+  relationships <- hb_prj_parse_rel(content_data)
+  
+  # First page, finished
+  combined_data <- hb_prj_coljoin_data(core, custom, tags, relationships)
+}
+
+

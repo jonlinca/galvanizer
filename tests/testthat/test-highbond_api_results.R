@@ -11,13 +11,13 @@ test_that("Highbond Results - POST with PURGE", {
   
   # Check if upload worked
   
-  expect_null(post_results_record(hb_creds, highbond_table, upload = upload, purge = TRUE))
+  expect_null(post_results_records(hb_creds, highbond_table, upload = upload, purge = TRUE))
   
   # Col type check for re-download
   
   Sys.sleep(20) # Allow Highbond to process...
   
-  download <- get_results_record(hb_creds, highbond_table, timezone = 'Canada/Pacific')
+  download <- get_results_records(hb_creds, highbond_table, timezone = 'Canada/Pacific')
   
   coltypes <- download$content$columns %>%
     dplyr::filter(field_name %in% c('field_one', 'field_two', 'field_three', 'field_four', 'field_five', 'field_six')) %>%
@@ -41,17 +41,17 @@ test_that("Highbond Results - POST without Purge", {
   
   Sys.sleep(20)
   
-  download <- get_results_record(hb_creds, highbond_table)
+  download <- get_results_records(hb_creds, highbond_table)
   
   current_count <- nrow(download$content$data)
   
-  expect_equal(post_results_record(hb_creds, highbond_table, upload = upload, purge = FALSE), NULL)
+  expect_equal(post_results_records(hb_creds, highbond_table, upload = upload, purge = FALSE), NULL)
   
   # Wait delay
   
   Sys.sleep(20)
   
-  download <- get_results_record(hb_creds, highbond_table)
+  download <- get_results_records(hb_creds, highbond_table)
   
   new_count <- nrow(download$content$data)
   
@@ -64,7 +64,7 @@ test_that("Highbond Results - GET", {
   
   Sys.sleep(20)
   
-  download <- get_results_record(hb_creds, highbond_table)
+  download <- get_results_records(hb_creds, highbond_table)
   
   expect_true(nrow(download$content$data) >  0)
 })
@@ -75,7 +75,72 @@ test_that("Highbond Results - POST - Stress test", {
   
   massupload <- do.call("rbind", replicate(1000, upload, simplify = FALSE))
   
-  expect_null(post_results_record(hb_creds, highbond_table, upload = massupload, purge = TRUE))
+  expect_null(post_results_records(hb_creds, highbond_table, upload = massupload, purge = TRUE))
   
   Sys.sleep(20)
+})
+
+test_that("Highbond Results - Create, Update, Delete Collections", {
+  hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
+  
+  name <- 'galvanizer R Testthat Collection'
+  response1 <- create_results_collections(hb_creds, name)
+  expect_true(nrow(response1) == 1)
+
+  collection_id <- response1$id[[1]]
+  myattr <- list(name = 'galvanizer Super Test Collection', description = 'My second description')
+  response2 <- update_results_collections(hb_creds, collection_id, attributes = myattr)
+  expect_true(response2$description[[1]] == 'My second description')
+  
+  response3 <- delete_results_collections(hb_creds, collection_id)
+  expect_true(response3$status_code == 202)
+})
+
+test_that("Highbond Results - Create, Update, Delete everything", {
+  auth <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
+  collection_name <- 'galvanizer Test Collection'
+  response1 <- create_results_collections(auth, collection_name)
+  collection_id <- response1$id[[1]]
+  expect_true(nrow(response1) == 1)
+  
+  ### ANALYSES
+  analysis_name <- 'galvanizer test analysis'
+  response2 <- create_results_analyses(auth, collection_id, name = analysis_name)
+  analysis_id <- response2$id[[1]]
+  expect_true(nrow(response2) == 1)
+  
+  myattr <- list(description = 'My second description')
+  response3 <- update_results_analyses(auth, analysis_id, attributes = myattr)
+  expect_true(response3$description[[1]] == 'My second description')
+  
+  ### TABLES
+  table_name <- 'galvanizer test table'
+  response4 <- create_results_tables(auth, analysis_id, name = analysis_name)
+  expect_true(nrow(response4) == 1)
+  
+  table_id <- response4$id[[1]]
+  myattr <- list(description = 'My third description', script_name = "myscript.R")
+  response5 <- update_results_tables(auth, table_id, attributes = myattr)
+  expect_true(response5$description[[1]] == 'My third description')
+  
+  ### COLUMNS
+  field_name <- c("a", "b", "c", "d", "e", "f", "g")
+  display_name <- c("field_one", "field_two", "field_three", "field_four", "field_five", "field_six", "field_seven")
+  data_type <- c("character", "numeric", 'logical', 'date', 'datetime', 'file', 'digital_signature')
+  
+  response6 <- create_results_columns(auth, table_id, data.frame(field_name, display_name, data_type))
+  expect_true(nrow(response6) == 7)
+  
+  response7 <- get_results_columns(auth, table_id)
+  expect_true(nrow(response7) == 7)
+  
+  # Cleanup
+  response8 <- delete_results_analyses(auth, analysis_id)
+  expect_false(httr::http_error(response8))
+  
+  response9 <- delete_results_tables(auth, table_id)
+  expect_false(httr::http_error(response9))
+  
+  response10 <- delete_results_collections(auth, collection_id)
+  expect_false(httr::http_error(response10))
 })

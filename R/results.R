@@ -1,4 +1,4 @@
-#' Retrieve Highbond Results table
+#' Retrieve Highbond Results - Records
 #'
 #' @description Downloads the content in the structure as saved by Highbond
 #'   Results, including metadata and questionnaire responses (if applicable).
@@ -19,17 +19,21 @@
 #'
 #' @examples
 #' \dontrun{
-#' response <- get_highbond_results(highbond_openapi, 12345, 'us', 567890)
+#' response <- get_results_records(auth, 567890)
 #' }
-get_highbond_results <- function(auth, table_id, timezone = Sys.timezone()){
+get_results_records <- function(auth, table_id, timezone = Sys.timezone()){
+  # Result records do not follow the structure of the rest of the endpoints, so
+  # its ok to be more custom
+  
   hb_checkauth(auth)
   
   # Print table name
-  tablename <- hb_api_get_result_name(auth, table_id)
+  tablename <- get_results_tables(auth, table_id = table_id)$name
   message(paste("Retrieving", tablename))
   
   # Download table
-  resp <- hb_api_get_result_records(auth, table_id)
+  url <- paste0(hb_url(auth), 'tables/', table_id, '/records')
+  resp <- hb_api_get(auth, url)
   parsed <- api_jsonParseDf(resp)
   
   # Separate records and column definition
@@ -57,7 +61,7 @@ get_highbond_results <- function(auth, table_id, timezone = Sys.timezone()){
   )
 }
 
-#' Upload Highbond Results table
+#' Upload Highbond Results - Records
 #'
 #' @description Uploads the content in to Highbond Results.
 #'
@@ -74,7 +78,7 @@ get_highbond_results <- function(auth, table_id, timezone = Sys.timezone()){
 #'   Data Analytic Settings for that table may be specified so a record with the
 #'   same primary key may be merged, rather than duplicated.
 #
-#' @inheritParams get_highbond_results
+#' @inheritParams get_results_records
 #'
 #' @param upload A data frame to be uploaded. Classes supported are
 #'   c('character', 'numeric', 'logical', 'Date', 'POSIXct', 'POSIXlt')
@@ -98,9 +102,9 @@ get_highbond_results <- function(auth, table_id, timezone = Sys.timezone()){
 #'   field_three = c(TRUE, FALSE, TRUE),
 #'   field_four = c(as.Date('2019-01-01'), as.Date('2020-01-01'), as.Date('2021-12-31')),
 #'   field_five = c(as.POSIXct(Sys.time()), as.POSIXct(Sys.time()), as.POSIXct(Sys.time())))
-#'   post_highbond_results(auth, upload = upload, purge = TRUE)
+#'   post_results_records(auth, upload = upload, purge = TRUE)
 #'   }
-post_highbond_results <- function(auth, table_id, 
+post_results_records <- function(auth, table_id, 
                                   upload = NULL, purge = FALSE, skipquestions = FALSE, sizelimit = 75000){
   
   if(is.null(upload) | !is.data.frame(upload)){
@@ -108,7 +112,7 @@ post_highbond_results <- function(auth, table_id,
   }
   
   # Print table name
-  tablename <- hb_api_get_result_name(auth, table_id)
+  tablename <- get_results_tables(auth, table_id = table_id)$name
   message(paste("Uploading to", tablename))
   
   `%!in%` <- Negate('%in%')
@@ -132,9 +136,9 @@ post_highbond_results <- function(auth, table_id,
   # TODO Add purge checks
   
   if(!purge){
-    hbCols <- hb_api_get_result_columns(auth, table_id)
+    hbCols <- get_results_columns(auth, table_id)
     
-    hbCompare <- data.frame(hb_name = hbCols$id, hb_coltype = hbCols$attributes.data_type,
+    hbCompare <- data.frame(hb_name = hbCols$id, hb_coltype = hbCols$data_type,
                             row.names = NULL,
                             stringAsFactors = FALSE)
     
@@ -217,4 +221,386 @@ post_highbond_results <- function(auth, table_id,
     purge <- FALSE
     i <- i + 1
   }
+}
+
+#' Retrieve Highbond Results - Collections
+#'
+#' @description Downloads a list of collections
+#' 
+#' @param collection_id Collection ID. Optional.
+#'
+#' @inheritParams get_results_records
+#' @export
+get_results_collections <- function(auth, collection_id = NULL){
+  # Behaves differently than all the other endpoints, so OK to be custom
+  
+  type <- hb_callingtarget() # Get the last word in the function name
+
+  primary <- collection_id
+  secondary <- NULL 
+  
+  url <- paste0(hb_url(auth), hb_url_component(type, primary))
+  plural <- is.null(primary) # Data always nested in data
+  
+  data <- hb_prj_get_controller(auth, url, NULL, plural) # Download the data
+  
+  return(data)
+}
+
+#' Retrieve Highbond Results - Analyses
+#'
+#' @description Downloads a list of Analyses in a Collection
+#' 
+#' @param collection_id Collection ID. Required if other parameter is blank.
+#' @param analysis_id Analyses ID. Required if other parameter is blank.
+#'
+#' @inheritParams get_results_records
+#' @export
+get_results_analyses <- function(auth, collection_id = NULL, analysis_id = NULL){
+  component <- 'analyses'
+  primary <- collection_id
+  secondary <- analysis_id
+  
+  url <- paste0(hb_url(auth), hb_url_component(component, primary, secondary))
+  plural <- is.null(secondary) # Data always nested in data
+  
+  params <- NULL # No parameters to send with results
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  
+  return(data)
+}
+
+#' Retrieve Highbond Results - Tables
+#'
+#' @description Downloads the primary details of one or all tables in an Analyses
+#' 
+#' @param analysis_id Analysis ID. Required if other parameter is blank.
+#' @param table_id Table ID. Required if other parameter is blank.
+#'
+#' @inheritParams get_results_records
+#' @export
+get_results_tables <- function(auth, analysis_id = NULL, table_id = NULL){
+  component <- 'tables'
+  primary <- analysis_id
+  secondary <- table_id
+  
+  hb_project_one_only(primary, secondary) # Checks
+  url <- paste0(hb_url(auth), hb_url_component(component, primary, secondary))
+  plural <- is.null(secondary)
+  
+  params <- NULL # No parameters to send with results
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  
+  return(data)
+}
+
+#' Retrieve Highbond Results - Columns
+#'
+#' @description Gets the schema of a single table
+#' 
+#' @param table_id Table ID. Required.
+#'
+#' @inheritParams get_results_records
+#' @export
+get_results_columns <- function(auth, table_id){
+  # Behaves differently than all the other endpoints, so OK to be custom
+  
+  component <- 'columns'
+  primary <- table_id
+  
+  url <- paste0(hb_url(auth), hb_url_component(component, primary))
+  plural <- TRUE # Data always nested in data
+  
+  params <- NULL # No parameters to send with results
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  
+  return(data)
+}
+
+#' Create, Update or Delete Results - Collections
+#'
+#' @inheritParams get_results_records
+#'
+#' @param name The name of the newly created Result object
+#' @param collection_id The ID number of the collection
+#' @param ... List(s) to add additional data
+#'
+#' @details Each endpoint has a list of required elements, as listed in the
+#'   parameters.
+#'
+#'   For optional data, such as attributes, you may pass additional lists. The
+#'   top level name of this optional list should match the name of the json
+#'   level to be added, with key-value pairs within the list. Ultimately, this
+#'   list object will be added as a child json level, under the 'data' top level
+#'   json.
+#'
+#'   For example: `attributes` is a json is nested under data, and therefore
+#'   should be created as the name of the object. Then additional information
+#'   can be added to it as a key-value pair to the list.
+#'
+#' @return A dataframe with the newly created object.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' # Create and delete a Collection
+#' auth <- setup_highbond(Sys.getenv('highbond_openapi'), 
+#'   Sys.getenv('highbond_org'), 
+#'   Sys.getenv('highbond_datacenter'))
+#'   
+#' name <- 'galvanizer Test Collection'
+#' response <- create_results_collections(auth, name)
+#' collection_id <- response$id[[1]]
+#' response <- delete_results_collections(auth, collection_id)
+#'
+#' # Create a Collection with attributes
+#' myattr <- list(description = 'My first description')
+#' response <- create_results_collections(auth, name, attributes = myattr)
+#' collection_id <- response$id[[1]]
+#'
+#' # Update a Collection with attributes
+#' myattr <- list(name = 'galvanizer Super Test Collection', description = 'My second description')
+#' response <- update_results_collections(auth, collection_id, attributes = myattr)
+#'
+#' # Delete a Collection
+#' response <- delete_results_collections(auth, collection_id)
+#' }
+create_results_collections <- function(auth, name, ...){
+  primary <- NULL
+  secondary <- NULL 
+  
+  type <- hb_callingtarget() # Get the last word in the function name
+  action <- hb_callingfunc() # Get the first word in the function name
+  
+  # Create the required elements of the payload
+  payload <- hb_initpayload(type)
+  payload$data$attributes$name <- name
+  
+  results_payload(auth, primary, secondary, type, action, payload, ...)
+}
+
+#' @describeIn create_results_collections Update a collection
+#' @export
+update_results_collections <- function(auth, collection_id, ...){
+  primary <- collection_id
+  secondary <- NULL 
+  
+  type <- hb_callingtarget() # Get the last word in the function name
+  action <- hb_callingfunc() # Get the first word in the function name
+  
+  # Create the required elements of the payload
+  payload <- hb_initpayload(type)
+  payload$data$id <- primary
+  
+  results_payload(auth, primary, secondary, type, action, payload, ...)
+}
+
+#' @describeIn create_results_collections Delete a collection
+#' @export
+delete_results_collections <- function(auth, collection_id){
+  primary <- collection_id
+  secondary <- NULL 
+  
+  type <- hb_callingtarget() # Get the last word in the function name
+  action <- hb_callingfunc() # Get the first word in the function name
+  
+  results_payload(auth, primary, secondary, type, action)
+}
+
+#' Create, Update or Delete Results - Analyses
+#'
+#' @inherit create_results_collections params details return
+#'
+#' @param analysis_id The ID number of the analyses
+#' @export
+create_results_analyses <- function(auth, collection_id, name, ...){
+  primary <- collection_id
+  secondary <- NULL 
+  
+  type <- hb_callingtarget() # Get the last word in the function name
+  action <- hb_callingfunc() # Get the first word in the function name
+  
+  # Create the required elements of the payload
+  payload <- hb_initpayload(type)
+  payload$data$attributes$name <- name
+  
+  results_payload(auth, primary, secondary, type, action, payload, ...)
+}
+
+#' @describeIn create_results_analyses Update an analyses
+#' @export
+update_results_analyses <- function(auth, analysis_id, ...){
+  primary <- NULL
+  secondary <- analysis_id 
+  
+  type <- hb_callingtarget() # Get the last word in the function name
+  action <- hb_callingfunc() # Get the first word in the function name
+  
+  # Create the required elements of the payload
+  payload <- hb_initpayload(type)
+  payload$data$id <- secondary
+  
+  results_payload(auth, primary, secondary, type, action, payload, ...)
+}
+
+#' @describeIn create_results_analyses Delete an analyses
+#' @export
+delete_results_analyses <- function(auth, analysis_id){
+  primary <- NULL
+  secondary <- analysis_id 
+  
+  type <- hb_callingtarget() # Get the last word in the function name
+  action <- hb_callingfunc() # Get the first word in the function name
+  
+  results_payload(auth, primary, secondary, type, action)
+}
+
+#' Create, Update or Delete Results - Tables
+#'
+#' @inherit create_results_analyses params details return
+#'
+#' @param table_id The ID number of the table
+#' @export
+create_results_tables <- function(auth, analysis_id, name, ...){
+  primary <- analysis_id
+  secondary <- NULL 
+  
+  type <- hb_callingtarget() # Get the last word in the function name
+  action <- hb_callingfunc() # Get the first word in the function name
+  
+  # Create the required elements of the payload
+  payload <- hb_initpayload(type)
+  payload$data$attributes$name <- name
+  
+  results_payload(auth, primary, secondary, type, action, payload, ...)
+}
+
+#' @describeIn create_results_tables Update an analyses
+#' @export
+update_results_tables <- function(auth, table_id, ...){
+  primary <- NULL
+  secondary <- table_id 
+  
+  type <- hb_callingtarget() # Get the last word in the function name
+  action <- hb_callingfunc() # Get the first word in the function name
+  
+  # Create the required elements of the payload
+  payload <- hb_initpayload(type)
+  payload$data$id <- secondary
+  
+  results_payload(auth, primary, secondary, type, action, payload, ...)
+}
+
+#' @describeIn create_results_tables Delete an analyses
+#' @export
+delete_results_tables <- function(auth, table_id){
+  primary <- NULL
+  secondary <- table_id 
+  
+  type <- hb_callingtarget() # Get the last word in the function name
+  action <- hb_callingfunc() # Get the first word in the function name
+  
+  results_payload(auth, primary, secondary, type, action)
+}
+
+#' Create or Delete Results - Columns
+#'
+#' \link[galvanizer]{post_results_records} will upload a data frame with the
+#' correct specification for the fields uploaded. You can use this function to
+#' add columns manually if preferred, especially if a non-standard column type.
+#'
+#' @details When creating columns, the argument will accept a data frame. This
+#'   data frame must only have three columns - `field_name`, `display_name`, and
+#'   `data_type.` See API for allowable `data_type.`
+#'
+#'   When deleting columns, the argument will accept a data frame. This data
+#'   frame must only have one column - `field_name`
+#'
+#' @inherit create_results_analyses params details return
+#'
+#' @param table_id The ID number of the table
+#' @param columns A data frame with columns to be added
+#'
+#' @export
+#' @examples
+#' \dontrun{
+#'   auth <- setup_highbond(Sys.getenv('highbond_openapi'), 
+#'     Sys.getenv('highbond_org'), 
+#'     Sys.getenv('highbond_datacenter'))
+#'     
+#'   field_name <- c("a", "b", "c", "d", "e", "f", "g")
+#'   display_name <- c("field_one", "field_two", "field_three", 
+#'     "field_four", "field_five", "field_six", "field_seven")
+#'   data_type <- c("character", "numeric", 'logical', 
+#'     'date', 'datetime', 'file', 'digital_signature')
+#'   columns <- data.frame(field_name, display_name, data_type)
+#'   
+#'   table_id <- 12345
+#'   response <- create_results_columns(auth, table_id, columns)
+#' }
+#' 
+create_results_columns <- function(auth, table_id, columns){
+  # This URL is a real special snowflake
+  # Due to 1) /bulk/ at end and 2) content_type being json and not vnd.api+json
+  
+  type <- hb_callingtarget() # Get the last word in the function name
+  primary <- table_id
+  
+  # Future improvement - check columns contents
+  payload <- list()
+  payload$data <- columns
+  payload <- jsonlite::toJSON(payload)
+  
+  url <- paste0(hb_url(auth), paste0('tables/', primary, '/', type, '/bulk'))
+  
+  # INCONSISTENCY IN API ENDPOINT - WATCH FOR REVISION TO VND.API+JSON
+  hb_headers_col <- httr::add_headers(Authorization = paste("Bearer", auth$key),
+                                  `Content-Type` = 'application/json',
+                                  `Accept-Encoding` = '')
+  
+  response <- httr::POST(url,
+                         body = payload,
+                         hb_headers_col,
+                         encoding = "raw")
+  
+  hb_validateDownload(response)
+  
+  json <- httr::content(response, 'text')
+  content <- jsonlite::fromJSON(json, simplifyVector = FALSE)
+  parsed <- hb_parse_content(content, TRUE)
+  
+  return(parsed)
+}
+
+delete_results_columns <- function(auth, table_id, columns){
+  # @describeIn create_results_columns Delete columns
+  
+  # This endpoint is returning a 500 error and I'm not sure why. Come back to it later
+  # This endpoint is also a special snowflake
+  
+  type <- hb_callingtarget() # Get the last word in the function name
+  primary <- table_id 
+  
+  # Future improvement - check columns contents
+  payload <- list()
+  payload$data <- columns
+  payload <- jsonlite::toJSON(payload)
+  
+  url <- paste0(hb_url(auth), paste0('tables/', primary, '/', type, '/bulk'))
+  
+  # INCONSISTENCY IN API ENDPOINT - WATCH FOR REVISION TO VND.API+JSON
+  hb_headers_col <- httr::add_headers(Authorization = paste("Bearer", auth$key),
+                                      `Content-Type` = 'application/json',
+                                      `Accept-Encoding` = '')
+  
+  #print(payload)
+  
+  response <- httr::DELETE(url,
+                         body = payload,
+                         hb_headers_col,
+                         encoding = "raw")
+  
+  #hb_validateDownload(response)
+  
+  return(response)
 }

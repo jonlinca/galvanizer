@@ -101,10 +101,10 @@
                      <span class="kw">date_ended</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span>()), <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span>())))
 
 <span class="co"># Substitute your API key, org number, data, center, table, and the dataframe to be uploaded</span>
-<span class="fu"><a href="reference/post_highbond_results.html">post_highbond_results</a></span>(<span class="no">highbond_auth</span>, <span class="no">highbond_table</span>, <span class="kw">upload</span> <span class="kw">=</span> <span class="no">upload</span>, <span class="kw">purge</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
+<span class="fu">post_highbond_results</span>(<span class="no">highbond_auth</span>, <span class="no">highbond_table</span>, <span class="kw">upload</span> <span class="kw">=</span> <span class="no">upload</span>, <span class="kw">purge</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
 <p>Once that has successfully uploaded into Highbond Results, you can view the results online and also download the new data too:</p>
 <p><img src="reference/figures/highbond_results_upload.png" alt="successful results upload"></p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="no">download</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/get_highbond_results.html">get_highbond_results</a></span>(<span class="no">highbond_auth</span>, <span class="no">highbond_table</span>)
+<div class="sourceCode" id="cb4"><pre class="r"><span class="no">download</span> <span class="kw">&lt;-</span> <span class="fu">get_highbond_results</span>(<span class="no">highbond_auth</span>, <span class="no">highbond_table</span>)
 <span class="co">#&gt; Retrieving Readme Table</span>
 <span class="co">#&gt; Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".</span>
 <span class="co">#&gt; Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".</span>

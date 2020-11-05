@@ -8,7 +8,7 @@
 #'   number_of_testing_rounds, opinion, opinion_description, purpose, scope,
 #'   start_date, target_date, tag_list, project_type, entities
 #'
-#' @inheritParams get_results_record
+#' @inheritParams get_results_records
 #'
 #' @param project_id Project ID number. \code{NULL} will default to all items.
 #' @param fields OPTIONAL. A character vector each field requested within the
@@ -518,6 +518,38 @@ get_project_collaborator <- function(auth, project_id = NULL, encoded_uid = NULL
   # A project id will return MULTIPLE users for one project
   # Whereas an encoded UID will return a single
   plural <- is.null(secondary) 
+  
+  params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
+  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  
+  return(data) 
+}
+
+#' Retrieve Highbond Projects - Custom Attributes
+#'
+#' @description Get the custom attributes set within a project type. Note these
+#'   are different than the custom terms used to rename fields. For those, see
+#'   \link[galvanizer]{project_type}
+#'
+#' @inheritParams get_project
+#'
+#' @param project_type_id Required if other parameter is blank.
+#' @param custom_attributes_id Required if the other parameter is blank. Base64
+#'   encoded parent resource id (project or framework) and user uid, encoded
+#'   from format \code{parent_resource_id:user_uid.}.
+#'
+#' @return A tibble of custom attributes
+#' @export
+get_project_custom_attributes <- function(auth, project_type_id = NULL, custom_attributes_id = NULL, fields = NULL, pagesize = 50){
+  
+  primary <- project_type_id
+  secondary <- custom_attributes_id
+  component <- 'custom_attributes' # Set up the project
+  hb_project_one_only(primary, secondary) # Checks
+  
+  url <- paste0(hb_url(auth), hb_url_component(component, primary, secondary)) # Set up the query parameters
+  
+  plural <- is.null(custom_attributes_id) 
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
   data <- hb_prj_get_controller(auth, url, params, plural) # Download the data

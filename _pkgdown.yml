@@ -5,16 +5,26 @@ reference:
 - contents:
   - setup_highbond
 - title: "Highbond Results"
+- subtitle: "Records"
   desc: >
     Functions for downloading and uploading data from Highbond Result tables
 - contents: 
-  - get_highbond_results*
-  - post_highbond_results*
-- title: "Highbond Projects"
+  - ends_with("records")
+- subtitle: "Collections, Analyses and other setup"
   desc: >
-    Functions for downloading and uploading data from Highbond Projects
+    Functions for interacting with collections, analyses and tables
 - contents:
-  - get_project_type
+  - starts_with("get_results")
+  - ends_with("collections")
+  - ends_with("analyses")
+  - ends_with("tables")
+  - ends_with("columns")
+  
+- title: "Highbond Projects"
+- subtitle: "Project data"
+  desc: >
+    Functions for downloading data from Highbond Projects
+- contents:
   - get_project
   - get_project_planning_file
   - get_project_result_file
@@ -30,3 +40,11 @@ reference:
   - get_project_actions
   - get_project_request_items
   - get_project_entity
+- subtitle: "Project settings"
+  desc: >
+    Functions for downloading configured settings for projects
+- contents:
+  - get_project_type
+  - get_project_collaborator
+  - get_project_custom_attributes
+

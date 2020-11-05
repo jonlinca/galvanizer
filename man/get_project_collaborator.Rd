@@ -17,14 +17,12 @@ get_project_collaborator(
 
 \item{project_id}{Required if other parameter is blank.}
 
-\item{encoded_uid}{Required if the other parameter is blank. Base64 encoded parent resource id (project or framework) and user uid in format \code{parent_resource_id:user_uid.}.}
+\item{encoded_uid}{Required if the other parameter is blank. Base64 encoded parent resource id (project or framework) and user uid, encoded from format \code{parent_resource_id:user_uid.}.}
 
 \item{fields}{OPTIONAL. A character vector each field requested within the
 project. NULL will default to all fields.}
 
 \item{pagesize}{Defaults to 50. Maximum is 100.}
-
-\item{parent_resource_type}{Can be \code{'projects'} or \code{'frameworks'}}
 }
 \value{
 A tibble of collaborators
