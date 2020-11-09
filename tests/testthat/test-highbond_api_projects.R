@@ -3,7 +3,7 @@ test_that("Highbond Projects - GET projects (many)", {
 
   highbond_fields <- 'name,state,status,created_at,updated_at,description,tag_list,project_type,entities'
   
-  projects <- get_projects(hb_creds, project_id = NULL)
+  projects <- get_projects(hb_creds, project_id = NULL, pagesize = 2)
   
   expect_true(nrow(projects) > 1)
 })

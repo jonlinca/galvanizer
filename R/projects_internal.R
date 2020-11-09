@@ -230,7 +230,7 @@ hb_prj_get_controller <- function(auth, url, params, plural, waittime = 0.6){
     combined_data_next <- NULL # Just a clean reset
     i <- i + 1 # increment to save into next page
     
-    url <- paste0(hb_url_base(auth$dc),next_page) # Use the next page as provided
+    url <- paste0(hb_url_base(auth),next_page) # Use the next page as provided
     download <- hb_api_get(auth, url, waittime) # Don't use parameters anymore
     
     json <- httr::content(download, 'text')
