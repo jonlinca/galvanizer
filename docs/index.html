@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">galvanizer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -128,7 +128,7 @@
 <h2 class="hasAnchor">
 <a href="#highbond-projects-data" class="anchor"></a>Highbond Projects data</h2>
 <p>Highbond Projects data (also known as ‘Audits’) is also retrievable, depending on which screen of information you would like to retrieve from. There are options to download all or just one set of information, depending on the pane chosen.</p>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="no">projects</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/get_project.html">get_project</a></span>(<span class="no">highbond_auth</span>)
+<div class="sourceCode" id="cb5"><pre class="r"><span class="no">projects</span> <span class="kw">&lt;-</span> <span class="fu">get_project</span>(<span class="no">highbond_auth</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">projects</span>)
 <span class="co">#&gt; # A tibble: 6 x 26</span>
 <span class="co">#&gt;   id    type  name  state status created_at updated_at description background</span>

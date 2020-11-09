@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create, Update or Delete Results - Analyses — create_results_analyses • galvanizer</title>
+<title>Retrieve Highbond Project - Planning Files — get_project_planning_files • galvanizer</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Create, Update or Delete Results - Analyses — create_results_analyses" />
-<meta property="og:description" content="Create, Update or Delete Results - Analyses" />
+<meta property="og:title" content="Retrieve Highbond Project - Planning Files — get_project_planning_files" />
+<meta property="og:description" content="Downloads the primary details of one or multiple planning files
+for a project." />
 
 
 
@@ -103,20 +104,23 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create, Update or Delete Results - Analyses</h1>
+    <h1>Retrieve Highbond Project - Planning Files</h1>
     
-    <div class="hidden name"><code>create_results_analyses.Rd</code></div>
+    <div class="hidden name"><code>get_project_planning_files.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create, Update or Delete Results - Analyses</p>
+    <p>Downloads the primary details of one or multiple planning files
+for a project.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>create_results_analyses</span>(<span class='no'>auth</span>, <span class='no'>collection_id</span>, <span class='no'>name</span>, <span class='no'>...</span>)
-
-<span class='fu'>update_results_analyses</span>(<span class='no'>auth</span>, <span class='no'>analysis_id</span>, <span class='no'>...</span>)
-
-<span class='fu'>delete_results_analyses</span>(<span class='no'>auth</span>, <span class='no'>analysis_id</span>)</pre>
+    <pre class="usage"><span class='fu'>get_project_planning_files</span>(
+  <span class='no'>auth</span>,
+  <span class='kw'>project_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>planning_file_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>fields</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>pagesize</span> <span class='kw'>=</span> <span class='fl'>50</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -126,45 +130,31 @@
       <td><p>Highbond authentication credentials, created from <code><a href='setup_highbond.html'>setup_highbond</a></code></p></td>
     </tr>
     <tr>
-      <th>collection_id</th>
-      <td><p>The ID number of the collection</p></td>
+      <th>project_id</th>
+      <td><p>Required if other parameter is blank. May obtain multiple rows.</p></td>
     </tr>
     <tr>
-      <th>name</th>
-      <td><p>The name of the newly created Result object</p></td>
+      <th>planning_file_id</th>
+      <td><p>Required if other parameter is blank. Will get only one row.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>List(s) to add additional data</p></td>
+      <th>fields</th>
+      <td><p>OPTIONAL. A character vector each field requested within the
+project. NULL will default to all fields.</p></td>
     </tr>
     <tr>
-      <th>analysis_id</th>
-      <td><p>The ID number of the analyses</p></td>
+      <th>pagesize</th>
+      <td><p>Defaults to 50. Maximum is 100.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dataframe with the newly created object.</p>
+    <p>A tibble of planning files.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Each endpoint has a list of required elements, as listed in the
-parameters.</p>
-<p>For optional data, such as attributes, you may pass additional lists. The
-top level name of this optional list should match the name of the json
-level to be added, with key-value pairs within the list. Ultimately, this
-list object will be added as a child json level, under the 'data' top level
-json.</p>
-<p>For example: <code>attributes</code> is a json is nested under data, and therefore
-should be created as the name of the object. Then additional information
-can be added to it as a key-value pair to the list.</p>
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
-
-    
-<ul>
-<li><p><code>update_results_analyses</code>: Update an analyses</p></li>
-<li><p><code>delete_results_analyses</code>: Delete an analyses</p></li>
-</ul>
+    <p>possible fields: name, reference_id, description, position,
+created_at, updated_at, custom_attributes, project</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
