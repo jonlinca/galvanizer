@@ -20,10 +20,10 @@
 #'
 #' @examples
 #' \dontrun{
-#' projects <- get_project(auth)
-#' projects <- get_project(auth, fields = c('name', 'state', 'status'))
+#' projects <- get_projects(auth)
+#' projects <- get_projects(auth, fields = c('name', 'state', 'status'))
 #' }
-get_project <- function(auth, project_id = NULL, fields = NULL, pagesize = 50){
+get_projects <- function(auth, project_id = NULL, fields = NULL, pagesize = 50){
   
   primary <- project_id
   component <- 'projects' # Set up the project
@@ -46,13 +46,13 @@ get_project <- function(auth, project_id = NULL, fields = NULL, pagesize = 50){
 #'   finding_action_terms, narrative_terms, objective_terms, planning_terms,
 #'   results_terms, risk_terms, test_plan_terms, walkthrough_terms
 #'
-#' @inheritParams get_project
+#' @inheritParams get_projects
 #'
 #' @param project_type_id \code{NULL} Defaults to all project types
 #'
 #' @export
 #' @return A tibble of project types
-get_project_type <- function(auth, project_type_id = NULL, fields = NULL, pagesize = 50){
+get_project_types <- function(auth, project_type_id = NULL, fields = NULL, pagesize = 50){
   
   primary <- project_type_id
   component <- 'project_types' # Set up the project
@@ -74,14 +74,14 @@ get_project_type <- function(auth, project_type_id = NULL, fields = NULL, pagesi
 #' @details possible fields: name, reference_id, description, position,
 #'   created_at, updated_at, custom_attributes, project
 #'
-#' @inheritParams get_project
+#' @inheritParams get_projects
 #'
 #' @param project_id Required if other parameter is blank. May obtain multiple rows.
 #' @param planning_file_id Required if other parameter is blank. Will get only one row.
 #' 
 #' @export
 #' @return A tibble of planning files.
-get_project_planning_file <- function(auth, project_id = NULL, planning_file_id = NULL, fields = NULL, pagesize = 50){
+get_project_planning_files <- function(auth, project_id = NULL, planning_file_id = NULL, fields = NULL, pagesize = 50){
 
   primary <- project_id
   secondary <- planning_file_id
@@ -105,13 +105,13 @@ get_project_planning_file <- function(auth, project_id = NULL, planning_file_id 
 #' @details possible fields: name, reference_id, description, position,
 #'   created_at, updated_at, custom_attributes, project
 #'
-#' @inheritParams get_project
+#' @inheritParams get_projects
 #'
 #' @param project_id Required if other parameter is blank. May obtain multiple rows.
 #' @param results_file_id Required if other parameter is blank. Will get only one row.
 #' @export
 #' @return A tibble of result files
-get_project_result_file <- function(auth, project_id = NULL, results_file_id = NULL, fields = NULL, pagesize = 50){
+get_project_result_files <- function(auth, project_id = NULL, results_file_id = NULL, fields = NULL, pagesize = 50){
   
   primary <- project_id
   secondary <- results_file_id
@@ -139,13 +139,13 @@ get_project_result_file <- function(auth, project_id = NULL, results_file_id = N
 #'   walkthrough_summary_id, testing_round_1_id, testing_round_2_id,
 #'   testing_round_3_id, testing_round_4_id, entities
 #'
-#' @inheritParams get_project
+#' @inheritParams get_projects
 #'
 #' @param project_id Required if other parameter is blank. May obtain multiple rows.
 #' @param objective_id Required if other parameter is blank. Will get only one row.
 #' @export
 #' @return A tibble of objectives
-get_project_objective <- function(auth, project_id = NULL, objective_id = NULL, fields = NULL, pagesize = 50){
+get_project_objectives <- function(auth, project_id = NULL, objective_id = NULL, fields = NULL, pagesize = 50){
   
   primary <- project_id
   secondary <- objective_id
@@ -169,13 +169,13 @@ get_project_objective <- function(auth, project_id = NULL, objective_id = NULL, 
 #'   
 #' @details possible fields: title, description, created_at, updated_at, objective
 #'
-#' @inheritParams get_project
+#' @inheritParams get_projects
 #'
 #' @param objective_id Required if other parameter is blank. May obtain multiple rows.
 #' @param narrative_id Required if other parameter is blank. Will get only one row.
 #' @export
 #' @return A tibble of narratives
-get_project_narrative <- function(auth, objective_id = NULL, narrative_id = NULL, fields = NULL, pagesize = 50){
+get_project_narratives <- function(auth, objective_id = NULL, narrative_id = NULL, fields = NULL, pagesize = 50){
   
   primary <- objective_id
   secondary <- narrative_id
@@ -201,13 +201,13 @@ get_project_narrative <- function(auth, objective_id = NULL, narrative_id = NULL
 #'   likelihood, custom_attributes, created_at, updated_at, objective,
 #'   mitigations, entities
 #'
-#' @inheritParams get_project
+#' @inheritParams get_projects
 #'
 #' @param objective_id Required if other parameter is blank. May obtain multiple rows.
 #' @param risk_id Required if other parameter is blank. Will get only one.
 #' @export
 #' @return A tibble of Risks
-get_project_risk <- function(auth, objective_id = NULL, risk_id = NULL, fields = NULL, pagesize = 50){
+get_project_risks <- function(auth, objective_id = NULL, risk_id = NULL, fields = NULL, pagesize = 50){
   
   primary <- objective_id
   secondary <- risk_id
@@ -236,14 +236,14 @@ get_project_risk <- function(auth, objective_id = NULL, risk_id = NULL, fields =
 #'   updated_at, custom_attributes, objective, walkthrough, control_test_plan,
 #'   control_tests, mitigations, owner_user, entities
 #'
-#' @inheritParams get_project
+#' @inheritParams get_projects
 #'
 #' @param objective_id Required if other parameter is blank. May obtain multiple rows.
 #' @param control_id Required if other parameter is blank. Will get only one.
 #'  
 #' @export
 #' @return A tibble of controls
-get_project_control <- function(auth, objective_id = NULL, control_id = NULL, fields = NULL, pagesize = 50){
+get_project_controls <- function(auth, objective_id = NULL, control_id = NULL, fields = NULL, pagesize = 50){
   
   primary <- objective_id
   secondary <- control_id
@@ -263,13 +263,13 @@ get_project_control <- function(auth, objective_id = NULL, control_id = NULL, fi
 #'
 #' @description The mapping between controls and risks
 #'
-#' @inheritParams get_project
+#' @inheritParams get_projects
 #'
 #' @param mitigation_id Will get only one.
 #'  
 #' @export
 #' @return A tibble of mitigations
-get_project_mitigation <- function(auth, mitigation_id, fields = NULL, pagesize = 50){
+get_project_mitigations <- function(auth, mitigation_id, fields = NULL, pagesize = 50){
   
   primary <- mitigation_id
   component <- 'mitigations' # Set up the project
@@ -296,13 +296,13 @@ get_project_mitigation <- function(auth, mitigation_id, fields = NULL, pagesize 
 #'   testing_results, testing_conclusion, created_at, updated_at, control,
 #'   assigned_user
 #'
-#' @inheritParams get_project
+#' @inheritParams get_projects
 #'
 #' @param control_test_plan_id Will get only one.
 #'
 #' @export
 #' @return A tibble of control test plans
-get_project_control_test_plan <- function(auth, control_test_plan_id, fields = NULL, pagesize = 50){
+get_project_control_test_plans <- function(auth, control_test_plan_id, fields = NULL, pagesize = 50){
   
   primary <- control_test_plan_id
   component <- 'control_test_plans' # Set up the project
@@ -322,13 +322,13 @@ get_project_control_test_plan <- function(auth, control_test_plan_id, fields = N
 #'
 #' @description "Control tests evaluate the operating effectiveness of a control."
 #'
-#' @inheritParams get_project
+#' @inheritParams get_projects
 #'
 #' @param control_test_id Will get only one.
 #'
 #' @export
 #' @return A tibble of control tests
-get_project_control_test <- function(auth, control_test_id, fields = NULL, pagesize = 50){
+get_project_control_tests <- function(auth, control_test_id, fields = NULL, pagesize = 50){
   
   primary <- control_test_id
   component <- 'control_tests' # Set up the project
@@ -350,13 +350,13 @@ get_project_control_test <- function(auth, control_test_id, fields = NULL, pages
 #'   control is designed appropriately. In a Workplan workflow project, a
 #'   walkthrough is called an execute procedure."
 #'
-#' @inheritParams get_project
+#' @inheritParams get_projects
 #'
 #' @param walkthrough_id Will get only one.
 #'
 #' @export
 #' @return A tibble of walkthroughs
-get_project_walkthrough <- function(auth, walkthrough_id, fields = NULL, pagesize = 50){
+get_project_walkthroughs <- function(auth, walkthrough_id, fields = NULL, pagesize = 50){
   
   primary <- walkthrough_id
   component <- 'walkthroughs' # Set up the project
@@ -386,13 +386,13 @@ get_project_walkthrough <- function(auth, walkthrough_id, fields = NULL, pagesiz
 #'   actual_retest_date, retesting_results_overview, custom_attributes, project,
 #'   entities
 #'
-#' @inheritParams get_project
+#' @inheritParams get_projects
 #'
 #' @param project_id Required if other parameter is blank. May obtain multiple rows.
 #' @param issue_id Required if other parameter is blank. Will get only one.
 #' @export
 #' @return A tibble of issues
-get_project_issue <- function(auth, project_id = NULL, issue_id = NULL, fields = NULL, pagesize = 50){
+get_project_issues <- function(auth, project_id = NULL, issue_id = NULL, fields = NULL, pagesize = 50){
   
   primary <- project_id
   secondary <- issue_id
@@ -421,7 +421,7 @@ get_project_issue <- function(auth, project_id = NULL, issue_id = NULL, fields =
 #'   completed_date, status, submitted_on, custom_attributes, issue,
 #'   assigned_by, cc_users
 #'
-#' @inheritParams get_project
+#' @inheritParams get_projects
 #'
 #' @param issue_id Required if other parameter is blank. May obtain multiple rows.
 #' @param action_id Required if other parameter is blank. Will get only one.
@@ -447,7 +447,7 @@ get_project_actions <- function(auth, issue_id = NULL, action_id = NULL, fields 
 #'
 #' @description Capture what you asked for
 #'
-#' @inheritParams get_project
+#' @inheritParams get_projects
 #'
 #' @param request_id Will get only one.
 #'
@@ -473,13 +473,13 @@ get_project_request_items <- function(auth, request_id, fields = NULL, pagesize 
 #'
 #' @details Fields allowed: title, description, created_at, updated_at, parent, children_count, entity_category
 #' 
-#' @inheritParams get_project
+#' @inheritParams get_projects
 #'
 #' @param entity_id \code{NULL} will default to all entities.
 #'
 #' @return A tibble of entities
 #' @export
-get_project_entity <- function(auth, entity_id = NULL, fields = NULL, pagesize = 50){
+get_project_entities <- function(auth, entity_id = NULL, fields = NULL, pagesize = 50){
   
   primary <- entity_id
   component <- 'entities' # Set up the project
@@ -493,45 +493,46 @@ get_project_entity <- function(auth, entity_id = NULL, fields = NULL, pagesize =
   return(data) 
 }
 
-#' Retrieve Highbond Projects - Collaborators
-#'
-#' @description Get the collaborators, aka user roles in Project or Framework.
-#'
-#' @details Fields allowed: project, framework, user, project_role, effective_role, organization_role, created_at, updated_at, group
-#' 
-#' @inheritParams get_project
-#'
-#' @param project_id Required if other parameter is blank. 
-#' @param encoded_uid Required if the other parameter is blank. Base64 encoded parent resource id (project or framework) and user uid, encoded from format \code{parent_resource_id:user_uid.}.
-#'
-#' @return A tibble of collaborators
-#' @export
-get_project_collaborator <- function(auth, project_id = NULL, encoded_uid = NULL, fields = NULL, pagesize = 50){
-  
-  primary <- project_id
-  secondary <- encoded_uid
-  component <- 'collaborators' # Set up the project
-  hb_project_one_only(primary, secondary) # Checks
-  
-  url <- paste0(hb_url(auth), hb_url_component(component, primary, secondary)) # Set up the query parameters
-  
-  # A project id will return MULTIPLE users for one project
-  # Whereas an encoded UID will return a single
-  plural <- is.null(secondary) 
-  
-  params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
-  
-  return(data) 
-}
+# Retrieve Highbond Projects - Collaborators
+# Implemented then removed
+#
+# @description Get the collaborators, aka user roles in Project or Framework.
+#
+# @details Fields allowed: project, framework, user, project_role, effective_role, organization_role, created_at, updated_at, group
+# 
+# @inheritParams get_projects
+#
+# @param project_id Required if other parameter is blank. 
+# @param encoded_uid Required if the other parameter is blank. Base64 encoded parent resource id (project or framework) and user uid, encoded from format \code{parent_resource_id:user_uid.}.
+#
+# @return A tibble of collaborators
+# @export
+# get_project_collaborators <- function(auth, project_id = NULL, encoded_uid = NULL, fields = NULL, pagesize = 50){
+#   
+#   primary <- project_id
+#   secondary <- encoded_uid
+#   component <- 'collaborators' # Set up the project
+#   hb_project_one_only(primary, secondary) # Checks
+#   
+#   url <- paste0(hb_url(auth), hb_url_component(component, primary, secondary)) # Set up the query parameters
+#   
+#   # A project id will return MULTIPLE users for one project
+#   # Whereas an encoded UID will return a single
+#   plural <- is.null(secondary) 
+#   
+#   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
+#   data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+#   
+#   return(data) 
+# }
 
 #' Retrieve Highbond Projects - Custom Attributes
 #'
 #' @description Get the custom attributes set within a project type. Note these
 #'   are different than the custom terms used to rename fields. For those, see
-#'   \link[galvanizer]{get_project_type}
+#'   \link[galvanizer]{get_project_types}
 #'
-#' @inheritParams get_project
+#' @inheritParams get_projects
 #'
 #' @param project_type_id Required if other parameter is blank.
 #' @param custom_attributes_id Required if the other parameter is blank. Base64

@@ -124,7 +124,7 @@ hb_callingfunc <- function(){
 
 hb_callingtarget <- function(){
   calling_target <- as.list(sys.call(-1))[[1]]
-  
+
   sub(".*_", "", calling_target)
 }
 
