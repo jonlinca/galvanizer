@@ -126,7 +126,7 @@ hb_prj_parse_tags <- function(content_raw){
   content_tags <- content_tags %>%
     gather_array() %>% 
     append_values_string() %>%
-    select(.data$document.id, .data$array.index, tag_list = .data$string) %>% #propose to remove array.index
+    select(.data$document.id, tag_list = .data$string) %>% 
     as_tibble() %>%
     nest(tag_list = c(.data$tag_list))
   
