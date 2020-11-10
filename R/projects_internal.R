@@ -94,11 +94,14 @@ hb_prj_parse_custom <- function(content_raw){
   
   content_attributes_custom <- content_attributes_custom %>%
     gather_array() %>%
-    gather_object() %>% 
-    append_values_string("value") %>% # This is the reason why an early return is not needed
-    select(.data$document.id, .data$array.index, .data$name, .data$value) %>% #propose to remove array.index
+    spread_values(id = jstring(id),
+                  term = jstring(term)) %>%
+    enter_object('value') %>%
+    gather_array('value') %>%
+    append_values_string("value") %>%
     as_tibble() %>%
-    nest(custom_attributes = c(.data$array.index, .data$name, .data$value)) # CONSIDER RESHAPING TO HAVE ID, NAME, VALUE
+    select(document.id, id, term, value) %>%
+    nest(custom_attributes = c(id, term, value))
   
   if (nrow(content_attributes_custom) == 0){return (NULL)}
   

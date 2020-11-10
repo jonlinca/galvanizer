@@ -554,6 +554,7 @@ get_project_custom_attributes <- function(auth, project_type_id = NULL, custom_a
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
   data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  # MAY REQUIRE ENHANCEMENT DUE TO OPTIONS NESTED
   
   return(data) 
 }
