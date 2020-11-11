@@ -197,13 +197,14 @@ hb_prj_coljoin_data <- function(core, custom, tags, relationships){
 #' @importFrom dplyr select bind_rows
 #' @importFrom httr content
 #' @importFrom jsonlite fromJSON
-hb_prj_get_controller <- function(auth, url, params, plural, waittime = 0.3){
+hb_prj_get_controller <- function(auth, url, params, plural, waittime = 0.2){
   # Performs the GET and loop
   
   i <- 1 # pointer
   
   # Download the first page, specifying parameters
-  download <- hb_api_get(auth, url, waittime, params = params)
+  download <- hb_api_get(auth, url, params = params)
+  waittime_last <- Sys.time()
   json <- httr::content(download, 'text')
   content <- jsonlite::fromJSON(json, simplifyVector = FALSE)
   
@@ -217,11 +218,19 @@ hb_prj_get_controller <- function(auth, url, params, plural, waittime = 0.3){
   
   # Pagination
   while (!is.null(next_page)){
+    waittime_now <- Sys.time() # Wait time is required as Highbond limits rates to about three queries per second
+    waittime_elapsed <- as.numeric(difftime(waittime_now, waittime_last, units = 'secs'))
+    if (waittime_elapsed < waittime){
+      message("Delaying until param wait time has reached")
+      Sys.sleep(waittime - waittime_elapsed)
+    }
+    
     combined_data_next <- NULL # Just a clean reset
     i <- i + 1 # increment to save into next page
     
     url <- paste0(hb_url_base(auth),next_page) # Use the next page as provided
-    download <- hb_api_get(auth, url, waittime) # Don't use parameters anymore
+    download <- hb_api_get(auth, url) # Don't use parameters anymore
+    waittime_last <- Sys.time()
     
     json <- httr::content(download, 'text')
     content <- jsonlite::fromJSON(json, simplifyVector = FALSE)
@@ -229,19 +238,7 @@ hb_prj_get_controller <- function(auth, url, params, plural, waittime = 0.3){
     next_page <- content$links$`next` # Save next page reference
     
     combined_data_next <- hb_parse_content(content, plural)
-    
-    # content_data <- if(plural){content$data} else {content} # This is important for many
-    # 
-    # core <- hb_prj_parse_standard(content_data) # Returns the three primary tables in all - header, attributes, relationships
-    # 
-    # # Custom fields get - relevant to most except...
-    # custom <- hb_prj_parse_custom(content_data) # Is component even necessary?
-    # tags <- hb_prj_parse_tags(content_data)
-    # relationships <- hb_prj_parse_rel(content_data)
-    # 
-    # # Next page, finished
-    # combined_data_next <- hb_prj_coljoin_data(core, custom, tags, relationships)
-    
+
     combined_data <- bind_rows(combined_data, combined_data_next)
   }
   

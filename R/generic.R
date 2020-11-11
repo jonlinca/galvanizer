@@ -44,24 +44,33 @@ hb_checkauth <- function(auth){
   stopifnot(class(auth) == 'hb_auth')
 }
 
-hb_api_get <- function(auth, url, waittime = 0.3, params = NULL){
+hb_api_get <- function(auth, url, params = NULL){
   # The function that actually pulls Highbond data
   hb_checkauth(auth)
   
   apikey <- auth$key
   
-  if (is.null(params)){
-    hb_api_get <- httr::GET(url, 
-                            hb_headers(auth))
-  } else {
-    # We have to do this because having a params of blank but passing a fully encoded url will clear all the parameters
-    hb_api_get <- httr::GET(url, 
-                          hb_headers(auth),
-                          query = params)
-  }
+  skip_retry <- TRUE
   
-  Sys.sleep(waittime) # Wait time is required as Highbond limits rates to about three queries per second
-  hb_validateDownload(hb_api_get)
+  while(skip_retry){
+    if (is.null(params)){
+      hb_api_get <- httr::GET(url, 
+                              hb_headers(auth))
+    } else {
+      # We have to do this because having a params of blank but passing a fully encoded url will clear all the parameters
+      hb_api_get <- httr::GET(url, 
+                            hb_headers(auth),
+                            query = params)
+    }
+    
+    # Force a retry if it fails
+    if (httr::status_code(hb_api_get) == 429){
+      message("Rate limit exceeded, waiting to retry")
+    }
+    
+    check_download <- hb_validateDownload(hb_api_get)
+    if (check_download){skip_retry <- FALSE}
+  }
   return(hb_api_get)
 }
 
@@ -84,6 +93,8 @@ hb_validateDownload <- function(content){
   if (httr::http_type(content) != 'application/json' & httr::http_type(content) != 'application/vnd.api+json'){
     stop("API did not return application/json or application/vnd.api+json", call. = FALSE)
   }
+  
+  return(TRUE)
 }
 
 hb_url <- function(auth){
@@ -254,7 +265,7 @@ hb_parse_content <- function(content, plural){
   content_data <- if(plural){content$data} else {content} # This is important for many
   
   if (length(content_data) == 0){
-    warning(paste('Downloaded json is blank. Is it empty?'))
+    warning('No data returned.')
     return(NULL)
   }
   
