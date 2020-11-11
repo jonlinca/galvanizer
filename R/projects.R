@@ -14,6 +14,7 @@
 #' @param fields OPTIONAL. A character vector each field requested within the
 #'   project. NULL will default to all fields.
 #' @param pagesize Defaults to 50. Maximum is 100.
+#' @param waittime Time in seconds to wait between requests.
 #'
 #' @return A tibble of projects
 #' @export
@@ -23,7 +24,7 @@
 #' projects <- get_projects(auth)
 #' projects <- get_projects(auth, fields = c('name', 'state', 'status'))
 #' }
-get_projects <- function(auth, project_id = NULL, fields = NULL, pagesize = 50){
+get_projects <- function(auth, project_id = NULL, fields = NULL, pagesize = 50, waittime = 0.2){
   
   primary <- project_id
   component <- 'projects' # Set up the project
@@ -32,7 +33,7 @@ get_projects <- function(auth, project_id = NULL, fields = NULL, pagesize = 50){
   plural <- is.null(primary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
   
   return(data) 
 }
@@ -52,7 +53,7 @@ get_projects <- function(auth, project_id = NULL, fields = NULL, pagesize = 50){
 #'
 #' @export
 #' @return A tibble of project types
-get_project_types <- function(auth, project_type_id = NULL, fields = NULL, pagesize = 50){
+get_project_types <- function(auth, project_type_id = NULL, fields = NULL, pagesize = 50, waittime = 0.2){
   
   primary <- project_type_id
   component <- 'project_types' # Set up the project
@@ -61,7 +62,7 @@ get_project_types <- function(auth, project_type_id = NULL, fields = NULL, pages
   plural <- is.null(primary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
   
   return(data) 
 }
@@ -81,7 +82,7 @@ get_project_types <- function(auth, project_type_id = NULL, fields = NULL, pages
 #' 
 #' @export
 #' @return A tibble of planning files.
-get_project_planning_files <- function(auth, project_id = NULL, planning_file_id = NULL, fields = NULL, pagesize = 50){
+get_project_planning_files <- function(auth, project_id = NULL, planning_file_id = NULL, fields = NULL, pagesize = 50, waittime = 0.2){
 
   primary <- project_id
   secondary <- planning_file_id
@@ -92,7 +93,7 @@ get_project_planning_files <- function(auth, project_id = NULL, planning_file_id
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
 
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
   
   return(data) 
 }
@@ -111,7 +112,7 @@ get_project_planning_files <- function(auth, project_id = NULL, planning_file_id
 #' @param results_file_id Required if other parameter is blank. Will get only one row.
 #' @export
 #' @return A tibble of result files
-get_project_result_files <- function(auth, project_id = NULL, results_file_id = NULL, fields = NULL, pagesize = 50){
+get_project_result_files <- function(auth, project_id = NULL, results_file_id = NULL, fields = NULL, pagesize = 50, waittime = 0.2){
   
   primary <- project_id
   secondary <- results_file_id
@@ -122,7 +123,7 @@ get_project_result_files <- function(auth, project_id = NULL, results_file_id = 
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
   
   return(data) 
 }
@@ -145,7 +146,7 @@ get_project_result_files <- function(auth, project_id = NULL, results_file_id = 
 #' @param objective_id Required if other parameter is blank. Will get only one row.
 #' @export
 #' @return A tibble of objectives
-get_project_objectives <- function(auth, project_id = NULL, objective_id = NULL, fields = NULL, pagesize = 50){
+get_project_objectives <- function(auth, project_id = NULL, objective_id = NULL, fields = NULL, pagesize = 50, waittime = 0.2){
   
   primary <- project_id
   secondary <- objective_id
@@ -156,7 +157,7 @@ get_project_objectives <- function(auth, project_id = NULL, objective_id = NULL,
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
   
   return(data) 
 }
@@ -175,7 +176,7 @@ get_project_objectives <- function(auth, project_id = NULL, objective_id = NULL,
 #' @param narrative_id Required if other parameter is blank. Will get only one row.
 #' @export
 #' @return A tibble of narratives
-get_project_narratives <- function(auth, objective_id = NULL, narrative_id = NULL, fields = NULL, pagesize = 50){
+get_project_narratives <- function(auth, objective_id = NULL, narrative_id = NULL, fields = NULL, pagesize = 50, waittime = 0.2){
   
   primary <- objective_id
   secondary <- narrative_id
@@ -186,7 +187,7 @@ get_project_narratives <- function(auth, objective_id = NULL, narrative_id = NUL
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
 
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
   
   return(data) 
 }
@@ -207,7 +208,7 @@ get_project_narratives <- function(auth, objective_id = NULL, narrative_id = NUL
 #' @param risk_id Required if other parameter is blank. Will get only one.
 #' @export
 #' @return A tibble of Risks
-get_project_risks <- function(auth, objective_id = NULL, risk_id = NULL, fields = NULL, pagesize = 50){
+get_project_risks <- function(auth, objective_id = NULL, risk_id = NULL, fields = NULL, pagesize = 50, waittime = 0.2){
   
   primary <- objective_id
   secondary <- risk_id
@@ -218,7 +219,7 @@ get_project_risks <- function(auth, objective_id = NULL, risk_id = NULL, fields 
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
   
   return(data) 
 }
@@ -243,7 +244,7 @@ get_project_risks <- function(auth, objective_id = NULL, risk_id = NULL, fields 
 #'  
 #' @export
 #' @return A tibble of controls
-get_project_controls <- function(auth, objective_id = NULL, control_id = NULL, fields = NULL, pagesize = 50){
+get_project_controls <- function(auth, objective_id = NULL, control_id = NULL, fields = NULL, pagesize = 50, waittime = 0.2){
   
   primary <- objective_id
   secondary <- control_id
@@ -254,7 +255,7 @@ get_project_controls <- function(auth, objective_id = NULL, control_id = NULL, f
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
   
   return(data) 
 }
@@ -269,7 +270,7 @@ get_project_controls <- function(auth, objective_id = NULL, control_id = NULL, f
 #'  
 #' @export
 #' @return A tibble of mitigations
-get_project_mitigations <- function(auth, mitigation_id, fields = NULL, pagesize = 50){
+get_project_mitigations <- function(auth, mitigation_id, fields = NULL, pagesize = 50, waittime = 0.2){
   
   primary <- mitigation_id
   component <- 'mitigations' # Set up the project
@@ -278,7 +279,7 @@ get_project_mitigations <- function(auth, mitigation_id, fields = NULL, pagesize
   plural <- FALSE
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
   
   return(data) 
 }
@@ -302,7 +303,7 @@ get_project_mitigations <- function(auth, mitigation_id, fields = NULL, pagesize
 #'
 #' @export
 #' @return A tibble of control test plans
-get_project_control_test_plans <- function(auth, control_test_plan_id, fields = NULL, pagesize = 50){
+get_project_control_test_plans <- function(auth, control_test_plan_id, fields = NULL, pagesize = 50, waittime = 0.2){
   
   primary <- control_test_plan_id
   component <- 'control_test_plans' # Set up the project
@@ -311,7 +312,7 @@ get_project_control_test_plans <- function(auth, control_test_plan_id, fields = 
   plural <- FALSE
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
   
   return(data) 
 }
@@ -328,7 +329,7 @@ get_project_control_test_plans <- function(auth, control_test_plan_id, fields = 
 #'
 #' @export
 #' @return A tibble of control tests
-get_project_control_tests <- function(auth, control_test_id, fields = NULL, pagesize = 50){
+get_project_control_tests <- function(auth, control_test_id, fields = NULL, pagesize = 50, waittime = 0.2){
   
   primary <- control_test_id
   component <- 'control_tests' # Set up the project
@@ -337,7 +338,7 @@ get_project_control_tests <- function(auth, control_test_id, fields = NULL, page
   plural <- FALSE
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
   
   return(data) 
 }
@@ -356,7 +357,7 @@ get_project_control_tests <- function(auth, control_test_id, fields = NULL, page
 #'
 #' @export
 #' @return A tibble of walkthroughs
-get_project_walkthroughs <- function(auth, walkthrough_id, fields = NULL, pagesize = 50){
+get_project_walkthroughs <- function(auth, walkthrough_id, fields = NULL, pagesize = 50, waittime = 0.2){
   
   primary <- walkthrough_id
   component <- 'walkthroughs' # Set up the project
@@ -365,7 +366,7 @@ get_project_walkthroughs <- function(auth, walkthrough_id, fields = NULL, pagesi
   plural <- FALSE
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
   
   return(data) 
 }
@@ -392,7 +393,7 @@ get_project_walkthroughs <- function(auth, walkthrough_id, fields = NULL, pagesi
 #' @param issue_id Required if other parameter is blank. Will get only one.
 #' @export
 #' @return A tibble of issues
-get_project_issues <- function(auth, project_id = NULL, issue_id = NULL, fields = NULL, pagesize = 50){
+get_project_issues <- function(auth, project_id = NULL, issue_id = NULL, fields = NULL, pagesize = 50, waittime = 0.2){
   
   primary <- project_id
   secondary <- issue_id
@@ -403,7 +404,7 @@ get_project_issues <- function(auth, project_id = NULL, issue_id = NULL, fields 
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
   
   return(data) 
 }
@@ -427,7 +428,7 @@ get_project_issues <- function(auth, project_id = NULL, issue_id = NULL, fields 
 #' @param action_id Required if other parameter is blank. Will get only one.
 #' @export
 #' @return A tibble of actions
-get_project_actions <- function(auth, issue_id = NULL, action_id = NULL, fields = NULL, pagesize = 50){
+get_project_actions <- function(auth, issue_id = NULL, action_id = NULL, fields = NULL, pagesize = 50, waittime = 0.2){
   
   primary <- issue_id
   secondary <- action_id
@@ -438,7 +439,7 @@ get_project_actions <- function(auth, issue_id = NULL, action_id = NULL, fields 
   plural <- is.null(secondary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
   
   return(data) 
 }
@@ -453,7 +454,7 @@ get_project_actions <- function(auth, issue_id = NULL, action_id = NULL, fields 
 #'
 #' @export
 #' @return A tibble of walkthroughs
-get_project_request_items <- function(auth, request_id, fields = NULL, pagesize = 50){
+get_project_request_items <- function(auth, request_id, fields = NULL, pagesize = 50, waittime = 0.2){
   
   primary <- request_id
   component <- 'request_items' # Set up the project
@@ -462,7 +463,7 @@ get_project_request_items <- function(auth, request_id, fields = NULL, pagesize 
   plural <- FALSE
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
   
   return(data) 
 }
@@ -479,7 +480,7 @@ get_project_request_items <- function(auth, request_id, fields = NULL, pagesize 
 #'
 #' @return A tibble of entities
 #' @export
-get_project_entities <- function(auth, entity_id = NULL, fields = NULL, pagesize = 50){
+get_project_entities <- function(auth, entity_id = NULL, fields = NULL, pagesize = 50, waittime = 0.2){
   
   primary <- entity_id
   component <- 'entities' # Set up the project
@@ -488,7 +489,7 @@ get_project_entities <- function(auth, entity_id = NULL, fields = NULL, pagesize
   plural <- is.null(primary) # Flag if its one or many. I.e. plural download
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
   
   return(data) 
 }
@@ -507,7 +508,7 @@ get_project_entities <- function(auth, entity_id = NULL, fields = NULL, pagesize
 #
 # @return A tibble of collaborators
 # @export
-# get_project_collaborators <- function(auth, project_id = NULL, encoded_uid = NULL, fields = NULL, pagesize = 50){
+# get_project_collaborators <- function(auth, project_id = NULL, encoded_uid = NULL, fields = NULL, pagesize = 50, waittime = 0.2){
 #   
 #   primary <- project_id
 #   secondary <- encoded_uid
@@ -521,12 +522,12 @@ get_project_entities <- function(auth, entity_id = NULL, fields = NULL, pagesize
 #   plural <- is.null(secondary) 
 #   
 #   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-#   data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+#   data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
 #   
 #   return(data) 
 # }
 
-#' Retrieve Highbond Projects - Custom Attributes
+#' Retrieve Highbond Projects - Project Type Custom Attributes
 #'
 #' @description Get the custom attributes set within a project type. Note these
 #'   are different than the custom terms used to rename fields. For those, see
@@ -541,7 +542,7 @@ get_project_entities <- function(auth, entity_id = NULL, fields = NULL, pagesize
 #'
 #' @return A tibble of custom attributes
 #' @export
-get_project_custom_attributes <- function(auth, project_type_id = NULL, custom_attributes_id = NULL, fields = NULL, pagesize = 50){
+get_project_type_custom_attributes <- function(auth, project_type_id = NULL, custom_attributes_id = NULL, fields = NULL, pagesize = 50, waittime = 0.2){
   
   primary <- project_type_id
   secondary <- custom_attributes_id
@@ -553,7 +554,7 @@ get_project_custom_attributes <- function(auth, project_type_id = NULL, custom_a
   plural <- is.null(custom_attributes_id) 
   
   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-  data <- hb_prj_get_controller(auth, url, params, plural) # Download the data
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
   # MAY REQUIRE ENHANCEMENT DUE TO OPTIONS NESTED
   
   return(data) 

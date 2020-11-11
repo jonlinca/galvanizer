@@ -8,7 +8,8 @@ get_project_control_test_plans(
   auth,
   control_test_plan_id,
   fields = NULL,
-  pagesize = 50
+  pagesize = 50,
+  waittime = 0.2
 )
 }
 \arguments{
@@ -20,6 +21,8 @@ get_project_control_test_plans(
 project. NULL will default to all fields.}
 
 \item{pagesize}{Defaults to 50. Maximum is 100.}
+
+\item{waittime}{Time in seconds to wait between requests.}
 }
 \value{
 A tibble of control test plans

@@ -45,5 +45,5 @@ reference:
     Functions for downloading configured settings for projects
 - contents:
   - get_project_types
-  - get_project_custom_attributes
+  - get_project_type_custom_attributes
 

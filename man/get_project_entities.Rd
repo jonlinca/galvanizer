@@ -4,7 +4,13 @@
 \alias{get_project_entities}
 \title{Retrieve Highbond Projects - Entities}
 \usage{
-get_project_entities(auth, entity_id = NULL, fields = NULL, pagesize = 50)
+get_project_entities(
+  auth,
+  entity_id = NULL,
+  fields = NULL,
+  pagesize = 50,
+  waittime = 0.2
+)
 }
 \arguments{
 \item{auth}{Highbond authentication credentials, created from \code{\link{setup_highbond}}}
@@ -15,6 +21,8 @@ get_project_entities(auth, entity_id = NULL, fields = NULL, pagesize = 50)
 project. NULL will default to all fields.}
 
 \item{pagesize}{Defaults to 50. Maximum is 100.}
+
+\item{waittime}{Time in seconds to wait between requests.}
 }
 \value{
 A tibble of entities

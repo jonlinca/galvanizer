@@ -151,13 +151,13 @@ test_that("Highbond Projects - GET entities", {
   expect_true(nrow(b) >= 1)
 })
 
-test_that("Highbond Projects - GET Custom Attributes", {
+test_that("Highbond Projects - GET Project Type Custom Attributes", {
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
   
   project_id <- 121339
   
-  a <- get_project_custom_attributes(hb_creds, project_type_id = 183697)
-  b <- get_project_custom_attributes(hb_creds, custom_attributes_id = 21192)
+  a <- get_project_type_custom_attributes(hb_creds, project_type_id = 183697)
+  b <- get_project_type_custom_attributes(hb_creds, custom_attributes_id = 21192)
   
   expect_true(nrow(a) >= 1)
   expect_true(nrow(b) >= 1)

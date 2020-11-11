@@ -44,7 +44,7 @@ hb_checkauth <- function(auth){
   stopifnot(class(auth) == 'hb_auth')
 }
 
-hb_api_get <- function(auth, url, waittime = 0.6, params = NULL){
+hb_api_get <- function(auth, url, waittime = 0.3, params = NULL){
   # The function that actually pulls Highbond data
   hb_checkauth(auth)
   

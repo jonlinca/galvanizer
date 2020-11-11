@@ -9,7 +9,8 @@ get_project_controls(
   objective_id = NULL,
   control_id = NULL,
   fields = NULL,
-  pagesize = 50
+  pagesize = 50,
+  waittime = 0.2
 )
 }
 \arguments{
@@ -23,6 +24,8 @@ get_project_controls(
 project. NULL will default to all fields.}
 
 \item{pagesize}{Defaults to 50. Maximum is 100.}
+
+\item{waittime}{Time in seconds to wait between requests.}
 }
 \value{
 A tibble of controls

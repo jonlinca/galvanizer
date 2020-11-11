@@ -197,7 +197,7 @@ hb_prj_coljoin_data <- function(core, custom, tags, relationships){
 #' @importFrom dplyr select bind_rows
 #' @importFrom httr content
 #' @importFrom jsonlite fromJSON
-hb_prj_get_controller <- function(auth, url, params, plural, waittime = 0.6){
+hb_prj_get_controller <- function(auth, url, params, plural, waittime = 0.3){
   # Performs the GET and loop
   
   i <- 1 # pointer

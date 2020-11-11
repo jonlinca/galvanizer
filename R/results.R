@@ -150,6 +150,10 @@ post_results_records <- function(auth, table_id,
   if(!purge){
     hbCols <- get_results_columns(auth, table_id)
     
+    if (nrow(hbCols) == 0) {
+      stop("No columns were detected in specified table. If this is a new table, use argument 'purge = TRUE'")
+    }
+    
     hbCompare <- data.frame(hb_name = hbCols$id, hb_coltype = hbCols$data_type,
                             row.names = NULL,
                             stringAsFactors = FALSE)

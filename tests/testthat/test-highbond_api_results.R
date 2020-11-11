@@ -38,26 +38,30 @@ test_that("Highbond Results - POST with PURGE", {
 
 test_that("Highbond Results - POST without Purge", {
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
-  
   highbond_table <- Sys.getenv('highbond_table')
+  
+  # Start from a blank slate, and purge
+  
+  expect_null(post_results_records(hb_creds, highbond_table, upload = upload, purge = TRUE))
   
   Sys.sleep(20)
   
+  # Get the current reference
   download <- get_results_records(hb_creds, highbond_table)
-  
   current_count <- nrow(download$content$data)
   
-  expect_equal(post_results_records(hb_creds, highbond_table, upload = upload, purge = FALSE), NULL)
+  # Then upload again without a purge
+  expect_null(post_results_records(hb_creds, highbond_table, upload = upload, purge = FALSE))
   
   # Wait delay
   
   Sys.sleep(20)
   
+  # Get the new state
   download <- get_results_records(hb_creds, highbond_table)
   
   new_count <- nrow(download$content$data)
-  
-  expect_equal(current_count + nrow(upload), new_count)
+  expect_equivalent(current_count + nrow(upload), new_count)
 })
 
 test_that("Highbond Results - GET", {
