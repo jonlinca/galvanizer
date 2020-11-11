@@ -83,6 +83,10 @@ hb_prj_parse_custom <- function(content_raw){
   # This parses custom only
 
   # Suppress notes, as these are JSON elements within the returned object
+  id <- NULL
+  term <- NULL
+  document.id <- NULL
+  value <- NULL
   attributes <- NULL
   custom_attributes <- NULL
 
