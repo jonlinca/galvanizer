@@ -51,9 +51,10 @@ same primary key may be merged, rather than duplicated.
 \dontrun{
   upload <- data.frame(field_one = c('A','B','C'),
   field_two = c(1, 2, 3),
-  field_three = c(TRUE, FALSE, TRUE),
-  field_four = c(as.Date('2019-01-01'), as.Date('2020-01-01'), as.Date('2021-12-31')),
-  field_five = c(as.POSIXct(Sys.time()), as.POSIXct(Sys.time()), as.POSIXct(Sys.time())))
+  field_three = c(10L, 11L, 12L),
+  field_four = c(TRUE, FALSE, TRUE),
+  field_five = c(as.Date('2019-01-01'), as.Date('2020-01-01'), as.Date('2021-12-31')),
+  field_six = c(as.POSIXct(Sys.time()), as.POSIXct(Sys.time()), as.POSIXct(Sys.time())))
   post_results_records(auth, upload = upload, purge = TRUE)
   }
 }

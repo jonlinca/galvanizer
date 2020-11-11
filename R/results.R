@@ -89,19 +89,22 @@ get_results_records <- function(auth, table_id, timezone = Sys.timezone()){
 #' @return No data is returned, although errors will be verbose
 #' @export
 #' 
-#' @importFrom dplyr mutate_if vars inner_join anti_join mutate
+#' @importFrom dplyr mutate_if vars inner_join anti_join mutate across
+#' @importFrom tidyselect vars_select_helpers
 #' @importFrom utils object.size
 #' @importFrom jsonlite toJSON
 #' @importFrom httr POST add_headers
 #' @importFrom utils capture.output
+#' @importFrom lubridate is.POSIXct is.POSIXlt
 #'
 #' @examples
 #' \dontrun{
 #'   upload <- data.frame(field_one = c('A','B','C'),
 #'   field_two = c(1, 2, 3),
-#'   field_three = c(TRUE, FALSE, TRUE),
-#'   field_four = c(as.Date('2019-01-01'), as.Date('2020-01-01'), as.Date('2021-12-31')),
-#'   field_five = c(as.POSIXct(Sys.time()), as.POSIXct(Sys.time()), as.POSIXct(Sys.time())))
+#'   field_three = c(10L, 11L, 12L),
+#'   field_four = c(TRUE, FALSE, TRUE),
+#'   field_five = c(as.Date('2019-01-01'), as.Date('2020-01-01'), as.Date('2021-12-31')),
+#'   field_six = c(as.POSIXct(Sys.time()), as.POSIXct(Sys.time()), as.POSIXct(Sys.time())))
 #'   post_results_records(auth, upload = upload, purge = TRUE)
 #'   }
 post_results_records <- function(auth, table_id, 
@@ -121,16 +124,25 @@ post_results_records <- function(auth, table_id,
   
   dfCols <- sapply(lapply(upload, class), function(x) x[1])
   
-  if (any(dfCols %!in% c('character', 'numeric', 'logical', 'Date', 'POSIXct', 'POSIXlt'))){
+  if (any(dfCols %!in% c('character', 'integer', 'numeric', 'logical', 'Date', 'POSIXct', 'POSIXlt'))){
     stop("Invalid data types to upload. Examine the classes in the dataframe.")
   }
   
   # Convert datetime to ISO 8701. Call it datetime for HB
   upload <- upload %>%
-    mutate_if(lubridate::is.POSIXct, strftime, format = '%Y-%m-%dT%H:%M:%S%z') %>%
-    mutate_if(lubridate::is.POSIXlt, strftime, format = '%Y-%m-%dT%H:%M:%S%z')
+    mutate(across(vars_select_helpers$where(is.POSIXct), ~ strftime(.x, format = '%Y-%m-%dT%H:%M:%S%z'))) %>%
+    mutate(across(vars_select_helpers$where(is.POSIXlt), ~ strftime(.x, format = '%Y-%m-%dT%H:%M:%S%z')))
+    # mutate_if(lubridate::is.POSIXct, strftime, format = '%Y-%m-%dT%H:%M:%S%z') %>%
+    # mutate_if(lubridate::is.POSIXlt, strftime, format = '%Y-%m-%dT%H:%M:%S%z')
   
+  # Convert integers to numeric
+  
+  upload <- upload %>%
+    mutate(across(vars_select_helpers$where(is.integer), as.numeric))
+  
+  # Reassess new fields, changing name of data types to match Highbond expectation
   dfCols <- gsub('posixct', 'datetime', tolower(dfCols))
+  dfCols <- gsub('integer', 'numeric', tolower(dfCols))
   
   # Get and compare exisitng column specifications
   # TODO Add purge checks

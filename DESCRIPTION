@@ -22,6 +22,7 @@ Imports:
     rlang,
     tidyjson,
     tibble,
-    tidyr
+    tidyr,
+    tidyselect
 Suggests: 
     testthat

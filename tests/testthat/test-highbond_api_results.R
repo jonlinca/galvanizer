@@ -3,7 +3,8 @@ upload <- data.frame(field_one = c('A','B','C'),
                      field_three = c(TRUE, FALSE, TRUE),
                      field_four = c(as.Date('2019-01-01'), as.Date('2020-01-01'), as.Date('2021-12-31')),
                      field_five = c(as.POSIXct(Sys.time()), as.POSIXct(Sys.time()), as.POSIXct(Sys.time())),
-                     field_six =  c(as.POSIXlt(Sys.time()), as.POSIXlt(Sys.time()), as.POSIXlt(Sys.time())))
+                     field_six =  c(as.POSIXlt(Sys.time()), as.POSIXlt(Sys.time()), as.POSIXlt(Sys.time())),
+                     field_seven = c(10L, 11L, 12L))
 
 test_that("Highbond Results - POST with PURGE", {
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
@@ -20,7 +21,7 @@ test_that("Highbond Results - POST with PURGE", {
   download <- get_results_records(hb_creds, highbond_table, timezone = 'Canada/Pacific')
   
   coltypes <- download$content$columns %>%
-    dplyr::filter(field_name %in% c('field_one', 'field_two', 'field_three', 'field_four', 'field_five', 'field_six')) %>%
+    dplyr::filter(field_name %in% c('field_one', 'field_two', 'field_three', 'field_four', 'field_five', 'field_six', 'field_seven')) %>%
     dplyr::mutate(correctType = dplyr::case_when(
       field_name == 'field_one' & data_type == 'character'~ TRUE,
       field_name == 'field_two' & data_type == 'numeric'~ TRUE,
@@ -28,6 +29,7 @@ test_that("Highbond Results - POST with PURGE", {
       field_name == 'field_four' & data_type == 'date'~ TRUE,
       field_name == 'field_five' & data_type == 'datetime'~ TRUE,
       field_name == 'field_six' & data_type == 'datetime'~ TRUE,
+      field_name == 'field_seven' & data_type == 'numeric'~ TRUE,
       TRUE ~ FALSE
     ))
   
