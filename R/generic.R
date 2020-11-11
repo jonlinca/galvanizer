@@ -66,10 +66,10 @@ hb_api_get <- function(auth, url, params = NULL){
     # Force a retry if it fails
     if (httr::status_code(hb_api_get) == 429){
       message("Rate limit exceeded, waiting to retry")
+    } else {
+      check_download <- hb_validateDownload(hb_api_get)
+      if (check_download){skip_retry <- FALSE}
     }
-    
-    check_download <- hb_validateDownload(hb_api_get)
-    if (check_download){skip_retry <- FALSE}
   }
   return(hb_api_get)
 }
@@ -265,7 +265,7 @@ hb_parse_content <- function(content, plural){
   content_data <- if(plural){content$data} else {content} # This is important for many
   
   if (length(content_data) == 0){
-    warning('No data returned.')
+    warning('No data returned. ')
     return(NULL)
   }
   
