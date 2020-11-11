@@ -66,6 +66,7 @@ hb_api_get <- function(auth, url, params = NULL){
     # Force a retry if it fails
     if (httr::status_code(hb_api_get) == 429){
       message("Rate limit exceeded, waiting to retry")
+      Sys.sleep(0.1)
     } else {
       check_download <- hb_validateDownload(hb_api_get)
       if (check_download){skip_retry <- FALSE}
