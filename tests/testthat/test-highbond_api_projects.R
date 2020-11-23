@@ -164,13 +164,12 @@ test_that("Highbond Projects - GET Project Type Custom Attributes", {
 })
 
 
-# test_that("Highbond Projects - GET collaborators", {
-# Wait for it to be 
-#   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
-#   
-#   a <- get_project_collaborators(hb_creds, project_id = 121339)
-#   b <- get_project_collaborators(hb_creds, encoded_uid = 'MTIxMzM5OmUySnNpX003Mk5WU3BFbnhQTlN6')
-#   
-#   expect_true(nrow(a) >= 1)
-#   expect_true(nrow(b) >= 1)
-# })
+test_that("Highbond Projects - GET collaborators", {
+  hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
+
+  a <- get_project_collaborators(hb_creds, project_id = 121339)
+  b <- get_project_collaborators(hb_creds, encoded_uid = 'MTIxMzM5OmUySnNpX003Mk5WU3BFbnhQTlN6')
+
+  expect_true(nrow(a) >= 1)
+  expect_true(nrow(b) >= 1)
+})

@@ -494,38 +494,37 @@ get_project_entities <- function(auth, entity_id = NULL, fields = NULL, pagesize
   return(data) 
 }
 
-# Retrieve Highbond Projects - Collaborators
-# Implemented then removed
-#
-# @description Get the collaborators, aka user roles in Project or Framework.
-#
-# @details Fields allowed: project, framework, user, project_role, effective_role, organization_role, created_at, updated_at, group
-# 
-# @inheritParams get_projects
-#
-# @param project_id Required if other parameter is blank. 
-# @param encoded_uid Required if the other parameter is blank. Base64 encoded parent resource id (project or framework) and user uid, encoded from format \code{parent_resource_id:user_uid.}.
-#
-# @return A tibble of collaborators
-# @export
-# get_project_collaborators <- function(auth, project_id = NULL, encoded_uid = NULL, fields = NULL, pagesize = 50, waittime = 0.2){
-#   
-#   primary <- project_id
-#   secondary <- encoded_uid
-#   component <- 'collaborators' # Set up the project
-#   hb_project_one_only(primary, secondary) # Checks
-#   
-#   url <- paste0(hb_url(auth), hb_url_component(component, primary, secondary)) # Set up the query parameters
-#   
-#   # A project id will return MULTIPLE users for one project
-#   # Whereas an encoded UID will return a single
-#   plural <- is.null(secondary) 
-#   
-#   params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
-#   data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
-#   
-#   return(data) 
-# }
+#' Retrieve Highbond Projects - Collaborators
+#' 
+#' @description Get the collaborators, aka user roles in Project or Framework.
+#' 
+#' @details Fields allowed: project, framework, user, project_role, effective_role, organization_role, created_at, updated_at, group
+#' 
+#' @inheritParams get_projects
+#' 
+#' @param project_id Required if other parameter is blank.
+#' @param encoded_uid Required if the other parameter is blank. Base64 encoded parent resource id (project or framework) and user uid, encoded from format \code{parent_resource_id:user_uid.}.
+#' 
+#' @return A tibble of collaborators
+#' @export
+get_project_collaborators <- function(auth, project_id = NULL, encoded_uid = NULL, fields = NULL, pagesize = 50, waittime = 0.2){
+
+  primary <- project_id
+  secondary <- encoded_uid
+  component <- 'collaborators' # Set up the project
+  hb_project_one_only(primary, secondary) # Checks
+
+  url <- paste0(hb_url(auth), hb_url_component(component, primary, secondary)) # Set up the query parameters
+
+  # A project id will return MULTIPLE users for one project
+  # Whereas an encoded UID will return a single
+  plural <- is.null(secondary)
+
+  params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
+
+  return(data)
+}
 
 #' Retrieve Highbond Projects - Project Type Custom Attributes
 #'
