@@ -28,6 +28,7 @@ reference:
   - get_projects
   - get_project_planning_files
   - get_project_result_files
+  - get_project_collaborators
   - get_project_objectives
   - get_project_narratives
   - get_project_risks

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">galvanizer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8</span>
       </span>
     </div>
 
@@ -112,7 +112,13 @@
     <p>Capture what you asked for</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_project_request_items</span>(<span class='no'>auth</span>, <span class='no'>request_id</span>, <span class='kw'>fields</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pagesize</span> <span class='kw'>=</span> <span class='fl'>50</span>)</pre>
+    <pre class="usage"><span class='fu'>get_project_request_items</span>(
+  <span class='no'>auth</span>,
+  <span class='no'>request_id</span>,
+  <span class='kw'>fields</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>pagesize</span> <span class='kw'>=</span> <span class='fl'>50</span>,
+  <span class='kw'>waittime</span> <span class='kw'>=</span> <span class='fl'>0.2</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -133,6 +139,10 @@ project. NULL will default to all fields.</p></td>
     <tr>
       <th>pagesize</th>
       <td><p>Defaults to 50. Maximum is 100.</p></td>
+    </tr>
+    <tr>
+      <th>waittime</th>
+      <td><p>Time in seconds to wait between requests.</p></td>
     </tr>
     </table>
 

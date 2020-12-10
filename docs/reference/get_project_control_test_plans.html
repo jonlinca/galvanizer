@@ -75,7 +75,7 @@ illustrate test steps or attributes.&quot;" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">galvanizer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8</span>
       </span>
     </div>
 
@@ -122,7 +122,8 @@ illustrate test steps or attributes."</p>
   <span class='no'>auth</span>,
   <span class='no'>control_test_plan_id</span>,
   <span class='kw'>fields</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>pagesize</span> <span class='kw'>=</span> <span class='fl'>50</span>
+  <span class='kw'>pagesize</span> <span class='kw'>=</span> <span class='fl'>50</span>,
+  <span class='kw'>waittime</span> <span class='kw'>=</span> <span class='fl'>0.2</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -144,6 +145,10 @@ project. NULL will default to all fields.</p></td>
     <tr>
       <th>pagesize</th>
       <td><p>Defaults to 50. Maximum is 100.</p></td>
+    </tr>
+    <tr>
+      <th>waittime</th>
+      <td><p>Time in seconds to wait between requests.</p></td>
     </tr>
     </table>
 
