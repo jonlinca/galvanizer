@@ -143,29 +143,70 @@ hb_prj_parse_tags <- function(content_raw){
 }
 
 #' @importFrom rlang .data
-#' @importFrom dplyr select
+#' @importFrom dplyr select bind_rows count slice rename
 #' @importFrom tidyr nest
 #' @importFrom tibble as_tibble tibble
-#' @importFrom tidyjson spread_values enter_object gather_object gather_array spread_all append_values_string
+#' @importFrom tidyjson json_types spread_values enter_object gather_object gather_array spread_all append_values_string
 hb_prj_parse_rel <- function(content_raw){
   # This only processes tags
   
   # Suppress notes, as these are JSON elements within the returned object
+  name <- NULL
+  type <- NULL
+  id <- NULL
+  document.id <- NULL
+  relationship_name <- NULL
   relationships <- NULL
-  relationship_id <- NULL
-  relationship_type <- NULL
   
-  content_rel <- content_raw %>%
-    tidyjson::enter_object(relationships) 
+  rel_check <- content_raw %>%
+    tidyjson::enter_object(relationships)
   
-  if (nrow(content_rel) == 0){return (NULL)} # This occurs here because select statement will fail if these columsn doen't exist
+  if (nrow(rel_check) == 0){return (NULL)} # This occurs here because select statement will fail if these columns don't exist
   
-  content_rel <- content_rel %>%
+  relationships_provided <- content_raw %>%
+    tidyjson::enter_object(relationships) %>%
     gather_object %>%
-    spread_all %>%
-    select(.data$document.id, .data$name, relationship_id = .data$data.id, relationship_type = .data$data.type) %>% # ARE THESE SHOWING UP DIFFERENTLY AFTER SPREADING FOR DIFERENT TYPES?
-    as_tibble() %>%
-    nest(relationships = c(.data$name, relationship_id, relationship_type))
+    json_types %>%
+    dplyr::count(name, type)
+  
+  combined_relationships <- list()
+  
+  for (i in 1:nrow(relationships_provided)){
+    one_rel <- content_raw %>%
+      tidyjson::enter_object(relationships) %>%
+      gather_object %>%
+      slice(i) %>%
+      rename(relationship_name = .data$name) %>%
+      gather_object %>%
+      select(-name) %>%
+      json_types %>%
+      rename(json_type = type)
+    
+    if (one_rel$json_type == 'array'){
+      combined_relationships[[i]] <- one_rel %>%
+        gather_array %>%
+        tidyjson::spread_values(id = tidyjson::jstring(id),
+                                type = tidyjson::jstring(type)) %>%
+        as_tibble %>%
+        select(document.id, relationship_name, id, type)
+    } else if (one_rel$json_type == 'object') {
+      combined_relationships[[i]] <- one_rel %>%
+        tidyjson::spread_values(id = tidyjson::jstring(id),
+                                type = tidyjson::jstring(type)) %>%
+        as_tibble %>%
+        select(document.id, relationship_name, id, type)
+    } else {
+      combined_relationships[[i]] <- data.frame(
+        document.id = one_rel$document.id,
+        relationship_name = one_rel$relationship_name,
+        id = NA, 
+        type = NA)
+    }
+  }
+  
+  content_rel <- bind_rows(combined_relationships)  %>%
+    rename(name = relationship_name) %>%
+    nest(relationships = c(name, id, type))
   
   return(content_rel)
 }
