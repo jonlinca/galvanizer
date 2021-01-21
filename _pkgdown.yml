@@ -41,6 +41,7 @@ reference:
   - get_project_actions
   - get_project_request_items
   - get_project_entities
+  - get_project_entity_categories
 - subtitle: "Project settings"
   desc: >
     Functions for downloading configured settings for projects
