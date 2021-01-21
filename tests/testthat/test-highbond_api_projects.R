@@ -151,6 +151,16 @@ test_that("Highbond Projects - GET entities", {
   expect_true(nrow(b) >= 1)
 })
 
+test_that("Highbond Projects - GET entity categories", {
+  hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
+  
+  a <- get_project_entity_categories(hb_creds, NULL)
+  b <- get_project_entity_categories(hb_creds, entity_category_id = 7058)
+  
+  expect_true(nrow(a) >= 1)
+  expect_true(nrow(b) >= 1)
+})
+
 test_that("Highbond Projects - GET Project Type Custom Attributes", {
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
   

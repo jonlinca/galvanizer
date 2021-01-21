@@ -163,7 +163,7 @@ hb_url_component <- function(component, primary = NULL, secondary = NULL, primar
   ### PART ONE - Substitution based on components.
   # These are components that are considered top level - i.e. /orgs/{org_id}/projects
   
-  if (component %in% c('projects', 'project_types', 'entities', 'collections')){
+  if (component %in% c('projects', 'project_types', 'entities', 'entity_categories', 'collections')){
     if (is.null(primary)) {
       url <- paste0(component, '/') # Get all projects
     } else {

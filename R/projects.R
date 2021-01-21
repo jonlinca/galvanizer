@@ -494,6 +494,32 @@ get_project_entities <- function(auth, entity_id = NULL, fields = NULL, pagesize
   return(data) 
 }
 
+#' Retrieve Highbond Projects - Entity Categories
+#'
+#' @description Get all the entity categories
+#'
+#' @details Fields allowed: title, description, position, entities_count, created_at, updated_at, entities
+#' 
+#' @inheritParams get_projects
+#'
+#' @param entity_category_id \code{NULL} will default to all entity categories
+#'
+#' @return A tibble of entities
+#' @export
+get_project_entity_categories <- function(auth, entity_category_id = NULL, fields = NULL, pagesize = 50, waittime = 0.2){
+  
+  primary <- entity_category_id
+  component <- 'entity_categories' # Set up the project
+  
+  url <- paste0(hb_url(auth), hb_url_component(component, primary)) # Set up the query parameters
+  plural <- is.null(primary) # Flag if its one or many. I.e. plural download
+  
+  params <- hb_prj_set_params(component, pagesize, fields) # Set up parameters
+  data <- hb_prj_get_controller(auth, url, params, plural, waittime) # Download the data
+  
+  return(data) 
+}
+
 #' Retrieve Highbond Projects - Collaborators
 #' 
 #' @description Get the collaborators, aka user roles in Project or Framework.
