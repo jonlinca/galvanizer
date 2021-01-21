@@ -1,6 +1,6 @@
 Package: galvanizer
 Title: Interface to Galvanize Internal Audit Software
-Version: 0.4.9
+Version: 0.5.0
 Authors@R: 
     person(given = "Jonathan",
            family = "Lin",
