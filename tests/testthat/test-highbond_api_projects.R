@@ -1,4 +1,12 @@
+check_api <- function(){
+  key <- Sys.getenv('highbond_openapi') 
+  if (!nzchar(key)){
+    skip('API not available')
+  }
+}
+
 test_that("Highbond Projects - GET projects (many)", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
 
   highbond_fields <- 'name,state,status,created_at,updated_at,description,tag_list,project_type,entities'
@@ -9,6 +17,7 @@ test_that("Highbond Projects - GET projects (many)", {
 })
 
 test_that("Highbond Projects - GET projects (one)", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
 
   highbond_fields <- 'name,state,status,created_at,updated_at,description,tag_list,project_type,entities'
@@ -20,6 +29,7 @@ test_that("Highbond Projects - GET projects (one)", {
 })
 
 test_that("Highbond Projects - GET project types", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
 
   a <- get_project_types(hb_creds, NULL)
@@ -30,6 +40,7 @@ test_that("Highbond Projects - GET project types", {
 })
 
 test_that("Highbond Projects - GET project planning files", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
 
   a <- get_project_planning_files(hb_creds, project_id = 121339) 
@@ -40,6 +51,7 @@ test_that("Highbond Projects - GET project planning files", {
 })
 
 test_that("Highbond Projects - GET project result files", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
 
   a <- get_project_result_files(hb_creds, project_id = 121339)
@@ -50,6 +62,7 @@ test_that("Highbond Projects - GET project result files", {
 })
 
 test_that("Highbond Projects - GET objectives", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
   
   a <- get_project_objectives(hb_creds, project_id = 121341)
@@ -60,6 +73,7 @@ test_that("Highbond Projects - GET objectives", {
 })
 
 test_that("Highbond Projects - GET narratives", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
   
   a <- get_project_narratives(hb_creds, objective_id = 593214) 
@@ -70,6 +84,7 @@ test_that("Highbond Projects - GET narratives", {
 })
 
 test_that("Highbond Projects - GET risks", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
   
   a <- get_project_risks(hb_creds, objective_id = 593214) 
@@ -79,7 +94,8 @@ test_that("Highbond Projects - GET risks", {
   expect_true(nrow(b) >= 1)
 })
 
-test_that("Highbond Projects - GET control", {
+test_that("Highbond Projects - GET controls", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
 
   a <- get_project_controls(hb_creds, objective_id = 593214) 
@@ -90,6 +106,7 @@ test_that("Highbond Projects - GET control", {
 })
 
 test_that("Highbond Projects - GET control test plans", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
 
   a <- get_project_control_test_plans(hb_creds, control_test_plan_id = 4650972)
@@ -98,6 +115,7 @@ test_that("Highbond Projects - GET control test plans", {
 })
 
 test_that("Highbond Projects - GET control tests", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
 
   a <- get_project_control_tests(hb_creds, control_test_id = 3359066)
@@ -106,6 +124,7 @@ test_that("Highbond Projects - GET control tests", {
 })
 
 test_that("Highbond Projects - GET walkthroughs", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
 
   a <- get_project_walkthroughs(hb_creds, walkthrough_id = 4218019)
@@ -114,6 +133,7 @@ test_that("Highbond Projects - GET walkthroughs", {
 })
 
 test_that("Highbond Projects - GET issues", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
 
   a <- get_project_issues(hb_creds, project_id = 121341)
@@ -124,6 +144,7 @@ test_that("Highbond Projects - GET issues", {
 })
 
 test_that("Highbond Projects - GET actions", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
 
   a <- get_project_actions(hb_creds, issue_id = 389481) 
@@ -134,6 +155,7 @@ test_that("Highbond Projects - GET actions", {
 })
 
 test_that("Highbond Projects - GET request items", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
 
   a <- get_project_request_items(hb_creds, request_id = 1824393)
@@ -142,6 +164,7 @@ test_that("Highbond Projects - GET request items", {
 })
 
 test_that("Highbond Projects - GET entities", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
   
   a <- get_project_entities(hb_creds, NULL)
@@ -152,6 +175,7 @@ test_that("Highbond Projects - GET entities", {
 })
 
 test_that("Highbond Projects - GET entity categories", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
   
   a <- get_project_entity_categories(hb_creds, NULL)
@@ -162,6 +186,7 @@ test_that("Highbond Projects - GET entity categories", {
 })
 
 test_that("Highbond Projects - GET Project Type Custom Attributes", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
   
   project_id <- 121339
@@ -175,6 +200,7 @@ test_that("Highbond Projects - GET Project Type Custom Attributes", {
 
 
 test_that("Highbond Projects - GET collaborators", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
 
   a <- get_project_collaborators(hb_creds, project_id = 121339)

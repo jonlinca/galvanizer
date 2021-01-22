@@ -6,7 +6,15 @@ upload <- data.frame(field_one = c('A','B','C'),
                      field_six =  c(as.POSIXlt(Sys.time()), as.POSIXlt(Sys.time()), as.POSIXlt(Sys.time())),
                      field_seven = c(10L, 11L, 12L))
 
+check_api <- function(){
+  key <- Sys.getenv('highbond_openapi') 
+  if (!nzchar(key)){
+    skip('API not available')
+  }
+}
+
 test_that("Highbond Results - POST with PURGE", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
   highbond_table <- Sys.getenv('highbond_table')
   
@@ -37,6 +45,7 @@ test_that("Highbond Results - POST with PURGE", {
 })
 
 test_that("Highbond Results - POST without Purge", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
   highbond_table <- Sys.getenv('highbond_table')
   
@@ -65,6 +74,7 @@ test_that("Highbond Results - POST without Purge", {
 })
 
 test_that("Highbond Results - GET", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
   highbond_table <- Sys.getenv('highbond_table')
   
@@ -76,6 +86,7 @@ test_that("Highbond Results - GET", {
 })
 
 test_that("Highbond Results - POST - Stress test", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
   highbond_table <- Sys.getenv('highbond_table')
   
@@ -87,6 +98,7 @@ test_that("Highbond Results - POST - Stress test", {
 })
 
 test_that("Highbond Results - Create, Update, Delete Collections", {
+  check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
   
   name <- 'galvanizer R Testthat Collection'
@@ -103,6 +115,7 @@ test_that("Highbond Results - Create, Update, Delete Collections", {
 })
 
 test_that("Highbond Results - Create, Update, Delete everything", {
+  check_api()
   auth <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
   collection_name <- 'galvanizer Test Collection'
   response1 <- create_results_collections(auth, collection_name)
