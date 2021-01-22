@@ -4,7 +4,6 @@
 # galvanizer
 
 <!-- badges: start -->
-
 <!-- badges: end -->
 
 galvanizer is a package designed to interact to Highbond’s API
@@ -28,9 +27,9 @@ devtools::install_github("jonlinca/galvanizer")
 Before using the API, you will need some core information to access your
 Highbond instance. They are:
 
-  - Highbond API token
-  - Organization number
-  - Data Center location
+-   Highbond API token
+-   Organization number
+-   Data Center location
 
 To generate a Highbond API token from your Highbond instance by
 referencing the [help
@@ -91,14 +90,14 @@ download <- get_results_records(highbond_auth, highbond_table)
 
 head(download$content$data)
 #>   metadata.priority metadata.status metadata.publish_date metadata.publisher
-#> 1               Low             New   2020-11-02 11:45:37           Jon Test
-#> 2               Low             New   2020-11-02 11:45:37           Jon Test
+#> 1               Low             New   2021-01-22 10:48:32           Jon Test
+#> 2               Low             New   2021-01-22 10:48:32           Jon Test
 #>   metadata.assignee metadata.group metadata.updated_at metadata.closed_at
-#> 1              <NA>           <NA> 2020-11-02 11:45:37               <NA>
-#> 2              <NA>           <NA> 2020-11-02 11:45:37               <NA>
+#> 1              <NA>           <NA> 2021-01-22 10:48:32               <NA>
+#> 2              <NA>           <NA> 2021-01-22 10:48:32               <NA>
 #>      name age active date_started          date_ended extras.record_id
-#> 1 Cowbell  21   TRUE   2019-01-01 2020-11-02 11:45:05     1.094678e+15
-#> 2   Rufus  32  FALSE   2020-01-01 2020-11-02 11:45:05     1.094678e+15
+#> 1 Cowbell  21   TRUE   2019-01-01 2021-01-22 10:48:28     1.162829e+15
+#> 2   Rufus  32  FALSE   2020-01-01 2021-01-22 10:48:28     1.162829e+15
 #>   extras.collection extras.results_table
 #> 1 galvanizer checks         Readme Table
 #> 2 galvanizer checks         Readme Table
@@ -112,17 +111,17 @@ from. There are options to download all or just one set of information,
 depending on the pane chosen.
 
 ``` r
-projects <- get_project(highbond_auth)
+projects <- get_projects(highbond_auth)
 head(projects)
 #> # A tibble: 6 x 26
 #>   id    type  name  state status created_at updated_at description background
 #>   <chr> <chr> <chr> <chr> <chr>  <chr>      <chr>      <chr>       <chr>     
-#> 1 1213… proj… Payr… acti… active 2020-08-1… 2020-08-2… "Project t… <NA>      
-#> 2 1213… proj… IT G… acti… active 2020-08-1… 2020-08-1… ""          <NA>      
-#> 3 1213… proj… Sarb… acti… active 2020-08-1… 2020-08-2… ""          <NA>      
-#> 4 1213… proj… Sale… acti… active 2020-08-1… 2020-08-1… "Project t… <NA>      
-#> 5 1213… proj… SOC … acti… active 2020-08-1… 2020-08-1… "Project t… <NA>      
-#> 6 1213… proj… Purc… acti… active 2020-08-1… 2020-08-1… "The purch… <NA>      
+#> 1 1213… proj… Payr… acti… active 2020-08-1… 2020-11-1… "Project t… ""        
+#> 2 1213… proj… IT G… acti… active 2020-08-1… 2020-08-1… ""           <NA>     
+#> 3 1213… proj… Sarb… acti… active 2020-08-1… 2020-08-2… ""           <NA>     
+#> 4 1213… proj… Sale… acti… active 2020-08-1… 2020-08-1… "Project t…  <NA>     
+#> 5 1213… proj… SOC … acti… active 2020-08-1… 2020-08-1… "Project t…  <NA>     
+#> 6 1213… proj… Purc… acti… active 2020-08-1… 2020-11-1… "The purch… ""        
 #> # … with 17 more variables: budget <dbl>, position <dbl>, certification <lgl>,
 #> #   control_performance <lgl>, risk_assurance <lgl>, management_response <chr>,
 #> #   max_sample_size <dbl>, number_of_testing_rounds <dbl>, opinion <chr>,

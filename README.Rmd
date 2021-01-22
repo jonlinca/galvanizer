@@ -89,6 +89,6 @@ head(download$content$data)
 Highbond Projects data (also known as 'Audits') is also retrievable, depending on which screen of information you would like to retrieve from. There are options to download all or just one set of information, depending on the pane chosen.
 
 ```{r}
-projects <- get_project(highbond_auth)
+projects <- get_projects(highbond_auth)
 head(projects)
 ```
