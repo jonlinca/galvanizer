@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -112,14 +112,14 @@
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">download</span>$<span class="no">content</span>$<span class="no">data</span>)
 <span class="co">#&gt;   metadata.priority metadata.status metadata.publish_date metadata.publisher</span>
-<span class="co">#&gt; 1               Low             New   2020-11-02 11:45:37           Jon Test</span>
-<span class="co">#&gt; 2               Low             New   2020-11-02 11:45:37           Jon Test</span>
+<span class="co">#&gt; 1               Low             New   2021-01-22 10:48:32           Jon Test</span>
+<span class="co">#&gt; 2               Low             New   2021-01-22 10:48:32           Jon Test</span>
 <span class="co">#&gt;   metadata.assignee metadata.group metadata.updated_at metadata.closed_at</span>
-<span class="co">#&gt; 1              &lt;NA&gt;           &lt;NA&gt; 2020-11-02 11:45:37               &lt;NA&gt;</span>
-<span class="co">#&gt; 2              &lt;NA&gt;           &lt;NA&gt; 2020-11-02 11:45:37               &lt;NA&gt;</span>
+<span class="co">#&gt; 1              &lt;NA&gt;           &lt;NA&gt; 2021-01-22 10:48:32               &lt;NA&gt;</span>
+<span class="co">#&gt; 2              &lt;NA&gt;           &lt;NA&gt; 2021-01-22 10:48:32               &lt;NA&gt;</span>
 <span class="co">#&gt;      name age active date_started          date_ended extras.record_id</span>
-<span class="co">#&gt; 1 Cowbell  21   TRUE   2019-01-01 2020-11-02 11:45:05     1.094678e+15</span>
-<span class="co">#&gt; 2   Rufus  32  FALSE   2020-01-01 2020-11-02 11:45:05     1.094678e+15</span>
+<span class="co">#&gt; 1 Cowbell  21   TRUE   2019-01-01 2021-01-22 10:48:28     1.162829e+15</span>
+<span class="co">#&gt; 2   Rufus  32  FALSE   2020-01-01 2021-01-22 10:48:28     1.162829e+15</span>
 <span class="co">#&gt;   extras.collection extras.results_table</span>
 <span class="co">#&gt; 1 galvanizer checks         Readme Table</span>
 <span class="co">#&gt; 2 galvanizer checks         Readme Table</span></pre></div>
@@ -128,17 +128,17 @@
 <h2 class="hasAnchor">
 <a href="#highbond-projects-data" class="anchor"></a>Highbond Projects data</h2>
 <p>Highbond Projects data (also known as ‘Audits’) is also retrievable, depending on which screen of information you would like to retrieve from. There are options to download all or just one set of information, depending on the pane chosen.</p>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="no">projects</span> <span class="kw">&lt;-</span> <span class="fu">get_project</span>(<span class="no">highbond_auth</span>)
+<div class="sourceCode" id="cb5"><pre class="r"><span class="no">projects</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/get_projects.html">get_projects</a></span>(<span class="no">highbond_auth</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">projects</span>)
 <span class="co">#&gt; # A tibble: 6 x 26</span>
 <span class="co">#&gt;   id    type  name  state status created_at updated_at description background</span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;     </span>
-<span class="co">#&gt; 1 1213… proj… Payr… acti… active 2020-08-1… 2020-08-2… "Project t… &lt;NA&gt;      </span>
-<span class="co">#&gt; 2 1213… proj… IT G… acti… active 2020-08-1… 2020-08-1… ""          &lt;NA&gt;      </span>
-<span class="co">#&gt; 3 1213… proj… Sarb… acti… active 2020-08-1… 2020-08-2… ""          &lt;NA&gt;      </span>
-<span class="co">#&gt; 4 1213… proj… Sale… acti… active 2020-08-1… 2020-08-1… "Project t… &lt;NA&gt;      </span>
-<span class="co">#&gt; 5 1213… proj… SOC … acti… active 2020-08-1… 2020-08-1… "Project t… &lt;NA&gt;      </span>
-<span class="co">#&gt; 6 1213… proj… Purc… acti… active 2020-08-1… 2020-08-1… "The purch… &lt;NA&gt;      </span>
+<span class="co">#&gt; 1 1213… proj… Payr… acti… active 2020-08-1… 2020-11-1… "Project t… ""        </span>
+<span class="co">#&gt; 2 1213… proj… IT G… acti… active 2020-08-1… 2020-08-1… ""           &lt;NA&gt;     </span>
+<span class="co">#&gt; 3 1213… proj… Sarb… acti… active 2020-08-1… 2020-08-2… ""           &lt;NA&gt;     </span>
+<span class="co">#&gt; 4 1213… proj… Sale… acti… active 2020-08-1… 2020-08-1… "Project t…  &lt;NA&gt;     </span>
+<span class="co">#&gt; 5 1213… proj… SOC … acti… active 2020-08-1… 2020-08-1… "Project t…  &lt;NA&gt;     </span>
+<span class="co">#&gt; 6 1213… proj… Purc… acti… active 2020-08-1… 2020-11-1… "The purch… ""        </span>
 <span class="co">#&gt; # … with 17 more variables: budget &lt;dbl&gt;, position &lt;dbl&gt;, certification &lt;lgl&gt;,</span>
 <span class="co">#&gt; #   control_performance &lt;lgl&gt;, risk_assurance &lt;lgl&gt;, management_response &lt;chr&gt;,</span>
 <span class="co">#&gt; #   max_sample_size &lt;dbl&gt;, number_of_testing_rounds &lt;dbl&gt;, opinion &lt;chr&gt;,</span>
