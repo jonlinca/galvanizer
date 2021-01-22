@@ -39,6 +39,5 @@ vignettes/*.pdf
 .Renviron
 
 .DS_Store
-.Rbuildignore
 
 /junk
