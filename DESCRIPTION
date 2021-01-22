@@ -5,7 +5,7 @@ Authors@R:
     person(given = "Jonathan",
            family = "Lin",
            role = c("aut", "cre"),
-           email = "jonlinca@users.noreply.github.com",
+           email = "hello@jonlin.ca",
            comment = c(ORCID = "0000-0001-8664-6846"))
 Description: API wrapper to Galvanize platform, including Highbond.
 License: GPL-3 + file LICENSE
