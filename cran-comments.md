@@ -22,3 +22,4 @@ Testing relies on API keys, embedded as secrets within Github actions
 ## Other comments
 
 * This is a new release.
+* Re-submission 1: Altered DESCRIPTION file to accurately reference licenses. Removed LICENSE file. Changed DESCRIPTION file, description line to reflect URL of API.

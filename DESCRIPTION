@@ -7,8 +7,8 @@ Authors@R:
            role = c("aut", "cre"),
            email = "hello@jonlin.ca",
            comment = c(ORCID = "0000-0001-8664-6846"))
-Description: API wrapper to Galvanize platform, including Highbond.
-License: GPL-3 + file LICENSE
+Description: An R interface to the Galvanize platform, via the Highbond API <https://docs-apis.highbond.com>.
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
