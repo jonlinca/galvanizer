@@ -1,6 +1,6 @@
 Package: galvanizer
 Title: Interface to Galvanize 'Highbond' Internal Audit Software
-Version: 0.5.0
+Version: 0.5.1
 Authors@R: 
     person(given = "Jonathan",
            family = "Lin",
