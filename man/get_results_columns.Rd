@@ -11,6 +11,9 @@ get_results_columns(auth, table_id)
 
 \item{table_id}{Table ID. Required.}
 }
+\value{
+A data frame column name and types of a single Table
+}
 \description{
-Gets the schema of a single table
+Gets the schema of a single table.
 }

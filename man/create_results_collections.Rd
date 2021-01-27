@@ -15,14 +15,15 @@ delete_results_collections(auth, collection_id)
 \arguments{
 \item{auth}{Highbond authentication credentials, created from \code{\link{setup_highbond}}}
 
-\item{name}{The name of the newly created Result object}
+\item{name}{The name of the Results object to create}
 
 \item{...}{List(s) to add additional data}
 
 \item{collection_id}{The ID number of the collection}
 }
 \value{
-A dataframe with the newly created object.
+If creating or updating, a data frame with the new details.
+When deleting, JSON response indicating success or failure.
 }
 \description{
 Create, Update or Delete Results - Collections

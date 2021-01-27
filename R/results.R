@@ -86,7 +86,7 @@ get_results_records <- function(auth, table_id, timezone = Sys.timezone()){
 #' @param skipquestions FALSE by default. Set TRUE if not purging and you don't want to overwrite the responses within the Results table already.
 #' @param sizelimit 75000 bytes (~75 kb) by default. Used to estimate chunk size. Reduce size if upload chunks tend to fail.
 #'
-#' @return No data is returned, although errors will be verbose
+#' @return No return value, although errors will be verbose
 #' @export
 #' 
 #' @importFrom dplyr mutate_if vars inner_join anti_join mutate across
@@ -237,6 +237,8 @@ post_results_records <- function(auth, table_id,
     purge <- FALSE
     i <- i + 1
   }
+  
+  return(NULL)
 }
 
 #' Retrieve Highbond Results - Collections
@@ -244,6 +246,8 @@ post_results_records <- function(auth, table_id,
 #' @description Downloads a list of collections
 #' 
 #' @param collection_id Collection ID. Optional.
+#' 
+#' @return A data frame of Collections
 #'
 #' @inheritParams get_results_records
 #' @export
@@ -269,6 +273,8 @@ get_results_collections <- function(auth, collection_id = NULL){
 #' 
 #' @param collection_id Collection ID. Required if other parameter is blank.
 #' @param analysis_id Analyses ID. Required if other parameter is blank.
+#' 
+#' @return A data frame of Analyses in a Collection
 #'
 #' @inheritParams get_results_records
 #' @export
@@ -292,6 +298,8 @@ get_results_analyses <- function(auth, collection_id = NULL, analysis_id = NULL)
 #' 
 #' @param analysis_id Analysis ID. Required if other parameter is blank.
 #' @param table_id Table ID. Required if other parameter is blank.
+#' 
+#' @return A data frame of Tables in an Analyses
 #'
 #' @inheritParams get_results_records
 #' @export
@@ -312,9 +320,11 @@ get_results_tables <- function(auth, analysis_id = NULL, table_id = NULL){
 
 #' Retrieve Highbond Results - Columns
 #'
-#' @description Gets the schema of a single table
+#' @description Gets the schema of a single table. 
 #' 
 #' @param table_id Table ID. Required.
+#' 
+#' @return A data frame column name and types of a single Table
 #'
 #' @inheritParams get_results_records
 #' @export
@@ -337,7 +347,7 @@ get_results_columns <- function(auth, table_id){
 #'
 #' @inheritParams get_results_records
 #'
-#' @param name The name of the newly created Result object
+#' @param name The name of the Results object to create
 #' @param collection_id The ID number of the collection
 #' @param ... List(s) to add additional data
 #'
@@ -354,7 +364,9 @@ get_results_columns <- function(auth, table_id){
 #'   should be created as the name of the object. Then additional information
 #'   can be added to it as a key-value pair to the list.
 #'
-#' @return A dataframe with the newly created object.
+#' @return If creating or updating, a data frame with the new details. 
+#'   When deleting, JSON response indicating success or failure.
+#'   
 #' @export
 #'
 #' @examples

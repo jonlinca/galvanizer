@@ -14,7 +14,8 @@ create_results_columns(auth, table_id, columns)
 \item{columns}{A data frame with columns to be added}
 }
 \value{
-A dataframe with the newly created object.
+If creating or updating, a data frame with the new details.
+When deleting, JSON response indicating success or failure.
 }
 \description{
 \link[galvanizer]{post_results_records} will upload a data frame with the

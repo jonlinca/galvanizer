@@ -1,5 +1,5 @@
 Package: galvanizer
-Title: Interface to Galvanize Internal Audit Software
+Title: Interface to Galvanize 'Highbond' Internal Audit Software
 Version: 0.5.0
 Authors@R: 
     person(given = "Jonathan",
@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "hello@jonlin.ca",
            comment = c(ORCID = "0000-0001-8664-6846"))
-Description: An R interface to the Galvanize platform, via the Highbond API <https://docs-apis.highbond.com>.
+Description: An R interface to the Galvanize 'Highbond' API <https://docs-apis.highbond.com>.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

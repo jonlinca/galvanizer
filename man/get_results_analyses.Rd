@@ -13,6 +13,9 @@ get_results_analyses(auth, collection_id = NULL, analysis_id = NULL)
 
 \item{analysis_id}{Analyses ID. Required if other parameter is blank.}
 }
+\value{
+A data frame of Analyses in a Collection
+}
 \description{
 Downloads a list of Analyses in a Collection
 }

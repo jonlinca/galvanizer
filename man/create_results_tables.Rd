@@ -17,14 +17,15 @@ delete_results_tables(auth, table_id)
 
 \item{analysis_id}{The ID number of the analyses}
 
-\item{name}{The name of the newly created Result object}
+\item{name}{The name of the Results object to create}
 
 \item{...}{List(s) to add additional data}
 
 \item{table_id}{The ID number of the table}
 }
 \value{
-A dataframe with the newly created object.
+If creating or updating, a data frame with the new details.
+When deleting, JSON response indicating success or failure.
 }
 \description{
 Create, Update or Delete Results - Tables

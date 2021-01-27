@@ -13,6 +13,9 @@ get_results_tables(auth, analysis_id = NULL, table_id = NULL)
 
 \item{table_id}{Table ID. Required if other parameter is blank.}
 }
+\value{
+A data frame of Tables in an Analyses
+}
 \description{
 Downloads the primary details of one or all tables in an Analyses
 }

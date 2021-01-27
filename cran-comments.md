@@ -23,3 +23,4 @@ Testing relies on API keys, embedded as secrets within Github actions
 
 * This is a new release.
 * Re-submission 1: Altered DESCRIPTION file to accurately reference licenses. Removed LICENSE file. Changed DESCRIPTION file, description line to reflect URL of API.
+* Re-submission 2: Added single quote around the word Highbond, removed pipe as export to remove need for \argument \value RD tag, added \value tags with outputs

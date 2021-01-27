@@ -11,6 +11,9 @@ get_results_collections(auth, collection_id = NULL)
 
 \item{collection_id}{Collection ID. Optional.}
 }
+\value{
+A data frame of Collections
+}
 \description{
 Downloads a list of collections
 }

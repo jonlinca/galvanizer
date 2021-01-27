@@ -28,7 +28,7 @@ c('character', 'numeric', 'logical', 'Date', 'POSIXct', 'POSIXlt')}
 \item{sizelimit}{75000 bytes (~75 kb) by default. Used to estimate chunk size. Reduce size if upload chunks tend to fail.}
 }
 \value{
-No data is returned, although errors will be verbose
+No return value, although errors will be verbose
 }
 \description{
 Uploads the content in to Highbond Results.
