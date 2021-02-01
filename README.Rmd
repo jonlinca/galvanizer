@@ -27,11 +27,14 @@ galvanizer is a package designed to interact to Highbond's API (https://docs-api
 
 ## Installation
 
-You can install the currently available version of galvanizer from [github](https://github.com/jonlinca/galvanizer) with:
+You can install the currently available version of galvanizer from [CRAN](https://cran.r-project.org/web/packages/galvanizer/index.html):
 
 ``` {r eval=FALSE}
-# install.packages("devtools")
-devtools::install_github("jonlinca/galvanizer")
+# Release:
+install.packages('galvanizer')
+
+# Development version:
+# devtools::install_github("jonlinca/galvanizer")
 ```
 
 ## Getting started

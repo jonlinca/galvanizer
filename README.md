@@ -15,11 +15,14 @@ Result tables.
 ## Installation
 
 You can install the currently available version of galvanizer from
-[github](https://github.com/jonlinca/galvanizer) with:
+[CRAN](https://cran.r-project.org/web/packages/galvanizer/index.html):
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("jonlinca/galvanizer")
+# Release:
+install.packages('galvanizer')
+
+# Development version:
+# devtools::install_github("jonlinca/galvanizer")
 ```
 
 ## Getting started
@@ -74,6 +77,7 @@ upload <- data.frame(name = c('Cowbell', 'Rufus'),
 
 # Substitute your API key, org number, data, center, table, and the dataframe to be uploaded
 post_results_records(highbond_auth, highbond_table, upload = upload, purge = TRUE)
+#> NULL
 ```
 
 Once that has successfully uploaded into Highbond Results, you can view
@@ -90,14 +94,14 @@ download <- get_results_records(highbond_auth, highbond_table)
 
 head(download$content$data)
 #>   metadata.priority metadata.status metadata.publish_date metadata.publisher
-#> 1               Low             New   2021-01-22 10:48:32           Jon Test
-#> 2               Low             New   2021-01-22 10:48:32           Jon Test
+#> 1               Low             New   2021-01-22 10:49:11           Jon Test
+#> 2               Low             New   2021-01-22 10:49:11           Jon Test
 #>   metadata.assignee metadata.group metadata.updated_at metadata.closed_at
-#> 1              <NA>           <NA> 2021-01-22 10:48:32               <NA>
-#> 2              <NA>           <NA> 2021-01-22 10:48:32               <NA>
+#> 1              <NA>           <NA> 2021-01-22 10:49:11               <NA>
+#> 2              <NA>           <NA> 2021-01-22 10:49:11               <NA>
 #>      name age active date_started          date_ended extras.record_id
-#> 1 Cowbell  21   TRUE   2019-01-01 2021-01-22 10:48:28     1.162829e+15
-#> 2   Rufus  32  FALSE   2020-01-01 2021-01-22 10:48:28     1.162829e+15
+#> 1 Cowbell  21   TRUE   2019-01-01 2021-01-22 10:49:07     1.162829e+15
+#> 2   Rufus  32  FALSE   2020-01-01 2021-01-22 10:49:07     1.162829e+15
 #>   extras.collection extras.results_table
 #> 1 galvanizer checks         Readme Table
 #> 2 galvanizer checks         Readme Table

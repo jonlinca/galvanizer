@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">galvanizer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
       </span>
     </div>
 
@@ -68,9 +68,12 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the currently available version of galvanizer from <a href="https://github.com/jonlinca/galvanizer">github</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="co"># install.packages("devtools")</span>
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"jonlinca/galvanizer"</span>)</pre></div>
+<p>You can install the currently available version of galvanizer from <a href="https://cran.r-project.org/web/packages/galvanizer/index.html">CRAN</a>:</p>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="co"># Release:</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'galvanizer'</span>)
+
+<span class="co"># Development version:</span>
+<span class="co"># devtools::install_github("jonlinca/galvanizer")</span></pre></div>
 </div>
 <div id="getting-started" class="section level2">
 <h2 class="hasAnchor">
@@ -101,7 +104,8 @@
                      <span class="kw">date_ended</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span>()), <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span>())))
 
 <span class="co"># Substitute your API key, org number, data, center, table, and the dataframe to be uploaded</span>
-<span class="fu"><a href="reference/post_results_records.html">post_results_records</a></span>(<span class="no">highbond_auth</span>, <span class="no">highbond_table</span>, <span class="kw">upload</span> <span class="kw">=</span> <span class="no">upload</span>, <span class="kw">purge</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
+<span class="fu"><a href="reference/post_results_records.html">post_results_records</a></span>(<span class="no">highbond_auth</span>, <span class="no">highbond_table</span>, <span class="kw">upload</span> <span class="kw">=</span> <span class="no">upload</span>, <span class="kw">purge</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="co">#&gt; NULL</span></pre></div>
 <p>Once that has successfully uploaded into Highbond Results, you can view the results online and also download the new data too:</p>
 <p><img src="reference/figures/highbond_results_upload.png" alt="successful results upload"></p>
 <div class="sourceCode" id="cb4"><pre class="r"><span class="no">download</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/get_results_records.html">get_results_records</a></span>(<span class="no">highbond_auth</span>, <span class="no">highbond_table</span>)
@@ -112,14 +116,14 @@
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">download</span>$<span class="no">content</span>$<span class="no">data</span>)
 <span class="co">#&gt;   metadata.priority metadata.status metadata.publish_date metadata.publisher</span>
-<span class="co">#&gt; 1               Low             New   2021-01-22 10:48:32           Jon Test</span>
-<span class="co">#&gt; 2               Low             New   2021-01-22 10:48:32           Jon Test</span>
+<span class="co">#&gt; 1               Low             New   2021-01-22 10:49:11           Jon Test</span>
+<span class="co">#&gt; 2               Low             New   2021-01-22 10:49:11           Jon Test</span>
 <span class="co">#&gt;   metadata.assignee metadata.group metadata.updated_at metadata.closed_at</span>
-<span class="co">#&gt; 1              &lt;NA&gt;           &lt;NA&gt; 2021-01-22 10:48:32               &lt;NA&gt;</span>
-<span class="co">#&gt; 2              &lt;NA&gt;           &lt;NA&gt; 2021-01-22 10:48:32               &lt;NA&gt;</span>
+<span class="co">#&gt; 1              &lt;NA&gt;           &lt;NA&gt; 2021-01-22 10:49:11               &lt;NA&gt;</span>
+<span class="co">#&gt; 2              &lt;NA&gt;           &lt;NA&gt; 2021-01-22 10:49:11               &lt;NA&gt;</span>
 <span class="co">#&gt;      name age active date_started          date_ended extras.record_id</span>
-<span class="co">#&gt; 1 Cowbell  21   TRUE   2019-01-01 2021-01-22 10:48:28     1.162829e+15</span>
-<span class="co">#&gt; 2   Rufus  32  FALSE   2020-01-01 2021-01-22 10:48:28     1.162829e+15</span>
+<span class="co">#&gt; 1 Cowbell  21   TRUE   2019-01-01 2021-01-22 10:49:07     1.162829e+15</span>
+<span class="co">#&gt; 2   Rufus  32  FALSE   2020-01-01 2021-01-22 10:49:07     1.162829e+15</span>
 <span class="co">#&gt;   extras.collection extras.results_table</span>
 <span class="co">#&gt; 1 galvanizer checks         Readme Table</span>
 <span class="co">#&gt; 2 galvanizer checks         Readme Table</span></pre></div>
@@ -150,7 +154,14 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="license">
+    <div class="links">
+<h2>Links</h2>
+<ul class="list-unstyled">
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=galvanizer">https://​cloud.r-project.org/​package=galvanizer</a>
+</li>
+</ul>
+</div>
+<div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
