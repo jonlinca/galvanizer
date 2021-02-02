@@ -166,12 +166,13 @@ hb_prj_parse_rel <- function(content_raw){
   relationships_provided <- content_raw %>%
     tidyjson::enter_object(relationships) %>%
     gather_object %>%
-    json_types %>%
-    dplyr::count(name, type)
+    json_types #%>% # Remove as it caused a bug where only the first relationship for each type was being generated
+    #dplyr::count(name, type)
   
   combined_relationships <- list()
   
   for (i in 1:nrow(relationships_provided)){
+    # Choose a single relationship
     one_rel <- content_raw %>%
       tidyjson::enter_object(relationships) %>%
       gather_object %>%

@@ -9,19 +9,30 @@ test_that("Highbond Projects - GET projects (many)", {
   check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
 
-  highbond_fields <- 'name,state,status,created_at,updated_at,description,tag_list,project_type,entities'
+  highbond_fields <- c('name', 'state', 'status', 'created_at', 'updated_at', 'description', 'background', 'budget', 'position', 'certification', 'control_performance', 'risk_assurance', 'management_response', 'max_sample_size', 'number_of_testing_rounds', 'opinion', 'opinion_description', 'purpose', 'scope', 'start_date', 'target_date', 'tag_list', 'project_type', 'entities', 'collaborators')
   
-  projects <- get_projects(hb_creds, project_id = NULL, pagesize = 2)
+  projects <- get_projects(hb_creds, project_id = NULL, pagesize = 2, fields = highbond_fields)
   
   expect_true(nrow(projects) > 1)
+})
+
+test_that("Highbond Projects - Relationships exist for more than first project", {
+  check_api()
+  hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
+  
+  highbond_fields <- c('name', 'state', 'status', 'created_at', 'updated_at', 'description', 'background', 'budget', 'position', 'certification', 'control_performance', 'risk_assurance', 'management_response', 'max_sample_size', 'number_of_testing_rounds', 'opinion', 'opinion_description', 'purpose', 'scope', 'start_date', 'target_date', 'tag_list', 'project_type', 'entities', 'collaborators')
+  
+  projects <- get_projects(hb_creds, project_id = NULL, pagesize = 2, fields = highbond_fields)
+  
+  no_relationships <- length(which(sapply(projects$relationships, is.null)))
+
+  expect_true(no_relationships == 0)
 })
 
 test_that("Highbond Projects - GET projects (one)", {
   check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
 
-  highbond_fields <- 'name,state,status,created_at,updated_at,description,tag_list,project_type,entities'
-  
   project_id <- 121339
   projects <- get_projects(hb_creds, project_id = project_id)
   
@@ -103,6 +114,24 @@ test_that("Highbond Projects - GET controls", {
     
   expect_true(nrow(a) >= 1)
   expect_true(nrow(b) >= 1)
+})
+
+test_that("Highbond Projects - Controls - Check Arrays", {
+  check_api()
+  hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
+  
+  fields <- c('title', 'description', 'control_id', 'owner', 'frequency', 'control_type', 'prevent_detect', 'method', 
+                       'status', 'position', 'created_at', 'updated_at', 'custom_attributes', 'objective', 'walkthrough', 'control_test_plan', 
+                       'control_tests', 'mitigations', 'entities', 'owner_user')
+  
+  a <- get_project_controls(hb_creds, control_id = 4679764, fields = fields) 
+  
+  # control_tests, mitigations, and entities should be arrays
+  
+  a_count <- a$relationships[[1]] %>% 
+    dplyr::filter(name == 'control_tests')
+  
+  expect_true(nrow(a_count) == 4)
 })
 
 test_that("Highbond Projects - GET control test plans", {
