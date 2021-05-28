@@ -76,8 +76,14 @@ jobs:
           highbond_datacenter: ${{secrets.HIGHBOND_DATACENTER}}
           highbond_openapi: ${{secrets.HIGHBOND_OPENAPI}}
           highbond_org: ${{secrets.HIGHBOND_ORG}}
-          highbond_readme_results_table: ${{secrets.HIGHBOND_README_RESULTS_TABLE}}
-          highbond_table: ${{secrets.HIGHBOND_TABLE}} 
+          results_table_readme: ${{secrets.RESULTS_TABLE_README}}
+          results_table: ${{secrets.RESULTS_TABLE}}
+          prj_project_workflow_id: ${{secrets.PRJ_PROJECT_WORKFLOW_ID}}
+          prj_project_sox_id: ${{secrets.PRJ_PROJECT_SOX_ID}}
+          prj_project_types_id: ${{secrets.PRJ_PROJECT_TYPES_ID}}
+          prj_project_request_id: ${{secrets.PRJ_PROJECT_REQUEST_ID}}
+          prj_project_entities_id: ${{secrets.PRJ_PROJECT_ENTITIES_ID}}
+          prj_project_entity_categories_id: ${{secrets.PRJ_PROJECT_ENTITY_CATEGORIES_ID}}
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 

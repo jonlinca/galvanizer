@@ -8,6 +8,15 @@
 \description{
 An R interface to the Galvanize 'Highbond' API <https://docs-apis.highbond.com>.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://jonlinca.github.io/galvanizer/}
+  \item \url{https://github.com/jonlinca/galvanizer}
+  \item Report bugs at \url{https://github.com/jonlinca/galvanizer/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Jonathan Lin \email{hello@jonlin.ca} (\href{https://orcid.org/0000-0001-8664-6846}{ORCID})
 
