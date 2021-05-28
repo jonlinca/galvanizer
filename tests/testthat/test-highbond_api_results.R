@@ -16,7 +16,7 @@ check_api <- function(){
 test_that("Highbond Results - POST with PURGE", {
   check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
-  highbond_table <- Sys.getenv('highbond_table')
+  highbond_table <- Sys.getenv('results_table')
   
   # Check if upload worked
   
@@ -47,7 +47,7 @@ test_that("Highbond Results - POST with PURGE", {
 test_that("Highbond Results - POST without Purge", {
   check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
-  highbond_table <- Sys.getenv('highbond_table')
+  highbond_table <- Sys.getenv('results_table')
   
   # Start from a blank slate, and purge
   
@@ -76,7 +76,7 @@ test_that("Highbond Results - POST without Purge", {
 test_that("Highbond Results - GET", {
   check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
-  highbond_table <- Sys.getenv('highbond_table')
+  highbond_table <- Sys.getenv('results_table')
   
   Sys.sleep(20)
   
@@ -88,7 +88,7 @@ test_that("Highbond Results - GET", {
 test_that("Highbond Results - POST - Stress test", {
   check_api()
   hb_creds <- setup_highbond(Sys.getenv('highbond_openapi'), Sys.getenv('highbond_org'), Sys.getenv('highbond_datacenter'))
-  highbond_table <- Sys.getenv('highbond_table')
+  highbond_table <- Sys.getenv('results_table')
   
   massupload <- do.call("rbind", replicate(1000, upload, simplify = FALSE))
   

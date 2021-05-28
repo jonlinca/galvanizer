@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
   highbond_openapi <- Sys.getenv('highbond_openapi')
   highbond_org <- Sys.getenv('highbond_org')
   highbond_datacenter <- Sys.getenv('highbond_datacenter')
-  highbond_table <- Sys.getenv('highbond_readme_results_table')
+  highbond_table <- Sys.getenv('results_table_readme')
 ```
 
 # galvanizer
@@ -91,7 +91,6 @@ head(download$content$data)
 
 Highbond Projects data (also known as 'Audits') is also retrievable, depending on which screen of information you would like to retrieve from. There are options to download all or just one set of information, depending on the pane chosen.
 
-```{r}
+```{r, eval=FALSE}
 projects <- get_projects(highbond_auth)
-head(projects)
 ```
