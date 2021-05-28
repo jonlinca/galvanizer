@@ -27,7 +27,7 @@ galvanizer is a package designed to interact to Highbond's API (https://docs-api
 
 ## Installation
 
-You can install the currently available version of galvanizer from [CRAN](https://cran.r-project.org/web/packages/galvanizer/index.html):
+You can install the currently available version of galvanizer from [CRAN](https://cran.r-project.org/package=galvanizer):
 
 ``` {r eval=FALSE}
 # Release:

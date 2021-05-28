@@ -15,7 +15,7 @@ Result tables.
 ## Installation
 
 You can install the currently available version of galvanizer from
-[CRAN](https://cran.r-project.org/web/packages/galvanizer/index.html):
+[CRAN](https://cran.r-project.org/package=galvanizer):
 
 ``` r
 # Release:

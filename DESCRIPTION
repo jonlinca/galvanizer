@@ -26,3 +26,6 @@ Imports:
     tidyselect
 Suggests: 
     testthat
+URL: https://jonlinca.github.io/galvanizer/, 
+  https://github.com/jonlinca/galvanizer
+BugReports: https://github.com/jonlinca/galvanizer/issues
