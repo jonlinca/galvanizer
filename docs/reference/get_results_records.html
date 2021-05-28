@@ -73,7 +73,7 @@ Results, including metadata and questionnaire responses (if applicable)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">galvanizer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.3</span>
       </span>
     </div>
 
@@ -114,7 +114,7 @@ Results, including metadata and questionnaire responses (if applicable)." />
 Results, including metadata and questionnaire responses (if applicable).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_results_records</span>(<span class='no'>auth</span>, <span class='no'>table_id</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/timezones.html'>Sys.timezone</a></span>())</pre>
+    <pre class="usage"><span class='fu'>get_results_records</span><span class='op'>(</span><span class='va'>auth</span>, <span class='va'>table_id</span>, timezone <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/timezones.html'>Sys.timezone</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,9 +142,10 @@ Results, including metadata and questionnaire responses (if applicable).</p>
 https://&lt;company_name&gt;.results.highbond.com/projects/&lt;COLLECTION_ID&gt;/controls/&lt;ANALYSIS_ID&gt;/control_tests/&lt;TABLE_ID&gt;</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>response</span> <span class='kw'>&lt;-</span> <span class='fu'>get_results_records</span>(<span class='no'>auth</span>, <span class='fl'>567890</span>)
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>response</span> <span class='op'>&lt;-</span> <span class='fu'>get_results_records</span><span class='op'>(</span><span class='va'>auth</span>, <span class='fl'>567890</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -160,7 +161,7 @@ https://&lt;company_name&gt;.results.highbond.com/projects/&lt;COLLECTION_ID&gt;
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

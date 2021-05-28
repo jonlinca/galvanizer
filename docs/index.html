@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">galvanizer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.3</span>
       </span>
     </div>
 
@@ -69,11 +69,12 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the currently available version of galvanizer from <a href="https://cran.r-project.org/web/packages/galvanizer/index.html">CRAN</a>:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="co"># Release:</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'galvanizer'</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Release:</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'galvanizer'</span><span class="op">)</span>
 
 <span class="co"># Development version:</span>
-<span class="co"># devtools::install_github("jonlinca/galvanizer")</span></pre></div>
+<span class="co"># devtools::install_github("jonlinca/galvanizer")</span></code></pre></div>
 </div>
 <div id="getting-started" class="section level2">
 <h2 class="hasAnchor">
@@ -88,8 +89,9 @@
 <p><img src="reference/figures/generate_token.png" alt="generate API token"></p>
 <p>To identify your organization number and data center, best found from your Launchpad, under Options / Organization. The organization number will be under the format of <code>https://accounts.highbond.com/orgs/&lt;ORGANIZATION_ID&gt;/details</code></p>
 <p>To use any functions, you will need to create and pass a Highbond Authentication object. You can make it by passing the API token, organization / instance number and data center location to <code><a href="reference/setup_highbond.html">setup_highbond()</a></code>:</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">galvanizer</span>)
-<span class="no">highbond_auth</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/setup_highbond.html">setup_highbond</a></span>(<span class="no">highbond_openapi</span>, <span class="no">highbond_org</span>, <span class="no">highbond_datacenter</span>)</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">galvanizer</span><span class="op">)</span>
+<span class="va">highbond_auth</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/setup_highbond.html">setup_highbond</a></span><span class="op">(</span><span class="va">highbond_openapi</span>, <span class="va">highbond_org</span>, <span class="va">highbond_datacenter</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="highbond-results-data" class="section level2">
 <h2 class="hasAnchor">
@@ -97,58 +99,45 @@
 <p>Once you have those, then you need to identify the table you want to upload and download data from. The easiest way to do this is to navigate to the Results Data Analytic table you want to upload and grab the <code>TABLE_ID</code> from the URL. It will look like:</p>
 <p><code>https://&lt;company_name&gt;.results.highbond.com/projects/&lt;COLLECTION_ID&gt;/controls/&lt;ANALYSIS_ID&gt;/control_tests/&lt;TABLE_ID&gt;</code></p>
 <p>You can choose to upload a set of test data into a new Data Analytic to try this out:</p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="no">upload</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Cowbell'</span>, <span class="st">'Rufus'</span>),
-                     <span class="kw">age</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">21</span>, <span class="fl">32</span>),
-                     <span class="kw">active</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">TRUE</span>, <span class="fl">FALSE</span>),
-                     <span class="kw">date_started</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">'2019-01-01'</span>), <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">'2020-01-01'</span>)),
-                     <span class="kw">date_ended</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span>()), <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span>())))
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">upload</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Cowbell'</span>, <span class="st">'Rufus'</span><span class="op">)</span>,
+                     age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">21</span>, <span class="fl">32</span><span class="op">)</span>,
+                     active <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>,
+                     date_started <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">'2019-01-01'</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">'2020-01-01'</span><span class="op">)</span><span class="op">)</span>,
+                     date_ended <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Substitute your API key, org number, data, center, table, and the dataframe to be uploaded</span>
-<span class="fu"><a href="reference/post_results_records.html">post_results_records</a></span>(<span class="no">highbond_auth</span>, <span class="no">highbond_table</span>, <span class="kw">upload</span> <span class="kw">=</span> <span class="no">upload</span>, <span class="kw">purge</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-<span class="co">#&gt; NULL</span></pre></div>
+<span class="fu"><a href="reference/post_results_records.html">post_results_records</a></span><span class="op">(</span><span class="va">highbond_auth</span>, <span class="va">highbond_table</span>, upload <span class="op">=</span> <span class="va">upload</span>, purge <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; NULL</span></code></pre></div>
 <p>Once that has successfully uploaded into Highbond Results, you can view the results online and also download the new data too:</p>
 <p><img src="reference/figures/highbond_results_upload.png" alt="successful results upload"></p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="no">download</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/get_results_records.html">get_results_records</a></span>(<span class="no">highbond_auth</span>, <span class="no">highbond_table</span>)
-<span class="co">#&gt; Retrieving Readme Table</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">download</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_results_records.html">get_results_records</a></span><span class="op">(</span><span class="va">highbond_auth</span>, <span class="va">highbond_table</span><span class="op">)</span>
+<span class="co">#&gt; Retrieving Readme</span>
 <span class="co">#&gt; Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".</span>
 <span class="co">#&gt; Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".</span>
 <span class="co">#&gt; Date in ISO8601 format; converting timezone from UTC to "America/Edmonton".</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">download</span>$<span class="no">content</span>$<span class="no">data</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">download</span><span class="op">$</span><span class="va">content</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
 <span class="co">#&gt;   metadata.priority metadata.status metadata.publish_date metadata.publisher</span>
-<span class="co">#&gt; 1               Low             New   2021-01-22 10:49:11           Jon Test</span>
-<span class="co">#&gt; 2               Low             New   2021-01-22 10:49:11           Jon Test</span>
+<span class="co">#&gt; 1               Low             New   2021-05-27 22:21:38       Jonathan Lin</span>
+<span class="co">#&gt; 2               Low             New   2021-05-27 22:21:38       Jonathan Lin</span>
 <span class="co">#&gt;   metadata.assignee metadata.group metadata.updated_at metadata.closed_at</span>
-<span class="co">#&gt; 1              &lt;NA&gt;           &lt;NA&gt; 2021-01-22 10:49:11               &lt;NA&gt;</span>
-<span class="co">#&gt; 2              &lt;NA&gt;           &lt;NA&gt; 2021-01-22 10:49:11               &lt;NA&gt;</span>
+<span class="co">#&gt; 1              &lt;NA&gt;           &lt;NA&gt; 2021-05-27 22:21:38               &lt;NA&gt;</span>
+<span class="co">#&gt; 2              &lt;NA&gt;           &lt;NA&gt; 2021-05-27 22:21:38               &lt;NA&gt;</span>
 <span class="co">#&gt;      name age active date_started          date_ended extras.record_id</span>
-<span class="co">#&gt; 1 Cowbell  21   TRUE   2019-01-01 2021-01-22 10:49:07     1.162829e+15</span>
-<span class="co">#&gt; 2   Rufus  32  FALSE   2020-01-01 2021-01-22 10:49:07     1.162829e+15</span>
+<span class="co">#&gt; 1 Cowbell  21   TRUE   2019-01-01 2021-05-27 22:21:34     1.250362e+15</span>
+<span class="co">#&gt; 2   Rufus  32  FALSE   2020-01-01 2021-05-27 22:21:34     1.250362e+15</span>
 <span class="co">#&gt;   extras.collection extras.results_table</span>
-<span class="co">#&gt; 1 galvanizer checks         Readme Table</span>
-<span class="co">#&gt; 2 galvanizer checks         Readme Table</span></pre></div>
+<span class="co">#&gt; 1        galvanizer               Readme</span>
+<span class="co">#&gt; 2        galvanizer               Readme</span></code></pre></div>
 </div>
 <div id="highbond-projects-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#highbond-projects-data" class="anchor"></a>Highbond Projects data</h2>
 <p>Highbond Projects data (also known as ‘Audits’) is also retrievable, depending on which screen of information you would like to retrieve from. There are options to download all or just one set of information, depending on the pane chosen.</p>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="no">projects</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/get_projects.html">get_projects</a></span>(<span class="no">highbond_auth</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">projects</span>)
-<span class="co">#&gt; # A tibble: 6 x 26</span>
-<span class="co">#&gt;   id    type  name  state status created_at updated_at description background</span>
-<span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;     </span>
-<span class="co">#&gt; 1 1213… proj… Payr… acti… active 2020-08-1… 2020-11-1… "Project t… ""        </span>
-<span class="co">#&gt; 2 1213… proj… IT G… acti… active 2020-08-1… 2020-08-1… ""           &lt;NA&gt;     </span>
-<span class="co">#&gt; 3 1213… proj… Sarb… acti… active 2020-08-1… 2020-08-2… ""           &lt;NA&gt;     </span>
-<span class="co">#&gt; 4 1213… proj… Sale… acti… active 2020-08-1… 2020-08-1… "Project t…  &lt;NA&gt;     </span>
-<span class="co">#&gt; 5 1213… proj… SOC … acti… active 2020-08-1… 2020-08-1… "Project t…  &lt;NA&gt;     </span>
-<span class="co">#&gt; 6 1213… proj… Purc… acti… active 2020-08-1… 2020-11-1… "The purch… ""        </span>
-<span class="co">#&gt; # … with 17 more variables: budget &lt;dbl&gt;, position &lt;dbl&gt;, certification &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   control_performance &lt;lgl&gt;, risk_assurance &lt;lgl&gt;, management_response &lt;chr&gt;,</span>
-<span class="co">#&gt; #   max_sample_size &lt;dbl&gt;, number_of_testing_rounds &lt;dbl&gt;, opinion &lt;chr&gt;,</span>
-<span class="co">#&gt; #   opinion_description &lt;chr&gt;, purpose &lt;chr&gt;, scope &lt;chr&gt;, start_date &lt;chr&gt;,</span>
-<span class="co">#&gt; #   target_date &lt;chr&gt;, custom_attributes &lt;list&gt;, tag_list &lt;list&gt;,</span>
-<span class="co">#&gt; #   relationships &lt;list&gt;</span></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">projects</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_projects.html">get_projects</a></span><span class="op">(</span><span class="va">highbond_auth</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
   </div>
@@ -183,7 +172,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
